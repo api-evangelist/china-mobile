@@ -1,0 +1,325 @@
+aid: china-mobile
+name: China Mobile
+review:
+  question: Does China Mobile expose a public, self-serve developer API surface, and
+    what is its CAMARA / GSMA Open Gateway posture?
+  answer: partial
+  date: '2026-07-25'
+  reviewer: API Evangelist
+  homeMarket: China
+  tier: mno-carrier
+findings:
+  summary: |
+    China Mobile is the world's largest mobile network operator (about 1,005 million
+    mobile customers, 110 million gigabit broadband customers as of 2025-12-31) and
+    it publishes real, first-party API documentation — but almost none of it is
+    self-serve, and none of it is machine-readable.
+
+    Four distinct first-party surfaces were confirmed live. OneNET
+    (open.iot.10086.cn, HTTP 200) is the only genuinely self-serve developer
+    platform: an IoT PaaS with open GitBook documentation and a live REST base URL
+    at api.heclouds.com, which answered an anonymous GET /devices with
+    {"errno":3,"error":"token鉴权失败"} — a real token-authenticated API behind real
+    docs. The IoT Card Capability Open Platform (api.iot.10086.cn, HTTP 200)
+    publishes anonymous interface documentation with a concrete documented endpoint
+    (GET/POST https://api.iot.10086.cn/v2/cardinfo, CMIOT_API2003) but issues
+    credentials by email only to approved enterprise IoT-card customers. The
+    Communication Capability Open Platform (ct.open.10086.cn, HTTP 200) publishes a
+    developer guide naming voice notification, voice OTP, click-to-dial, number
+    masking and QoS guarantee products, with no anonymous endpoint reference. The
+    Internet Capability Open Platform (dev.10086.cn, HTTP 200) is an enterprise
+    procurement console — its client bundle exposes routes for login, ability
+    ordering, application management, billing, invoices and work orders, and every
+    documentation path resolves to the same SPA shell.
+
+    Zero machine-readable API definitions were found. Every OpenAPI/Swagger
+    candidate probed returned either an HTML single-page-app shell, 403, 404 or 500.
+    No AsyncAPI, no GraphQL, no public .proto, no public Postman workspace, and no
+    first-party SDK packages on npm/PyPI/Maven/NuGet were found. The two China
+    Mobile GitHub organisations that do exist — cmri (China Mobile Research
+    Institute, 5 public repos) and cmti95035 (China Mobile Technology USA, 25 public
+    repos) — are research and US-engineering orgs, not the provider's API SDK
+    channel.
+
+    This is the split the telecom sector study predicts, in its purest form: the
+    standards work is real and substantial, and the developer surface is a contract
+    desk.
+  developerPortal:
+    primary: https://open.iot.10086.cn/
+    primaryStatus: 200
+    primaryVerdict: real self-serve IoT PaaS with open documentation and a live
+      token-authenticated API; console registration is mainland-oriented
+    others:
+    - url: https://dev.10086.cn/
+      status: 200
+      verdict: enterprise procurement console, not a developer portal — login wall
+        plus ability-ordering and work-order workflows
+      title: 中国移动互联网能力开放平台
+    - url: https://ct.open.10086.cn/portal/developer/docAndHelp.action
+      status: 200
+      verdict: real published developer guide (product intro, quick start, interface
+        guidance, pricing) but no anonymous endpoint reference or base URL
+      title: 中国移动·通信能力开放平台 — 文档与帮助
+    - url: https://api.iot.10086.cn/
+      status: 200
+      verdict: capability store with anonymously readable interface documentation;
+        credentials issued to enterprise customers only
+      title: 中国移动物联卡能力开放平台
+    deadOrAbsentSubdomains:
+    - developer.chinamobileltd.com (DNS/connect failure)
+    - developers.chinamobileltd.com (DNS/connect failure)
+    - docs.chinamobileltd.com (DNS/connect failure)
+    - api.chinamobileltd.com (DNS/connect failure)
+    - opengateway.chinamobileltd.com (DNS/connect failure)
+    - developer.10086.cn (DNS/connect failure)
+    - api.10086.cn (DNS/connect failure)
+    - developer.cmi.chinamobile.com (DNS/connect failure)
+    - api.cmi.chinamobile.com (DNS/connect failure)
+    - open.10086.cn (HTTP 412)
+  downloadableSpecs:
+    found: false
+    count: 0
+    probed:
+    - url: https://dev.10086.cn/openapi.json
+      status: 200
+      result: returns the site's HTML single-page-app shell, not a spec
+    - url: https://dev.10086.cn/swagger.json
+      status: 403
+      result: no spec
+    - url: https://open.iot.10086.cn/openapi.json
+      status: 500
+      result: no spec
+    - url: https://open.iot.10086.cn/swagger.json
+      status: 500
+      result: no spec
+    - url: https://open.iot.10086.cn/api-docs
+      status: 500
+      result: no spec
+    - url: https://open.iot.10086.cn/fuse-api/openapi.json
+      status: 500
+      result: no spec
+    - url: https://api.iot.10086.cn/sitemap.xml
+      status: 404
+      result: no index
+    note: No OpenAPI, Swagger, AsyncAPI, GraphQL SDL or .proto is published by China
+      Mobile on any confirmed first-party host. The openapi/ directory is therefore
+      omitted from this repository — nothing real was harvested.
+  camara:
+    posture: GSMA Open Gateway member since June 2023 and an active upstream CAMARA
+      API sponsor with a certified QoD implementation — but nothing CAMARA-shaped is
+      publicly callable or documented as an endpoint; access is domestic and
+      enterprise-contracted.
+    openGatewayMember: true
+    openGatewayJoined: '2023-06'
+    certification: GSMA Open Gateway certification announced 2024-10-29 for China
+      Mobile's Network-as-a-Service (NaaS) platform after its Quality on Demand API
+      passed 63 technical tests run by the Open Gateway working group; the underlying
+      exposure layer is ZTE NEF/SCEF over China Mobile 4G/5G core policy control.
+    apisWithEvidence:
+    - name: Quality on Demand
+      evidence: certified by GSMA Open Gateway (63 tests, announced 2024-10-29); a
+        QoS保障 intelligent-pipe product is listed in the ct.open.10086.cn developer
+        guide
+    - name: Click to Dial
+      evidence: China Mobile is the sponsor of the CAMARA Click to Dial API in the
+        CAMARA API backlog (template 2023/05/12, TSC approved 2023/09/07, v0.1.0
+        Spring26 release 2026/05/28) with Huawei; a 点击拨号 product is listed in the
+        ct.open.10086.cn developer guide
+    - name: Number Verification
+      evidence: GSMA Open Gateway material cites China Mobile doubling in-app
+        advertising conversion via a CAMARA number-verification solution; the
+        corresponding first-party product is 号码认证 / 移动认证 on dev.10086.cn delivered
+        through the CMPassport unified-authentication gateway — evidence is
+        press/case-study level, not a callable CAMARA endpoint
+    - name: Network Slice Booking
+      evidence: China Mobile is a listed participant in the CAMARA backlog entry
+        (sponsors China Unicom, China Telecom, Huawei; participants include China
+        Mobile and Ericsson; TSC approved 2024/01/18, v0.2.0 Spring26 2026/05/29)
+    - name: Model as a Service Family
+      evidence: China Mobile is the sole sponsor in the CAMARA backlog (template
+        2024/09/06, TSC approved 2024/10/17, v0.1.0 fall25 2025/09/18)
+    - name: Knowledge Base - Manage
+      evidence: China Mobile sole sponsor, CAMARA ModelAsAService repository, v0.1.0
+        fall25 2025/09/18
+    - name: Q&A Assistant - Manage
+      evidence: China Mobile sole sponsor, CAMARA ModelAsAService repository, v0.1.0
+        fall25 2025/09/18
+    - name: Q&A Assistant - Service
+      evidence: China Mobile sole sponsor, CAMARA ModelAsAService repository, v0.1.0
+        fall25 2025/09/18
+    - name: High-throughput Elastic Network
+      evidence: China Mobile sponsor with Huawei and ZTE, CAMARA backlog TSC approved
+        2024/11/21, no release yet
+    - name: Facial Recognition
+      evidence: China Mobile sole sponsor, CAMARA backlog TSC approved 2024/12/19,
+        maintainers pending, no release yet
+    - name: Site-to-cloud VPN
+      evidence: China Mobile listed as a participant (sponsors China Telecom and
+        Huawei); CAMARA repository archived 2026/02/05 with partial progress
+    pressOnly:
+    - name: 5G New Calling
+      note: reported as led by China Mobile and established in Open Gateway Drop 4;
+        no CAMARA backlog row or public specification was located under that name in
+        this review, so it is recorded as press-level evidence only
+    aduna:
+      member: false
+      note: China Mobile is not a shareholder in Aduna. The Aduna joint venture is
+        owned by Ericsson (50%) plus AT&T, Bharti Airtel, Deutsche Telekom, KDDI,
+        Orange, Reliance Jio, Singtel, Telefónica, Telstra, T-Mobile, Verizon and
+        Vodafone. China Mobile therefore reaches developers through its own domestic
+        capability marketplaces, not through the global aggregator channel and not
+        through a Western CPaaS partner.
+  tmForum:
+    conformanceCertification: none found
+    note: No TM Forum Open API conformance certificate (TMF620, TMF622, TMF641 or
+      any other) was located for China Mobile in this review. China Mobile
+      participates in TM Forum programmes, but no published certification report was
+      confirmed.
+  threeGppExposure:
+    nefScef: true
+    note: China Mobile's certified Quality on Demand implementation is built on ZTE
+      NEF/SCEF capability-exposure network functions over China Mobile's 4G/5G core
+      differentiated policy control. 5G network slicing appears via the CAMARA
+      Network Slice Booking work in which China Mobile participates. No public
+      NEF/SCEF or MEC endpoint is documented.
+  authModel:
+    schemes:
+    - name: proprietary signed request (appid + transid + ebid + SHA-256 token)
+      where: IoT Card Capability Open Platform (api.iot.10086.cn/v2)
+      documented: true
+    - name: platform token
+      where: OneNET / api.heclouds.com — anonymous call returns a token
+        authentication error
+      documented: true
+    ciba: not found
+    cibaNote: CAMARA specifies OIDC and CIBA (Client-Initiated Backchannel
+      Authentication) for network-based authorization. No CIBA reference, and no
+      OIDC discovery document, was found on any China Mobile host. Both
+      https://dev.10086.cn/.well-known/openid-configuration and
+      https://dev.10086.cn/.well-known/oauth-authorization-server return HTTP 200 but
+      serve the site's HTML single-page-app shell, not JSON metadata;
+      open.iot.10086.cn returns HTTP 500 and iot-api.heclouds.com HTTP 406 for the
+      same paths.
+  webhooks:
+    found: false
+    note: No public webhook or event catalogue and no AsyncAPI document was found on
+      any first-party host. OneNET documents a message queue (MQ) product and MQTT
+      device access, but no anonymously readable event schema catalogue.
+  sdks:
+    firstPartyPackages: none confirmed
+    note: No first-party China Mobile SDK packages were confirmed on npm, PyPI, Maven
+      or NuGet. Published integration code is inline sample code in the Chinese-language
+      documentation (Java, PHP, Python, C# request samples on the IoT Card platform
+      docs). GitHub organisations cmri (China Mobile Research Institute) and
+      cmti95035 (China Mobile Technology USA) exist but are research/engineering
+      orgs, not the API SDK distribution channel.
+  channelToDevelopers: |
+    Direct and domestic. China Mobile does not resell its network capabilities
+    through Aduna or through a Western CPaaS partner; it operates its own
+    Chinese-language capability marketplaces (dev.10086.cn for application
+    capabilities, ct.open.10086.cn for communication capabilities,
+    api.iot.10086.cn for IoT-card capabilities, open.iot.10086.cn for IoT device
+    connectivity). Onboarding for everything except OneNET runs through enterprise
+    registration, contract and manually issued credentials.
+  transports:
+  - protocol: REST
+    scheme: https
+    baseURL: https://api.heclouds.com
+    documented: true
+    note: OneNET legacy device REST API; anonymous GET /devices returns
+      {"errno":3,"error":"token鉴权失败"}.
+  - protocol: REST
+    scheme: https
+    baseURL: https://api.iot.10086.cn/v2
+    documented: true
+    note: IoT Card Capability Open Platform; documented operation GET/POST
+      /cardinfo (CMIOT_API2003).
+  - protocol: MQTT
+    scheme: mqtt
+    documented: true
+    note: OneNET documents MQTT and multi-protocol device access; no broker host is
+      published anonymously.
+  - protocol: GraphQL
+    documented: false
+    note: No GraphQL endpoint found on any China Mobile host.
+  - protocol: gRPC
+    documented: false
+    note: No published .proto found.
+  - protocol: WebSocket
+    documented: false
+    note: No documented WebSocket surface found.
+sources:
+- url: https://www.chinamobileltd.com/en/about/overview.php
+  status: 200
+  type: Website
+  note: Company overview — 1,005 million mobile customers and 110 million gigabit
+    broadband customers as of 2025-12-31; RMB 1,050.2 billion revenue; HKEX and SSE
+    listings; 68.8% held by China Mobile Communications Group.
+- url: https://open.iot.10086.cn/
+  status: 200
+  type: Portal
+  note: OneNET — 中国移动物联网开放平台, PaaS IoT platform.
+- url: https://open.iot.10086.cn/doc/
+  status: 200
+  type: Documentation
+  note: OneNET developer documentation (GitBook) covering MQTT, multi-protocol
+    access, OneNET Studio, edge, DMP, OTA, MQ, SMS, LBS, video, AI.
+- url: https://api.heclouds.com/devices
+  status: 200
+  type: APIReference
+  note: Live OneNET REST base URL; anonymous request returns
+    {"errno":3,"error":"token鉴权失败"}.
+- url: https://api.iot.10086.cn/
+  status: 200
+  type: Portal
+  note: 中国移动物联卡能力开放平台 — IoT card capability store.
+- url: https://api.iot.10086.cn/apiDocuments/cusInfo/codeInfoQuery.html
+  status: 200
+  type: APIReference
+  note: CMIOT_API2003 码号信息查询 — documents GET/POST https://api.iot.10086.cn/v2/cardinfo
+    with appid/transid/ebid/token signed-request parameters.
+- url: https://ct.open.10086.cn/portal/developer/docAndHelp.action
+  status: 200
+  type: Documentation
+  note: 中国移动·通信能力开放平台 developer guide — 语音通知, 语音验证码, 点击拨号, 中间号, QoS保障.
+- url: https://dev.10086.cn/
+  status: 200
+  type: Portal
+  note: 中国移动互联网能力开放平台 — meta description names 移动认证, 大数据服务, 通信能力, 支付能力, 推广能力.
+- url: https://raw.githubusercontent.com/camaraproject/APIBacklog/main/documentation/APIbacklog.md
+  status: 200
+  type: Standards
+  note: CAMARA API backlog — China Mobile sponsor/participant rows for Click to
+    Dial, Network Slice Booking, Model as a Service family, Knowledge Base - Manage,
+    Q&A Assistant - Manage, Q&A Assistant - Service, High-throughput Elastic Network,
+    Facial Recognition and Site-to-cloud VPN.
+- url: https://www.telecompaper.com/news/china-mobile-secures-gsma-open-gateway-certification-for-naas-platform--1517199
+  status: 200
+  type: PressRelease
+  note: 2024-10-29 — GSMA Open Gateway certification for China Mobile's NaaS
+    platform; QoD API passed 63 tests; ZTE collaboration.
+- url: https://www.gsma.com/newsroom/press-release/chinas-three-largest-mobile-operators-join-gsma-open-gateway-initiative/
+  status: 403
+  type: PressRelease
+  note: GSMA newsroom blocks anonymous fetch (HTTP 403); China Mobile's June 2023
+    Open Gateway membership was corroborated from secondary reporting rather than
+    read directly.
+- url: https://www.ericsson.com/en/press-releases/2025/7/ericsson-announces-completion-of-aduna-transaction
+  status: 200
+  type: PressRelease
+  note: Aduna shareholder list — China Mobile is not among the twelve operator
+    shareholders.
+actions:
+  openapiDirectoryCreated: false
+  reason: |
+    No machine-readable API definition of any kind is published by China Mobile on
+    any confirmed first-party host, and CAMARA's upstream specifications belong to
+    the CAMARA project rather than to China Mobile, so nothing was copied into this
+    repository. The openapi/ directory is deliberately absent.
+  apisYmlCreated: true
+  gated: true
+  gatedReason: |
+    Three of the four first-party surfaces require enterprise registration, a
+    contract and manually issued credentials; the fourth (OneNET) is self-serve but
+    mainland-oriented. The certified CAMARA Quality on Demand capability is sold
+    through the communication capability platform, not exposed as a public endpoint.

@@ -1,0 +1,155 @@
+aid: china-mobile
+url: https://raw.githubusercontent.com/api-evangelist/china-mobile/refs/heads/main/apis.yml
+name: China Mobile
+kind: company
+description: China Mobile Limited is the world's largest mobile network operator by
+  subscribers, serving approximately 1,005 million mobile customers and 110 million
+  gigabit broadband customers across all 31 provinces of mainland China plus Hong Kong,
+  with roaming into more than 200 countries. Listed on the Hong Kong Stock Exchange
+  and the Shanghai Stock Exchange and majority-owned by state-held China Mobile Communications
+  Group, it runs mobile, broadband, cellular IoT, satellite internet, data centre,
+  cloud and AI businesses on annual revenue of about RMB 1,050.2 billion. In the network-API
+  value chain China Mobile sits squarely on the operator side, not the aggregator side.
+  It joined the GSMA Open Gateway initiative in June 2023, sponsors and maintains several
+  CAMARA APIs upstream (Click to Dial, the Model as a Service family, High-throughput
+  Elastic Network, Facial Recognition, and co-sponsors Network Slice Booking), and
+  in October 2024 secured GSMA Open Gateway certification for its Network-as-a-Service
+  platform after its Quality on Demand API passed 63 conformance tests on ZTE NEF/SCEF
+  exposure functions. None of that is callable from the open internet. Its API posture
+  is partner-gated and domestic — the capability platforms at dev.10086.cn, ct.open.10086.cn
+  and api.iot.10086.cn publish real product and interface documentation but issue credentials
+  only to registered mainland enterprise customers under contract, and China Mobile
+  is not a shareholder in Aduna, so it reaches developers through its own Chinese-language
+  capability marketplaces rather than through the global CPaaS or aggregator channel.
+  The one genuinely self-serve surface is OneNET, its IoT PaaS, which publishes open
+  developer documentation and a live token-authenticated device API.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Telecommunications
+- China
+- Mobile Network Operator
+- Network APIs
+- CAMARA
+- GSMA Open Gateway
+- IoT
+- 5G
+- Broadband
+- Quality on Demand
+- Number Authentication
+- Satellite
+created: '2026-07-25'
+modified: '2026-07-25'
+specificationVersion: '0.19'
+apis:
+- aid: china-mobile:onenet-iot-platform
+  name: OneNET IoT Open Platform API
+  description: OneNET is China Mobile's IoT PaaS, operated by its CMIOT subsidiary,
+    for device connection, device management, data storage and data visualisation.
+    It is the company's most genuinely developer-facing surface, with open Chinese-language
+    documentation covering MQTT and multi-protocol device access, OneNET Studio, edge
+    computing, device management (DMP), OTA, message queue, SMS, LBS and video capabilities.
+    The legacy REST base URL api.heclouds.com is live and responds with a JSON token
+    authentication error to unauthenticated calls, confirming a real token-authenticated
+    device API behind the docs.
+  humanURL: https://open.iot.10086.cn/doc/
+  baseURL: https://api.heclouds.com
+  tags:
+  - IoT
+  - Device Management
+  - MQTT
+  - PaaS
+  - China
+  properties:
+  - type: Documentation
+    url: https://open.iot.10086.cn/doc/
+  - type: APIReference
+    url: https://open.iot.10086.cn/doc/iot_platform/
+  - type: Documentation
+    url: https://open.iot.10086.cn/doc/mqtt
+  - type: Portal
+    url: https://open.iot.10086.cn/
+- aid: china-mobile:iot-card-capability-platform
+  name: China Mobile IoT Card Capability Open Platform API
+  description: The 物联卡能力开放平台 (IoT Card Capability Open Platform) exposes cellular
+    M2M SIM lifecycle and subscriber-information operations to enterprise IoT customers.
+    Interface documentation is published openly — the confirmed CMIOT_API2003 码号信息查询
+    (code/number information query) page documents GET/POST https://api.iot.10086.cn/v2/cardinfo,
+    which resolves any one of ICCID, IMSI or MSISDN into the other two. Authentication
+    is a proprietary signed-request scheme (appid, transid, ebid and a SHA-256 token
+    derived from appid+password+transid) whose credentials China Mobile issues by email
+    to approved enterprise IoT-card customers only. No OpenAPI is published.
+  humanURL: https://api.iot.10086.cn/apiDocuments/cusInfo/codeInfoQuery.html
+  baseURL: https://api.iot.10086.cn/v2
+  tags:
+  - IoT
+  - M2M
+  - SIM Management
+  - Connectivity Management
+  - China
+  properties:
+  - type: Documentation
+    url: https://api.iot.10086.cn/
+  - type: APIReference
+    url: https://api.iot.10086.cn/apiDocuments/cusInfo/codeInfoQuery.html
+- aid: china-mobile:communication-capability-platform
+  name: China Mobile Communication Capability Open Platform
+  description: The 通信能力开放平台 (Communication Capability Open Platform) is China Mobile's
+    commercial network-capability channel and the surface where its Open Gateway work
+    actually meets buyers. Its published developer guide lists audio/video products
+    — 语音通知 (voice notification), 语音验证码 (voice OTP), 点击拨号 (click to dial) and 中间号
+    (number masking / privacy number) — plus an intelligent-pipe product, QoS保障 (QoS
+    guarantee). Click to Dial and QoS map directly to the CAMARA Click to Dial and
+    Quality on Demand APIs that China Mobile sponsors upstream. The guide covers product
+    introduction, quick start, interface guidance and pricing, but ordering and credentials
+    require enterprise onboarding; no base URL, endpoint reference or machine-readable
+    definition is published anonymously.
+  humanURL: https://ct.open.10086.cn/portal/developer/docAndHelp.action
+  tags:
+  - Voice
+  - Click to Dial
+  - Number Masking
+  - Quality on Demand
+  - Network APIs
+  - China
+  properties:
+  - type: Documentation
+    url: https://ct.open.10086.cn/portal/developer/docAndHelp.action
+  - type: Portal
+    url: https://ct.open.10086.cn/portal/index.action
+- aid: china-mobile:internet-capability-open-platform
+  name: China Mobile Internet Capability Open Platform
+  description: 中国移动互联网能力开放平台 at dev.10086.cn is the operator's application-facing
+    capability marketplace, describing itself as offering 移动认证/号码认证 (mobile and number
+    authentication), 大数据服务 (big data services), 通信能力 (communication capabilities),
+    支付能力 (payment/carrier-billing capabilities) and promotion capabilities. In practice
+    it is an enterprise procurement console rather than a developer portal — its routes
+    are login, ability ordering, application management, billing, invoices and work
+    orders, and every documentation route resolves to the same single-page shell for
+    anonymous visitors. Its number-authentication capability is the domestic analogue
+    of CAMARA Number Verification and is delivered through China Mobile's CMPassport
+    unified-authentication gateway rather than through a CAMARA endpoint.
+  humanURL: https://dev.10086.cn/
+  tags:
+  - Number Authentication
+  - Identity Verification
+  - Carrier Billing
+  - Big Data
+  - Messaging
+  - China
+  properties:
+  - type: Documentation
+    url: https://dev.10086.cn/
+  - type: Portal
+    url: https://dev.10086.cn/apmc/abilityList
+common:
+- type: Website
+  url: https://www.chinamobileltd.com/
+- type: Portal
+  url: https://dev.10086.cn/
+- type: Documentation
+  url: https://open.iot.10086.cn/doc/
+- type: GitHubOrganization
+  url: https://github.com/cmri
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
