@@ -1,0 +1,171 @@
+generated: '2026-07-25'
+method: searched
+source: https://open.iot.10086.cn/doc/iot_platform/book/api/sdk.html
+docs: https://open.iot.10086.cn/doc/iot_platform/book/api/sdk.html
+note: >-
+  China Mobile's first-party client-library channel is the OneNET (CMIOT / 中移物联网)
+  GitHub account https://github.com/cm-heclouds — 38 public repositories, blog
+  http://www.heclouds.com, located in Chongqing where CMIOT is headquartered. The
+  OneNET Studio "API SDK下载" page names the Java and Node SDKs there as the platform's
+  official API SDKs, and the JAVA-HTTP-SDK README states verbatim that the project was
+  built by 中移物联网公司 (China Mobile IoT Company) for Java developers integrating OneNET.
+  Only the Java SDK is published to a package registry (Maven Central, groupId
+  com.github.cm-heclouds); everything else is distributed as source from GitHub. No
+  first-party China Mobile package was found on PyPI, NuGet, RubyGems, Packagist,
+  crates.io or pkg.go.dev, and none of the enterprise capability platforms
+  (dev.10086.cn, ct.open.10086.cn, api.iot.10086.cn) ships an SDK.
+registries_probed:
+- registry: maven-central
+  query: onenet, heclouds
+  result: 6 artifacts under groupId com.github.cm-heclouds
+- registry: npm
+  query: onenet
+  result: onenetstudio-api-node-sdk present but published under an individual account
+- registry: pypi
+  query: onenet, onenet-sdk
+  result: only a third-party community SDK (menduo/onenet-python-sdk)
+- registry: nuget
+  query: onenet
+  result: no first-party package
+- registry: pkg.go.dev
+  query: onenet, heclouds
+  result: only third-party community SDKs
+packages:
+- language: java
+  registry: maven-central
+  name: com.github.cm-heclouds:onenet-studio-api-sdk
+  version: 1.0.1
+  url: https://central.sonatype.com/artifact/com.github.cm-heclouds/onenet-studio-api-sdk
+  source: https://github.com/cm-heclouds/onenet-studio-api-java-sdk
+  install: "<dependency><groupId>com.github.cm-heclouds</groupId><artifactId>onenet-studio-api-sdk</artifactId><version>1.0.1</version></dependency>"
+  official: true
+  covers: OneNET Studio application API (openapi.heclouds.com)
+- language: java
+  registry: maven-central
+  name: com.github.cm-heclouds:protocol-adapter-sdk
+  version: 1.0.4
+  url: https://central.sonatype.com/artifact/com.github.cm-heclouds/protocol-adapter-sdk
+  source: https://github.com/cm-heclouds/onenet-protocol-adapter
+  official: true
+  covers: OneNET 泛协议接入 (generic protocol adapter) for cloud-to-cloud and gateway access
+- language: java
+  registry: maven-central
+  name: com.github.cm-heclouds:protocol-adapter-core
+  version: 1.0.4
+  url: https://central.sonatype.com/artifact/com.github.cm-heclouds/protocol-adapter-core
+  official: true
+- language: java
+  registry: maven-central
+  name: com.github.cm-heclouds:protocol-adapter-protocolhub-tcp
+  version: 1.0.4
+  url: https://central.sonatype.com/artifact/com.github.cm-heclouds/protocol-adapter-protocolhub-tcp
+  official: true
+- language: java
+  registry: maven-central
+  name: com.github.cm-heclouds:protocol-adapter-parent
+  version: 1.0.4
+  url: https://central.sonatype.com/artifact/com.github.cm-heclouds/protocol-adapter-parent
+  official: true
+- language: java
+  registry: maven-central
+  name: com.github.cm-heclouds:thing-model-code-generator
+  version: 1.0.4
+  url: https://central.sonatype.com/artifact/com.github.cm-heclouds/thing-model-code-generator
+  official: true
+  covers: code generation from a OneNET thing model (物模型)
+- language: javascript
+  registry: npm
+  name: onenetstudio-api-node-sdk
+  version: 1.0.0
+  url: https://www.npmjs.com/package/onenetstudio-api-node-sdk
+  install: npm i onenetstudio-api-node-sdk
+  source: https://github.com/cm-heclouds/onenet-studio-api-node-sdk
+  official: false
+  note: >-
+    Named as the official Node SDK on the OneNET "API SDK下载" documentation page and
+    mirrors the cm-heclouds repository of the same name, but the npm package itself is
+    published by an individual maintainer account (guiwazi) rather than a China Mobile
+    org account, so first-party ownership of the registry entry is not verifiable.
+source_distributions:
+- language: java
+  name: onenet-studio-api-java-sdk
+  url: https://github.com/cm-heclouds/onenet-studio-api-java-sdk
+  official: true
+  note: The Java SDK named on the OneNET API SDK download page. Last pushed 2025-11-13.
+- language: javascript
+  name: onenet-studio-api-node-sdk
+  url: https://github.com/cm-heclouds/onenet-studio-api-node-sdk
+  official: true
+- language: java
+  name: JAVA-HTTP-SDK
+  url: https://github.com/cm-heclouds/JAVA-HTTP-SDK
+  official: true
+  license: MIT
+  note: >-
+    Legacy OneNET public-edition Java SDK (devices, datastreams, datapoints, triggers,
+    API keys, binary data, commands, MQTT). README states it was built by 中移物联网公司.
+- language: java
+  name: AndroidSDK
+  url: https://github.com/cm-heclouds/AndroidSDK
+  official: true
+  license: MIT
+- language: objective-c
+  name: IOSSDK
+  url: https://github.com/cm-heclouds/IOSSDK
+  official: true
+  license: MIT
+- language: c
+  name: MQTT
+  url: https://github.com/cm-heclouds/MQTT
+  official: true
+  license: BSD-3-Clause
+  note: OneNET MQTT device SDK.
+- language: c
+  name: nbiot_sdk
+  url: https://github.com/cm-heclouds/nbiot_sdk
+  official: true
+  note: OneNET NB-IoT C SDK.
+- language: java
+  name: nbiot_api_sdk
+  url: https://github.com/cm-heclouds/nbiot_api_sdk
+  official: true
+  license: MIT
+- language: csharp
+  name: CSharp-SDK
+  url: https://github.com/cm-heclouds/CSharp-SDK
+  official: true
+  license: MIT
+- language: php
+  name: PHPSDK
+  url: https://github.com/cm-heclouds/PHPSDK
+  official: true
+  license: MIT
+- language: go
+  name: GoSDK
+  url: https://github.com/cm-heclouds/GoSDK
+  official: true
+- language: javascript
+  name: JS-SDK
+  url: https://github.com/cm-heclouds/JS-SDK
+  official: true
+  license: MIT
+- language: cpp
+  name: ArdiunoHttpSDK
+  url: https://github.com/cm-heclouds/ArdiunoHttpSDK
+  official: true
+- language: c
+  name: video_sdk
+  url: https://github.com/cm-heclouds/video_sdk
+  official: true
+- language: csharp
+  name: data-push
+  url: https://github.com/cm-heclouds/data-push
+  official: true
+  license: MIT
+  note: Third-party HTTP data-push (webhook) receiver SDK for the OneNET push service.
+- language: java
+  name: voice-JAVA-HTTP
+  url: https://github.com/cm-heclouds/voice-JAVA-HTTP
+  official: true
+  license: MIT
+  note: OneNET Voice Call Service (语音通话) Java HTTP SDK.

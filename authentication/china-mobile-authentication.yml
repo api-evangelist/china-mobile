@@ -1,0 +1,27 @@
+generated: '2026-07-25'
+method: derived
+source: openapi/china-mobile-onenet-studio-openapi.yml, openapi/china-mobile-vcs-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: onenetAuthorization
+  type: apiKey
+  in: header
+  parameter: authorization
+  description: 'OneNET signed authorization token: version=2020-05-29&res=userid/{userid}&et={epoch}&method={md5|sha1|sha256}&sign={signature},
+    where sign = base64(hmac_method(base64decode(accessKey), et + "\n" + method + "\n" + res
+    + "\n" + version)). Reference: https://open.iot.10086.cn/doc/iot_platform/book/api/auth.html'
+  sources:
+  - openapi/china-mobile-onenet-studio-openapi.yml
+- name: onenetAuthorization
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: 'OneNET signed authorization token: `version=2020-05-29&res=userid/{userid}&et={epoch}&method={md5|sha1|sha256}&sign={signature}`
+    where sign = base64(hmac_method(base64decode(accessKey), et + "\n" + method + "\n" + res
+    + "\n" + version)). See https://open.iot.10086.cn/doc/iot_platform/book/api/auth.html'
+  sources:
+  - openapi/china-mobile-vcs-openapi.yml

@@ -28,6 +28,22 @@ In the network-API value chain China Mobile sits squarely on the operator side, 
 
 ## APIs
 
+### OneNET Studio Application API
+
+The one China Mobile surface with a complete, anonymously readable request-and-response contract. An action-dispatched gateway — every call is `https://openapi.heclouds.com/{namespace}?action={Action}&version=1`, with namespaces `application`, `common`, `lwm2m-online` and `lwm2m-offline`. Forty-four operations are documented across devices, products, projects, groups, thing models, properties and desired properties, service invocation, device files and scene-linkage rules. Authentication is a signed, time-boxed `authorization` header (HMAC over `et`, `method`, `res`, `version`; signature algorithm version `2020-05-29`). Every response is a uniform envelope carrying a platform-generated `requestId`; business failures arrive as HTTP 200 with `success: false`.
+
+- **Human URL:** [API 调用说明](https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html)
+- **Base URL:** `https://openapi.heclouds.com`
+- **OpenAPI:** `openapi/china-mobile-onenet-studio-openapi.yml`
+
+### OneNET Voice Call Service (VCS) API
+
+语音通话 — click to dial (点击拨号) and TTS voice notification (语音通知) at `https://openapi.heclouds.com/vcs?action={voiceNotify|dialNotify}&version=2`, each returning a `call_id` and delivering call-status callbacks to a caller-supplied `notify_url`. **Click to Dial is the domestic first-party product behind the CAMARA Click to Dial API that China Mobile sponsors upstream** — but it does not implement the CAMARA schema or its OIDC/CIBA security model. Access is gated three ways: business entitlement, a test account pinned to an approved source IP, and a trial-usage quota.
+
+- **Human URL:** [API 使用说明](https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/request.html)
+- **Base URL:** `https://openapi.heclouds.com`
+- **OpenAPI:** `openapi/china-mobile-vcs-openapi.yml`
+
 ### OneNET IoT Open Platform API
 
 OneNET is China Mobile's IoT PaaS, operated by its CMIOT subsidiary, for device connection, device management, data storage and data visualisation. It is the company's most genuinely developer-facing surface, with open Chinese-language documentation covering MQTT and multi-protocol device access, OneNET Studio, edge computing, device management (DMP), OTA, message queue, SMS, LBS and video capabilities. The legacy REST base URL is live and responds with a JSON token authentication error to unauthenticated calls.
@@ -86,7 +102,41 @@ None of it is publicly callable. There is no CAMARA endpoint, no OpenAPI, no OID
 
 ## Machine-readable definitions
 
-**None found.** Every OpenAPI, Swagger, AsyncAPI, GraphQL and Postman candidate probed on China Mobile hosts returned an HTML single-page-app shell, 403, 404 or 500. This repository therefore has no `openapi/` directory. See `review.yml` for the full probe log with HTTP statuses.
+**China Mobile publishes none.** Every OpenAPI, Swagger, AsyncAPI, GraphQL, gRPC and Postman candidate probed on China Mobile hosts returned an HTML single-page-app shell, 403, 404, 406 or 500 — re-probed on 2026-07-25 against `openapi.heclouds.com`, `api.heclouds.com`, `iot-api.heclouds.com`, `api.iot.10086.cn`, `open.iot.10086.cn` and `dev.10086.cn`. See `review.yml` and `well-known/` for the probe logs with HTTP statuses.
+
+What the 2026-07-25 enrichment round *did* find is that OneNET publishes a complete, anonymously readable reference for two of its API products. Those references have been transcribed — operation by operation, with each operation carrying its source page in `x-evidence` — into machine-readable definitions in this repository:
+
+- `openapi/china-mobile-onenet-studio-openapi.yml` — 44 documented operations on the OneNET Studio application API (`https://openapi.heclouds.com/{namespace}?action={Action}&version=1`)
+- `openapi/china-mobile-vcs-openapi.yml` — the Voice Call Service actions `voiceNotify` and `dialNotify`, plus their two call-status webhook callbacks
+- `asyncapi/china-mobile-onenet-asyncapi.yml` — the OneNET event surface (HTTP data push, push-instance validation handshake, VCS call-status callbacks)
+
+These are API Evangelist derivations of published first-party documentation, marked as such in each `info.x-provenance` block. They are not China Mobile products and China Mobile does not endorse them.
+
+## Artifacts
+
+| Artifact | File |
+| --- | --- |
+| Authentication | `authentication/china-mobile-authentication.yml` |
+| Conventions | `conventions/china-mobile-conventions.yml` |
+| Error codes | `errors/china-mobile-error-codes.yml` |
+| Webhooks | `asyncapi/china-mobile-onenet-webhooks.yml` |
+| Data model | `data-model/china-mobile-data-model.yml` |
+| Packages / SDKs | `packages/china-mobile-packages.yml` |
+| Lifecycle | `lifecycle/china-mobile-lifecycle.yml` |
+| Changelog | `changelog/china-mobile-changelog.yml` |
+| Sandbox | `sandbox/china-mobile-sandbox.yml` |
+| Conformance | `conformance/china-mobile-conformance.yml` |
+| Domain security | `security/china-mobile-domain-security.yml` |
+| Well-known probe log | `well-known/china-mobile-well-known.yml` |
+| Agentic access | `agentic-access/china-mobile-agentic-access.yml` |
+| MCP (candidate) | `mcp/china-mobile-mcp.yml` |
+| Agent skills | `skills/` |
+| llms.txt | `llms/china-mobile-llms.txt` |
+| Overlays | `overlays/` |
+
+## SDKs
+
+China Mobile's first-party client-library channel is **[github.com/cm-heclouds](https://github.com/cm-heclouds)** — the CMIOT (中移物联网) OneNET account, 38 public repositories covering Java, Node, C, C#, PHP, Go, Android, iOS, Arduino, JavaScript and NB-IoT. The OneNET "API SDK下载" page names the Java and Node SDKs there as the platform's official SDKs, and the `JAVA-HTTP-SDK` README states verbatim that it was built by 中移物联网公司. Only the Java side reaches a package registry, on **Maven Central** under `com.github.cm-heclouds`. Nothing first-party was found on PyPI, NuGet, RubyGems, Packagist, crates.io or pkg.go.dev.
 
 ## Links
 

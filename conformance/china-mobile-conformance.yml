@@ -1,0 +1,132 @@
+generated: '2026-07-25'
+method: searched
+source: apis.yml, review.yml, https://open.iot.10086.cn/doc/iot_platform/book/api/
+summary: >-
+  China Mobile's standards posture is split in two. Upstream, in the GSMA/CAMARA arena, it
+  is a genuine and heavily invested participant: an Open Gateway member since June 2023,
+  the sponsor or co-sponsor of nine CAMARA APIs, and the holder of a GSMA Open Gateway
+  certification for its Network-as-a-Service platform after a Quality on Demand
+  implementation passed 63 conformance tests. Downstream, in the API contracts it actually
+  publishes, it conforms to almost nothing that is cross-cutting: no OAuth 2.0, no OIDC,
+  no CIBA, no RFC 9457, no RFC 9116, no RFC 8594, no OpenAPI, no AsyncAPI. Its own signed
+  header scheme, its own action-dispatched gateway, its own error registry.
+standards:
+- id: gsma-open-gateway
+  conforms: true
+  evidence: >-
+    GSMA Open Gateway member since June 2023. Certification announced 2024-10-29 for China
+    Mobile's Network-as-a-Service platform after its Quality on Demand API passed 63
+    technical tests run by the Open Gateway working group, over ZTE NEF/SCEF exposure
+    functions on China Mobile 4G/5G core policy control.
+  source: https://www.telecompaper.com/news/china-mobile-secures-gsma-open-gateway-certification-for-naas-platform--1517199
+- id: camara
+  conforms: partial
+  evidence: >-
+    Sponsor or co-sponsor of nine CAMARA APIs in the CAMARA API backlog — Click to Dial,
+    Model as a Service family (Knowledge Base - Manage, Q&A Assistant - Manage, Q&A
+    Assistant - Service), High-throughput Elastic Network, Facial Recognition — and a
+    listed participant on Network Slice Booking and Site-to-cloud VPN. The upstream
+    specifications belong to the CAMARA project; no CAMARA-shaped endpoint is publicly
+    callable or documented on any China Mobile host.
+  source: https://raw.githubusercontent.com/camaraproject/APIBacklog/main/documentation/APIbacklog.md
+- id: camara-click-to-dial
+  conforms: partial
+  evidence: >-
+    China Mobile sponsors the CAMARA Click to Dial API upstream (with Huawei) and ships
+    the domestic first-party equivalent as OneNET 点击拨号, POST
+    https://openapi.heclouds.com/vcs?action=dialNotify&version=2 — fully documented with
+    request body, response envelope, error codes and a call-status callback. The shipped
+    product does not use CAMARA's schema, paths or OIDC/CIBA security model.
+  source: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd.html
+- id: 3gpp-nef-scef
+  conforms: true
+  evidence: >-
+    The certified Quality on Demand implementation is built on ZTE NEF/SCEF
+    capability-exposure network functions over China Mobile's 4G/5G core differentiated
+    policy control. No public NEF/SCEF or MEC endpoint is documented.
+- id: oauth2
+  conforms: false
+  evidence: >-
+    No oauth2 security scheme in any published contract. OneNET uses a proprietary signed
+    header (HMAC over et/method/res/version); the IoT Card platform uses a proprietary
+    signed request (appid/transid/ebid + SHA-256 token).
+- id: oidc
+  conforms: false
+  evidence: >-
+    No OIDC discovery document on any host — /.well-known/openid-configuration returns
+    404/403/406, or on dev.10086.cn HTTP 200 with the site's HTML shell.
+- id: oidc-ciba
+  conforms: false
+  evidence: >-
+    CAMARA specifies CIBA for network-based authorization. No CIBA reference was found on
+    any China Mobile host. Number authentication is delivered instead through China
+    Mobile's proprietary CMPassport unified-authentication gateway.
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: false
+  evidence: /.well-known/oauth-authorization-server absent on every probed host.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors are returned as HTTP 200 with a proprietary envelope
+    ({requestId, success, code, msg}); no application/problem+json anywhere.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt absent on every probed host.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No deprecation policy and no Sunset/Deprecation header support published.
+- id: rfc9727-api-catalog
+  conforms: false
+  evidence: /.well-known/api-catalog absent on every probed host.
+- id: openapi
+  conforms: false
+  evidence: >-
+    No OpenAPI or Swagger document is published on any confirmed first-party host. The two
+    OpenAPI documents in this repository are API Evangelist derivations of the published
+    reference pages, marked as such in each info.x-provenance block.
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    No AsyncAPI document is published. OneNET does publish a real webhook and message-queue
+    event surface, captured here as a derived AsyncAPI 3.0.0 document.
+- id: mqtt
+  conforms: true
+  evidence: >-
+    OneNET documents MQTT device access with a published topic convention, alongside CoAP,
+    LwM2M and HTTP.
+  source: https://open.iot.10086.cn/doc/iot_platform/book/device-connect&manager/MQTT/topic.html
+- id: lwm2m
+  conforms: true
+  evidence: >-
+    OneNET documents OMA LwM2M device access including an IPSO object API surface
+    (real-time commands, cached commands, DTLS PSK management) and added LwM2M support in
+    platform release v1.1.9 (2021-03-25).
+  source: https://open.iot.10086.cn/doc/iot_platform/book/device-connect&manager/LwM2M/protocol.html
+- id: coap
+  conforms: true
+  evidence: OneNET documents CoAP device connection and its usage limits.
+- id: tmforum-open-api
+  conforms: false
+  evidence: >-
+    No TM Forum Open API conformance certificate (TMF620, TMF622, TMF641 or any other) was
+    located for China Mobile.
+- id: graphql
+  conforms: false
+  evidence: No GraphQL endpoint found on any China Mobile host.
+- id: grpc
+  conforms: false
+  evidence: No published .proto found in any China Mobile repository or documentation.
+- id: mcp
+  conforms: false
+  evidence: >-
+    No official China Mobile MCP server was found in the MCP registry, on GitHub, or in the
+    OneNET documentation.
+compliance_program:
+  published: false
+  note: >-
+    No SOC 2, ISO 27001, PCI DSS, HIPAA, FedRAMP or CSA STAR attestation is published on
+    any China Mobile developer surface, and no trust centre exists. The OneNET footer
+    carries a 可信云认证 (Trusted Cloud certification) link, but it is commented out of the
+    live markup, so it is not recorded here as a published certification. Regulatory
+    identity that IS published is Chinese ICP filing 京ICP备05002571号. For this reason no
+    `Compliance` pointer is wired into apis.yml.

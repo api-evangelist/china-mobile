@@ -1,0 +1,79 @@
+generated: '2026-07-25'
+method: derived
+status: candidate
+source: openapi/china-mobile-onenet-studio-openapi.yml, openapi/china-mobile-vcs-openapi.yml
+search:
+  official_server: none found
+  probed:
+  - registry.modelcontextprotocol.io (search "onenet", "china mobile") — 0 servers
+  - github search "onenet mcp" — 0 repositories
+  - OneNET documentation (open.iot.10086.cn) — no MCP, agent or tool-calling surface
+  conclusion: >-
+    China Mobile publishes no MCP server. The tool list below is an API Evangelist
+    derivation from the documented OneNET operations — a candidate design, not a China
+    Mobile product, and deliberately NOT wired as a `MCPServer` pointer in apis.yml.
+server:
+  name: china-mobile-onenet
+  status: candidate
+  transport: null
+  url: null
+notes:
+- Every candidate tool inherits its real input schema from the backing OpenAPI operation's
+  parameters or requestBody in this repository.
+- Read tools are safe to expose to an agent. The write tools carry consequence, and the two
+  voice tools place billable telephone calls with no idempotency key — see
+  agentic-access/china-mobile-agentic-access.yml.
+tools:
+- name: list_products
+  description: List the products integrated into a OneNET project.
+  source_operation: openapi/china-mobile-onenet-studio-openapi.yml#QueryProductList
+- name: list_devices
+  description: List the devices integrated into a OneNET project.
+  source_operation: openapi/china-mobile-onenet-studio-openapi.yml#QueryDeviceList
+- name: get_device
+  description: Get the detail record for a device by product_id + device_name.
+  source_operation: openapi/china-mobile-onenet-studio-openapi.yml#QueryDeviceDetail
+- name: get_device_status
+  description: Get a device's current online/offline status.
+  source_operation: openapi/china-mobile-onenet-studio-openapi.yml#QueryDeviceStatus
+- name: get_device_properties
+  description: Get a device's latest thing-model property values.
+  source_operation: openapi/china-mobile-onenet-studio-openapi.yml#QueryDeviceProperty
+- name: get_device_property_history
+  description: Query historical values for a device thing-model property.
+  source_operation: openapi/china-mobile-onenet-studio-openapi.yml#QueryDevicePropertyHistory
+- name: get_device_event_history
+  description: Query historical thing-model events for a device.
+  source_operation: openapi/china-mobile-onenet-studio-openapi.yml#QueryDeviceEventHistory
+- name: get_thing_model
+  description: Get the thing model (properties, events, services) for a product.
+  source_operation: openapi/china-mobile-onenet-studio-openapi.yml#QueryThingModel
+- name: get_device_log
+  description: Query a device's operation log.
+  source_operation: openapi/china-mobile-onenet-studio-openapi.yml#QueryDeviceLog
+- name: create_device
+  description: Register a new device under a product.
+  source_operation: openapi/china-mobile-onenet-studio-openapi.yml#CreateDevice
+  consequence: write
+- name: set_device_property
+  description: Write a thing-model property on an online device.
+  source_operation: openapi/china-mobile-onenet-studio-openapi.yml#SetDeviceProperty
+  consequence: write
+- name: set_device_desired_property
+  description: Store a desired property value for a device to collect when it reconnects.
+  source_operation: openapi/china-mobile-onenet-studio-openapi.yml#SetDeviceDesiredProperty
+  consequence: write
+- name: call_device_service
+  description: Invoke a thing-model service on a device.
+  source_operation: openapi/china-mobile-onenet-studio-openapi.yml#CallService
+  consequence: physical
+- name: place_click_to_dial_call
+  description: Connect a caller and a callee over the China Mobile network (action=dialNotify).
+  source_operation: openapi/china-mobile-vcs-openapi.yml#vcsAction
+  consequence: physical
+  note: Places a billable telephone call. No idempotency key exists; a retry dials again.
+- name: send_voice_notification
+  description: Deliver a TTS voice notification, optionally collecting digits (action=voiceNotify).
+  source_operation: openapi/china-mobile-vcs-openapi.yml#vcsAction
+  consequence: physical
+  note: Places a billable telephone call. No idempotency key exists; a retry dials again.

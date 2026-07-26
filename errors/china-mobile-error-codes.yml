@@ -1,0 +1,282 @@
+generated: '2026-07-25'
+method: searched
+source: https://open.iot.10086.cn/doc/iot_platform/book/api/code.html
+docs:
+- https://open.iot.10086.cn/doc/iot_platform/book/api/code.html
+- https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/errorcode.html
+- https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd-status.html
+format: proprietary-envelope
+note: >-
+  China Mobile does not use RFC 9457 problem+json anywhere. Three distinct first-party
+  error envelopes were confirmed live, and two published error-code registries were
+  captured verbatim from the OneNET reference. Error codes are string symbols (not
+  numeric), returned inside the response envelope with HTTP 200.
+envelopes:
+- name: OneNET Studio / VCS application API
+  hosts: [openapi.heclouds.com]
+  shape: '{"requestId": "<uuid>", "success": false, "code": "iot.application.deviceNotFound", "msg": "device does not exist"}'
+  fields:
+    request_id_field: requestId
+    success_field: success
+    code_field: code
+    message_field: msg
+    data_field: data
+  http_status: 200 (business failure carried in the envelope)
+  source: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
+- name: OneNET new-generation device API
+  hosts: [iot-api.heclouds.com]
+  shape: '{"code":10403,"data":null,"msg":"authentication failed:authorization cannot be empty","request_id":"<hex>"}'
+  fields:
+    request_id_field: request_id
+    code_field: code
+    message_field: msg
+    data_field: data
+  observed: '2026-07-25 anonymous GET https://iot-api.heclouds.com/thingmodel/query-thing-model -> HTTP 200'
+- name: OneNET legacy device cloud API
+  hosts: [api.heclouds.com]
+  shape: '{"errno":3,"error":"token鉴权失败"}'
+  fields:
+    code_field: errno
+    message_field: error
+  observed: '2026-07-25 anonymous GET https://api.heclouds.com/devices -> HTTP 200'
+- name: IoT Card Capability Open Platform
+  hosts: [api.iot.10086.cn]
+  shape: '{"status":"10","message":"请求参数不正确，请参考能力调用文档","result":[]}'
+  fields:
+    code_field: status
+    message_field: message
+    data_field: result
+  observed: |
+    2026-07-25 anonymous GET https://api.iot.10086.cn/v2/cardinfo -> HTTP 200 status 10
+    (invalid request parameters); anonymous GET https://api.iot.10086.cn/v2/openapi.json ->
+    HTTP 200 status 10006 (requested address does not exist)
+error_codes:
+- group: Resource and permission
+  api: OneNET Studio application API
+  codes:
+  - code: authPermissionDeny
+    message_zh: 鉴权失败
+    message_en: Authentication failed
+  - code: resourePermissionDeny
+    message_zh: 无资源访问权限
+    message_en: No permission to access the resource
+  - code: parameterRequired
+    message_zh: 缺少请求参数
+    message_en: Missing request parameter
+  - code: parameterMissing
+    message_zh: 缺少请求参数
+    message_en: Missing request parameter
+  - code: invalidParameter
+    message_zh: 不合法的请求参数
+    message_en: Invalid request parameter
+- group: Project
+  api: OneNET Studio application API
+  codes:
+  - code: projectCatNotFound
+    message_zh: 项目行业标签不存在
+    message_en: Project industry tag does not exist
+  - code: projectNotFound
+    message_zh: 项目不存在
+    message_en: Project does not exist
+  - code: projectCreateFailed
+    message_zh: 项目创建失败
+    message_en: Project creation failed
+  - code: projectUpdateFailed
+    message_zh: 项目更新失败
+    message_en: Project update failed
+  - code: projectGetFailed
+    message_zh: 项目详情获取失败
+    message_en: Failed to get project detail
+  - code: projectHasDevice
+    message_zh: 项目存在关联设备
+    message_en: Project still has associated devices
+  - code: projectStatisticsFailed
+    message_zh: 项目统计信息获取失败
+    message_en: Failed to get project statistics
+- group: Product
+  api: OneNET Studio application API
+  codes:
+  - code: productNotFound
+    message_zh: 产品不存在
+    message_en: Product does not exist
+  - code: productHasNoDevice
+    message_zh: 产品未创建设备
+    message_en: Product has no devices
+- group: Device
+  api: OneNET Studio application API
+  codes:
+  - code: deviceNotFound
+    message_zh: 设备不存在
+    message_en: Device does not exist
+  - code: setPropertyFailed
+    message_zh: 设备属性设置失败
+    message_en: Failed to set device property
+  - code: setDesiredPeropertyFailed
+    message_zh: 设备属性期望设置失败
+    message_en: Failed to set desired device property
+  - code: queryDesiredProperyFailed
+    message_zh: 设备属性期望查询失败
+    message_en: Failed to query desired device property
+  - code: getTmProperties
+    message_zh: 设备属性获取失败
+    message_en: Failed to get device properties
+  - code: callTmService
+    message_zh: 设备服务调用失败
+    message_en: Device service invocation failed
+  - code: deleteDesiredPeropertyFailed
+    message_zh: 设备属性期望删除失败
+    message_en: Failed to delete desired device property
+  - code: queryCurrentData
+    message_zh: 设备最新数据查询失败
+    message_en: Failed to query latest device data
+  - code: queryPropertyHistoryData
+    message_zh: 设备属性历史数据查询失败
+    message_en: Failed to query device property history
+  - code: queryEventHistoryData
+    message_zh: 设备事件历史数据查询失败
+    message_en: Failed to query device event history
+  - code: queryOperationLog
+    message_zh: 设备操作记录查询失败
+    message_en: Failed to query device operation log
+- group: Scene linkage
+  api: OneNET Studio application API
+  codes:
+  - code: sceneNotFound
+    message_zh: 场景联动规则不存在
+    message_en: Scene linkage rule does not exist
+  - code: sceneCreateFailed
+    message_zh: 场景联动规则创建失败
+    message_en: Scene linkage rule creation failed
+  - code: sceneUpdateFailed
+    message_zh: 场景联动规则更新失败
+    message_en: Scene linkage rule update failed
+  - code: sceneDelGetFailed
+    message_zh: 场景联动规则删除失败
+    message_en: Scene linkage rule deletion failed
+  - code: sceneUpdateStatusFailed
+    message_zh: 场景联动规则状态切换失败
+    message_en: Scene linkage rule status switch failed
+- group: Voice Call Service
+  api: OneNET VCS API
+  source: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/errorcode.html
+  codes:
+  - code: systemException
+    message_zh: 系统异常
+    message_en: System exception
+  - code: invalidParams
+    message_zh: 不合法的请求参数
+    message_en: Invalid request parameter
+  - code: invalidReqParams
+    message_zh: 不合法的请求参数
+    message_en: Invalid request parameter
+  - code: paramNullException
+    message_zh: 参数为空
+    message_en: Parameter is empty
+  - code: invalidPageParams
+    message_zh: 不合法的分页参数
+    message_en: Invalid pagination parameter
+  - code: alreadyExistsException
+    message_zh: 记录已存在
+    message_en: Record already exists
+  - code: recordsNotFoundException
+    message_zh: 记录不存在
+    message_en: Record not found
+  - code: fileNotFoundException
+    message_zh: 文件不存在
+    message_en: File not found
+  - code: invalidJsonParams
+    message_zh: 不合法的json参数
+    message_en: Invalid JSON parameter
+  - code: dateParseException
+    message_zh: 类型转换错误
+    message_en: Type conversion error
+  - code: callIdNotExist
+    message_zh: 呼叫标识为空
+    message_en: Call identifier is empty
+  - code: userIdNotExist
+    message_zh: 用户ID不存在
+    message_en: User id does not exist
+  - code: numberFormatError
+    message_zh: 数字转换错误
+    message_en: Number conversion error
+  - code: userIdIsExist
+    message_zh: 用户已存在
+    message_en: User already exists
+  - code: overTheExperienceNumber
+    message_zh: 体验次数超过限制
+    message_en: Trial-usage limit exceeded
+  - code: businessNumberMismatch
+    message_zh: 业务号码不匹配
+    message_en: Service number mismatch
+  - code: notOpenTheBusiness
+    message_zh: 服务未开通
+    message_en: Service not enabled
+  - code: theBusinessIsClosed
+    message_zh: 服务已暂停
+    message_en: Service suspended
+  - code: ipWhiteListNotMatch
+    message_zh: IP白名单不匹配
+    message_en: IP allowlist mismatch
+  - code: talkTimeIsLimit
+    message_zh: 通话时长受限
+    message_en: Call duration limited
+  - code: subscribeServiceFailed
+    message_zh: 订阅服务失败
+    message_en: Service subscription failed
+  - code: notApplyTestAccount
+    message_zh: 未申请测试账户
+    message_en: No test account applied for
+  - code: testAccountIsInvalid
+    message_zh: 测试账户非法
+    message_en: Test account invalid
+callback_response_codes:
+  note: >-
+    Codes the receiving application server returns to OneNET when acknowledging a VCS
+    call-status callback (the direction is inbound-to-you, so these are codes you emit).
+  source: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/notify-status.html
+  codes:
+  - code_no: '000000'
+    code: onenet_common_success
+    message_zh: 成功
+  - code_no: '000111'
+    code: onenet_common_systemException
+    message_zh: 系统异常，请稍后重试
+  - code_no: '000001'
+    code: onenet_common_systemBusy
+    message_zh: 系统繁忙，请稍后重试
+  - code_no: '000002'
+    code: onenet_common_authException
+    message_zh: 系统认证失败
+  - code_no: '000004'
+    code: onenet_common_invalidParams
+    message_zh: 非法的参数
+  - code_no: '000005'
+    code: onenet_common_invalidReqParams
+    message_zh: 非法的请求参数
+  - code_no: '000006'
+    code: onenet_common_paramNullException
+    message_zh: 必输参数不能为空
+  - code_no: '000012'
+    code: onenet_common_JsonException
+    message_zh: 非法JSON的数据
+  - code_no: '000014'
+    code: onenet_common_authorizationIsNull
+    message_zh: 鉴权参数为空
+  - code_no: '000015'
+    code: onenet_common_authorizationFailed
+    message_zh: 鉴权失败
+  - code_no: '001001'
+    code: onenet_iaepVoice_callIdNotExist
+    message_zh: 呼叫标识不存在
+  - code_no: '001005'
+    code: onenet_iaepVoice_NumberFormatRrror
+    message_zh: 号码格式错误
+  - code_no: '001008'
+    code: onenet_iaepVoice_BusinessNumberMismatch
+    message_zh: 业务号码不匹配
+  - code_no: '001009'
+    code: onenet_iaepVoice_NotOpenTheBusiness
+    message_zh: 用户没有开通该业务
+  - code_no: '001010'
+    code: onenet_iaepVoice_TheBusinessIsClosed
+    message_zh: 用户该项业务已关闭

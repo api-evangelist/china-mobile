@@ -1,0 +1,49 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for China Mobile OneNET Studio Application API
+  version: 1.0.0
+extends: openapi/china-mobile-onenet-studio-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: china-mobile
+    x-apievangelist-artifact-set:
+    - authentication/china-mobile-authentication.yml
+    - conventions/china-mobile-conventions.yml
+    - errors/china-mobile-error-codes.yml
+    - lifecycle/china-mobile-lifecycle.yml
+    - packages/china-mobile-packages.yml
+    - asyncapi/china-mobile-onenet-asyncapi.yml
+    - data-model/china-mobile-data-model.yml
+    x-apievangelist-contract-origin: >-
+      Derived from first-party documentation at
+      https://open.iot.10086.cn/doc/iot_platform/book/api/ — China Mobile publishes no
+      OpenAPI. Each operation carries x-evidence pointing at its source reference page.
+- target: $.info
+  update:
+    x-onboarding:
+      self_serve: partial
+      credential: OneNET console access key (accessKey), issued after account registration
+        and 实名认证 (real-name verification)
+      market: mainland China oriented; console and documentation are Chinese-language
+      docs: https://open.iot.10086.cn/doc/iot_platform/book/get-start/login.html
+- target: $
+  update:
+    x-apievangelist-gaps:
+      idempotency: not supported — no idempotency key, no replay window
+      rate_limits: not published — no quota, burst or 429 semantics documented
+      pagination: page parameters exist per operation but no cross-cutting convention
+      error_format: proprietary envelope on HTTP 200, not RFC 9457
+      security_txt: absent on every host
+      status_page: none published
+- target: $.components.securitySchemes.onenetAuthorization
+  update:
+    x-signature:
+      algorithm_versions: ['2020-05-29']
+      hash_methods: [md5, sha1, sha256]
+      string_to_sign: et + "\n" + method + "\n" + res + "\n" + version
+      resource_scopes:
+      - userid/{userid}
+      - projectid/{projectid}/groupid/{groupid}
+      expiry_field: et (10-digit epoch seconds)
+      docs: https://open.iot.10086.cn/doc/iot_platform/book/api/auth.html

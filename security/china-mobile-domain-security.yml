@@ -1,0 +1,68 @@
+generated: '2026-07-25'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.chinamobileltd.com
+  https: true
+  tls_version: TLSv1.2
+  cert_expires: Jan 23 00:54:37 2027 GMT
+  hsts: true
+  hsts_max_age: 31536000
+- host: dev.10086.cn
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Apr  1 08:39:04 2027 GMT
+  hsts: false
+- host: open.iot.10086.cn
+  https: true
+  tls_version: TLSv1.2
+  cert_expires: Feb  7 23:59:59 2027 GMT
+  hsts: true
+  hsts_max_age: 2592000
+- host: openapi.heclouds.com
+  https: true
+  tls_version: TLSv1.2
+  cert_expires: Feb  8 23:59:59 2027 GMT
+  hsts: false
+  note: OneNET open API gateway; returns HTTP 403 to anonymous requests (openresty).
+- host: api.heclouds.com
+  https: true
+  tls_version: TLSv1.2
+  cert_expires: Feb  8 23:59:59 2027 GMT
+  hsts: false
+  note: OneNET legacy device cloud API; anonymous GET /devices returns a token
+    authentication error (nginx).
+- host: iot-api.heclouds.com
+  https: true
+  tls_version: TLSv1.2
+  cert_expires: Feb  8 23:59:59 2027 GMT
+  hsts: false
+  note: OneNET new-generation device API; anonymous requests return code 10403.
+- host: api.iot.10086.cn
+  https: true
+  hsts: false
+  note: IoT Card Capability Open Platform (Tomcat). TLS version and certificate expiry
+    were not captured in this round.
+domains:
+- domain: chinamobileltd.com
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: false
+- domain: 10086.cn
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: false
+- domain: heclouds.com
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: false
+summary: >-
+  Every China Mobile host reachable over HTTPS, but the posture is thin. No registrable
+  domain in the estate publishes DNSSEC, a CAA record, an SPF record or a DMARC policy —
+  three domains, zero of twelve controls. HSTS is set only on the corporate site
+  (www.chinamobileltd.com, one year) and the OneNET portal (open.iot.10086.cn, 30 days);
+  none of the four API hosts sets it. TLS 1.2 predominates; only dev.10086.cn negotiated
+  TLS 1.3.

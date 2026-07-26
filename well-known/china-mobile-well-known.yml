@@ -1,0 +1,103 @@
+generated: '2026-07-25'
+method: searched
+source: live probes of every China Mobile API and portal host
+summary: >-
+  China Mobile publishes no /.well-known/ discovery surface on any confirmed first-party
+  host. Every RFC 9116 security.txt, OIDC discovery, RFC 8414 authorization-server
+  metadata, RFC 9727 api-catalog and ai-plugin.json probe returned 404, 403, 406, 500 or
+  — on dev.10086.cn — HTTP 200 carrying the site's HTML single-page-app shell rather than
+  a document (a soft 404). No document was saved because none exists.
+hosts_probed:
+- https://openapi.heclouds.com
+- https://api.heclouds.com
+- https://iot-api.heclouds.com
+- https://api.iot.10086.cn
+- https://open.iot.10086.cn
+- https://dev.10086.cn
+- https://ct.open.10086.cn
+- https://www.chinamobileltd.com
+- https://www.10086.cn
+documents:
+- path: /.well-known/security.txt
+  host: https://api.heclouds.com
+  status: 404
+- path: /.well-known/security.txt
+  host: https://openapi.heclouds.com
+  status: 403
+- path: /.well-known/security.txt
+  host: https://iot-api.heclouds.com
+  status: 406
+- path: /.well-known/security.txt
+  host: https://api.iot.10086.cn
+  status: 404
+- path: /.well-known/security.txt
+  host: https://open.iot.10086.cn
+  status: 500
+- path: /.well-known/security.txt
+  host: https://dev.10086.cn
+  status: 200
+  result: HTML single-page-app shell, not RFC 9116 text (soft 404)
+- path: /.well-known/security.txt
+  host: https://ct.open.10086.cn
+  status: 404
+- path: /.well-known/security.txt
+  host: https://www.chinamobileltd.com
+  status: 404
+- path: /.well-known/security.txt
+  host: https://www.10086.cn
+  status: 403
+- path: /.well-known/openid-configuration
+  host: https://api.heclouds.com
+  status: 404
+- path: /.well-known/openid-configuration
+  host: https://iot-api.heclouds.com
+  status: 406
+- path: /.well-known/openid-configuration
+  host: https://openapi.heclouds.com
+  status: 403
+- path: /.well-known/openid-configuration
+  host: https://api.iot.10086.cn
+  status: 404
+- path: /.well-known/openid-configuration
+  host: https://dev.10086.cn
+  status: 200
+  result: HTML single-page-app shell, not JSON metadata (soft 404)
+- path: /.well-known/oauth-authorization-server
+  host: https://api.iot.10086.cn
+  status: 404
+- path: /.well-known/oauth-authorization-server
+  host: https://dev.10086.cn
+  status: 200
+  result: HTML single-page-app shell, not JSON metadata (soft 404)
+- path: /.well-known/api-catalog
+  host: https://api.heclouds.com
+  status: 404
+- path: /.well-known/api-catalog
+  host: https://api.iot.10086.cn
+  status: 404
+- path: /.well-known/api-catalog
+  host: https://open.iot.10086.cn
+  status: 500
+- path: /.well-known/ai-plugin.json
+  host: https://dev.10086.cn
+  status: 200
+  result: HTML single-page-app shell, not JSON manifest (soft 404)
+- path: /llms.txt
+  host: https://open.iot.10086.cn
+  status: 500
+- path: /llms.txt
+  host: https://api.iot.10086.cn
+  status: 404
+- path: /llms.txt
+  host: https://dev.10086.cn
+  status: 200
+  result: HTML single-page-app shell (soft 404)
+- path: /llms.txt
+  host: https://www.chinamobileltd.com
+  status: 404
+- path: /robots.txt
+  host: https://api.iot.10086.cn
+  status: 404
+- path: /robots.txt
+  host: https://www.chinamobileltd.com
+  status: 404

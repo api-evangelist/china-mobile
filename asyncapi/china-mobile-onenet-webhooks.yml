@@ -1,0 +1,80 @@
+generated: '2026-07-25'
+method: searched
+source: https://open.iot.10086.cn/doc/iot_platform/book/application-develop/push/http_push.html
+spec: asyncapi/china-mobile-onenet-asyncapi.yml
+summary: >-
+  OneNET publishes a real, fully documented outbound webhook surface. Two families exist:
+  the platform-wide 数据推送 (HTTP data push) service, driven by the rule engine, and the
+  Voice Call Service per-call status callbacks. Both are plain HTTP(S) POST to a
+  subscriber-controlled URL, both are signed, and the data-push family adds a mandatory
+  address-validation handshake, optional AES payload encryption and a published
+  exponential-backoff retry schedule. No other China Mobile capability platform
+  (api.iot.10086.cn, ct.open.10086.cn, dev.10086.cn) publishes a webhook catalogue
+  anonymously.
+webhooks:
+- name: HTTP 数据推送 (HTTP data push)
+  direction: outbound
+  transport: HTTP/HTTPS POST
+  configuration: >-
+    Created as a 推送实例 (push instance) in the console under 应用开发 → 消息推送. Maximum 10
+    instances per user. Fields: push address (must accept both GET and POST), token, and
+    message encryption mode (明文 plaintext or 安全 secure).
+  event_sources:
+  - 设备生命周期 (device lifecycle)
+  - 设备物模型 (device thing-model data)
+  - 场景联动触发日志 (scene-linkage trigger log)
+  routing: >-
+    Message source is configured per project through the rule engine; the destination is
+    selected as HTTP 推送 and bound to a validated push instance.
+  payload_fields: [msg, nonce, signature, time, id]
+  signature: base64(md5(token + nonce + msg))
+  encryption: >-
+    Optional 安全模式 — msg is AES encrypted in CBC mode with PKCS7 padding using a
+    platform-generated 16-byte key.
+  validation_handshake: >-
+    GET {url}?msg=…&nonce=…&signature=… ; verify signature, then echo msg verbatim.
+    Instance states are 待验证 (pending), 验证成功 (validated) and 验证失败 (failed).
+  delivery_contract:
+    ack_timeout_seconds: 5
+    required_status: 200
+    retries: 16
+    strategy: exponential backoff
+    total_retry_window: 2h 45m 04s
+    schedule_seconds: [5, 10, 30, 60, 120, 180, 240, 300, 360, 420, 480, 540, 600, 1200,
+      1800, 3600]
+    note: >-
+      Receivers must be idempotent — OneNET replays a message up to 16 times when an ack
+      is late or non-200, and the platform itself offers no idempotency key.
+  docs: https://open.iot.10086.cn/doc/iot_platform/book/application-develop/push/http_push.html
+  sdk: https://github.com/cm-heclouds/data-push
+- name: 语音通知状态呼叫通知 (voice notification call-status callback)
+  direction: outbound
+  transport: HTTP/HTTPS POST
+  configuration: notify_url field on the voiceNotify request, else the platform-configured URL
+  statuses: [CallingCallee, Connected, Disconnected, CollectResult]
+  payload_fields: [user_id, call_id, caller, callee, status, reason, operation_result,
+    call_duration]
+  auth: OneNET signed Authorization header on the inbound request
+  ack_envelope: [request_id, code_no, code, message]
+  docs: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/notify-status.html
+- name: 点击拨号状态呼叫通知 (click-to-dial call-status callback)
+  direction: outbound
+  transport: HTTP/HTTPS POST
+  configuration: notify_url field on the dialNotify request, else the platform-configured URL
+  statuses: [CallingCaller, CallingCallee, Connected, Disconnected]
+  payload_fields: [user_id, call_id, caller, callee, status, report_date, reason,
+    call_duration, caller_call_duration]
+  auth: OneNET signed Authorization header on the inbound request
+  ack_envelope: [request_id, code_no, code, message]
+  docs: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd-status.html
+other_event_transports:
+- name: 消息队列 MQ
+  note: >-
+    OneNET also offers a managed message-queue destination on the rule engine as an
+    alternative to HTTP push. Documented at
+    https://open.iot.10086.cn/doc/iot_platform/book/transfer/mq_introduce.html
+- name: MQTT device access
+  note: >-
+    Devices connect over MQTT/CoAP/LwM2M/HTTP; topics are documented under
+    https://open.iot.10086.cn/doc/iot_platform/book/device-connect&manager/MQTT/topic.html
+    but the broker host is not published anonymously.

@@ -41,6 +41,83 @@ created: '2026-07-25'
 modified: '2026-07-25'
 specificationVersion: '0.19'
 apis:
+- aid: china-mobile:onenet-studio-application-api
+  name: OneNET Studio Application API
+  description: The OneNET Studio application API is the one China Mobile surface with a
+    complete, anonymously readable request-and-response contract. It is an action-dispatched
+    gateway — every call is https://openapi.heclouds.com/{namespace}?action={Action}&version=1,
+    where the namespace is application (application development), common (device management),
+    lwm2m-online or lwm2m-offline. Forty-four operations are documented across devices,
+    products, projects, groups, thing models, device properties and desired properties,
+    thing-model service invocation, device files and scene-linkage rules. Authentication is a
+    signed, time-boxed authorization header (HMAC over et, method, res and version, signature
+    algorithm version 2020-05-29). Every response is a uniform envelope carrying a
+    platform-generated requestId, and business failures arrive as HTTP 200 with success false
+    plus a string error code. China Mobile publishes no OpenAPI for it; the OpenAPI in this
+    repository was transcribed operation by operation from the published reference, with each
+    operation carrying its source page in x-evidence.
+  humanURL: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
+  baseURL: https://openapi.heclouds.com
+  tags:
+  - IoT
+  - Device Management
+  - Thing Model
+  - PaaS
+  - China
+  properties:
+  - type: OpenAPI
+    url: openapi/china-mobile-onenet-studio-openapi.yml
+  - type: Overlay
+    url: overlays/china-mobile-onenet-studio-overlay.yaml
+  - type: Documentation
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
+  - type: APIReference
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
+  - type: Authentication
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/auth.html
+  - type: ErrorCatalog
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/code.html
+  - type: SDKs
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/sdk.html
+  - type: DataModel
+    url: data-model/china-mobile-data-model.yml
+- aid: china-mobile:onenet-voice-call-service
+  name: OneNET Voice Call Service (VCS) API
+  description: 语音通话 (Voice Call Service) is China Mobile's publicly documented voice
+    capability on the OneNET gateway, reached at
+    https://openapi.heclouds.com/vcs?action={voiceNotify|dialNotify}&version=2. Click to dial
+    (点击拨号) connects a caller and a callee across the China Mobile network; voice notification
+    (语音通知) plays an approved TTS template to a subscriber and can collect DTMF digits. Both
+    return a call_id and both deliver call-status callbacks to a caller-supplied notify_url,
+    with documented status and disconnect-reason enumerations. Click to Dial is the domestic
+    first-party product behind the CAMARA Click to Dial API that China Mobile sponsors
+    upstream with Huawei — the shipped product does not implement the CAMARA schema or its
+    OIDC/CIBA security model. Access is gated three ways — business entitlement, a test account
+    pinned to an approved source IP, and a trial-usage quota. Service numbers and TTS templates
+    require qualification review before use.
+  humanURL: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/request.html
+  baseURL: https://openapi.heclouds.com
+  tags:
+  - Voice
+  - Click to Dial
+  - CAMARA
+  - Network APIs
+  - China
+  properties:
+  - type: OpenAPI
+    url: openapi/china-mobile-vcs-openapi.yml
+  - type: Overlay
+    url: overlays/china-mobile-vcs-overlay.yaml
+  - type: Documentation
+    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/request.html
+  - type: APIReference
+    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd.html
+  - type: ErrorCatalog
+    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/errorcode.html
+  - type: Webhooks
+    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd-status.html
+  - type: TermsOfService
+    url: https://open.iot.10086.cn/doc/iot_platform/book/agreement/vcs-service-agreement.html
 - aid: china-mobile:onenet-iot-platform
   name: OneNET IoT Open Platform API
   description: OneNET is China Mobile's IoT PaaS, operated by its CMIOT subsidiary,
@@ -144,12 +221,66 @@ apis:
 common:
 - type: Website
   url: https://www.chinamobileltd.com/
+- type: DeveloperPortal
+  url: https://open.iot.10086.cn/
 - type: Portal
   url: https://dev.10086.cn/
 - type: Documentation
   url: https://open.iot.10086.cn/doc/
+- type: APIReference
+  url: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
+- type: GettingStarted
+  url: https://open.iot.10086.cn/doc/easy-manual
+- type: Support
+  url: https://open.iot.10086.cn/servicesupport/workorder/list
+- type: HelpCenter
+  url: https://open.iot.10086.cn/doc/problem
+- type: Pricing
+  url: https://open.iot.10086.cn/doc/introduce/book/fee.html
+- type: SignUp
+  url: https://open.iot.10086.cn/login
+- type: TermsOfService
+  url: https://open.iot.10086.cn/about/serviceprot/
+- type: Console
+  url: https://open.iot.10086.cn/console
 - type: GitHubOrganization
   url: https://github.com/cmri
+- type: SourceCode
+  url: https://github.com/cm-heclouds
+- type: ChangeLog
+  url: https://open.iot.10086.cn/doc/iot_platform/book/release/update_log.html
+- type: AgenticAccess
+  url: agentic-access/china-mobile-agentic-access.yml
+- type: DomainSecurity
+  url: security/china-mobile-domain-security.yml
+- type: Authentication
+  url: authentication/china-mobile-authentication.yml
+- type: Packages
+  url: packages/china-mobile-packages.yml
+- type: SDKs
+  url: packages/china-mobile-packages.yml
+- type: Conventions
+  url: conventions/china-mobile-conventions.yml
+- type: ErrorCatalog
+  url: errors/china-mobile-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/china-mobile-lifecycle.yml
+- type: ChangeLog
+  url: changelog/china-mobile-changelog.yml
+- type: Conformance
+  url: conformance/china-mobile-conformance.yml
+- type: Sandbox
+  url: sandbox/china-mobile-sandbox.yml
+- type: DataModel
+  url: data-model/china-mobile-data-model.yml
+- type: AsyncAPI
+  url: asyncapi/china-mobile-onenet-asyncapi.yml
+- type: Webhooks
+  url: asyncapi/china-mobile-onenet-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/china-mobile-llms.txt
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

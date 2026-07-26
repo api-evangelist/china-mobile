@@ -1,0 +1,615 @@
+generated: '2026-07-25'
+method: generated
+source: openapi/china-mobile-onenet-studio-openapi.yml, openapi/china-mobile-vcs-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from the OpenAPI.
+  A governance starting point for exposing this API to AI agents — review and bind audience per deployment.
+  See research/curity/agentic-governance/.
+summary:
+  operations: 45
+  by_action_class:
+    acting: 23
+    connected: 22
+  by_consequence:
+    write: 22
+    read: 22
+    physical: 1
+  human_in_the_loop_required: 0
+operations:
+- path: /common?action=CreateDevice&version=1
+  method: post
+  operationId: CreateDevice
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /common?action=BatchCreateDevices&version=1
+  method: post
+  operationId: BatchCreateDevices
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /common?action=UpdateDevice&version=1
+  method: post
+  operationId: UpdateDevice
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /common?action=DeleteDevice&version=1
+  method: post
+  operationId: DeleteDevice
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /common?action=QueryDeviceDetail&version=1
+  method: get
+  operationId: QueryDeviceDetail
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /common?action=MoveProductDevice&version=1
+  method: post
+  operationId: MoveProductDevice
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /common?action=QuerySystemThingModel&version=1
+  method: get
+  operationId: QuerySystemThingModel
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /common?action=QueryThingModel&version=1
+  method: get
+  operationId: QueryThingModel
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /common?action=RegistDeviceIdentity&version=1
+  method: post
+  operationId: RegistDeviceIdentity
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /application?action=QueryProductList&version=1
+  method: get
+  operationId: QueryProductList
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=QueryDeviceList&version=1
+  method: get
+  operationId: QueryDeviceList
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=AddDevice&version=1
+  method: post
+  operationId: AddDevice
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /application?action=RemoveDevice&version=1
+  method: post
+  operationId: RemoveDevice
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /application?action=CreateGroup&version=1
+  method: post
+  operationId: CreateGroup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /application?action=DeleteGroup&version=1
+  method: post
+  operationId: DeleteGroup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /application?action=UpdateGroup&version=1
+  method: post
+  operationId: UpdateGroup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /application?action=QueryGroupDetail&version=1
+  method: get
+  operationId: QueryGroupDetail
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=QueryGroupList&version=1
+  method: get
+  operationId: QueryGroupList
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=AddGroupDevice&version=1
+  method: post
+  operationId: AddGroupDevice
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /application?action=RemoveGroupDevice&version=1
+  method: post
+  operationId: RemoveGroupDevice
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /application?action=QueryDeviceDetail&version=1
+  method: get
+  operationId: QueryDeviceDetail
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=QueryDeviceStatus&version=1
+  method: get
+  operationId: QueryDeviceStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=QueryDeviceStatusHistory&version=1
+  method: get
+  operationId: QueryDeviceStatusHistory
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=SetDeviceProperty&version=1
+  method: post
+  operationId: SetDeviceProperty
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /application?action=QueryDevicePropertyDetail&version=1
+  method: post
+  operationId: QueryDevicePropertyDetail
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /application?action=SetDeviceDesiredProperty&version=1
+  method: post
+  operationId: SetDeviceDesiredProperty
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /application?action=QueryDeviceDesiredProperty&version=1
+  method: post
+  operationId: QueryDeviceDesiredProperty
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /application?action=DeleteDeviceDesiredProperty&version=1
+  method: post
+  operationId: DeleteDeviceDesiredProperty
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /application?action=QueryDeviceLog&version=1
+  method: get
+  operationId: QueryDeviceLog
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=QueryDeviceProperty&version=1
+  method: get
+  operationId: QueryDeviceProperty
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=QueryDevicePropertyHistory&version=1
+  method: get
+  operationId: QueryDevicePropertyHistory
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=QueryDeviceEventHistory&version=1
+  method: get
+  operationId: QueryDeviceEventHistory
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=CallService&version=1
+  method: post
+  operationId: CallService
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /application?action=QueryServiceRecord&version=1
+  method: get
+  operationId: QueryServiceRecord
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=CreateDeviceFile&version=1
+  method: post
+  operationId: CreateDeviceFile
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /application?action=GetDeviceFile&version=1
+  method: get
+  operationId: GetDeviceFile
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=DeleteDeviceFile&version=1
+  method: post
+  operationId: DeleteDeviceFile
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /application?action=GetDeviceFilesList&version=1
+  method: get
+  operationId: GetDeviceFilesList
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=GetDeviceFileSpace&version=1
+  method: get
+  operationId: GetDeviceFileSpace
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=GetDeviceFileCount&version=1
+  method: get
+  operationId: GetDeviceFileCount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=CreateSceneRule&version=1
+  method: post
+  operationId: CreateSceneRule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /application?action=QuerySceneRuleDetail&version=1
+  method: get
+  operationId: QuerySceneRuleDetail
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=QuerySceneRules&version=1
+  method: get
+  operationId: QuerySceneRules
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /application?action=QuerySceneLog&version=1
+  method: get
+  operationId: QuerySceneLog
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /vcs
+  method: post
+  operationId: vcsAction
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: required
+      purpose: required
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+  x-curation:
+    method: searched
+    raised_from: write
+    reason: Both documented actions on this operation (voiceNotify, dialNotify) place a real, billable
+      telephone call on China Mobile's network to a third party's handset. That is a physical-world consequence,
+      not a data write. There is no idempotency key on this platform, so a retried request dials again
+      — treat a timeout as unknown and reconcile through the call-status callback on call_id before retrying.
+    source: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd.html

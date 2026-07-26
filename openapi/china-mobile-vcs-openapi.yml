@@ -1,0 +1,467 @@
+openapi: 3.1.0
+info:
+  title: China Mobile OneNET Voice Call Service (VCS) API
+  version: '2'
+  summary: Voice notification and click-to-dial operations on China Mobile's OneNET
+    open API gateway, plus their call-status callbacks.
+  description: >-
+    OneNET 语音通话 (Voice Call Service, VCS) is the only China Mobile network-capability
+    product whose full request/response contract is published anonymously. Every path,
+    parameter, type, length, required flag, enumeration and example in this document was
+    transcribed verbatim from the first-party OneNET developer documentation at
+    open.iot.10086.cn (see x-evidence on each operation) — nothing here is invented.
+    China Mobile publishes no OpenAPI of its own; this document is an API Evangelist
+    derivation of the published reference so the surface is machine-readable.
+
+    The gateway uses a single path per namespace with the operation selected by the
+    `action` query parameter and pinned by `version`. Voice Call Service is namespace
+    `vcs`, API version `2`. Authentication is the OneNET signed `authorization` header
+    (HMAC over et/method/res/version — see authentication/china-mobile-authentication.yml).
+
+    Click to Dial is the domestic first-party product behind the CAMARA Click to Dial API
+    that China Mobile sponsors upstream.
+  contact:
+    name: OneNET Service (中移物联网)
+    email: iot_service@cmiot.chinamobile.com
+    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/request.html
+  x-provenance:
+    generated: '2026-07-25'
+    method: derived
+    source: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/
+    note: Derived from published first-party documentation; China Mobile publishes no
+      OpenAPI/Swagger document on any confirmed first-party host.
+servers:
+- url: https://openapi.heclouds.com
+  description: OneNET open API gateway (live; returns HTTP 403 to anonymous requests)
+tags:
+- name: Voice Call Service
+  description: 语音通话 — voice notification and click-to-dial
+paths:
+  /vcs:
+    post:
+      operationId: vcsAction
+      summary: Invoke a Voice Call Service action
+      description: >-
+        Single entry point for the `vcs` namespace. The concrete operation is selected by
+        the `action` query parameter; `version` is 2 for every Voice Call Service action.
+        Documented actions are `voiceNotify` (语音通知, voice notification) and `dialNotify`
+        (点击拨号, click to dial).
+      tags:
+      - Voice Call Service
+      security:
+      - onenetAuthorization: []
+      parameters:
+      - name: action
+        in: query
+        required: true
+        description: API interface name.
+        schema:
+          type: string
+          enum:
+          - voiceNotify
+          - dialNotify
+      - name: version
+        in: query
+        required: true
+        description: API version number; all Voice Call Service interfaces are version 2.
+        schema:
+          type: string
+          enum: ['2']
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/VoiceNotifyRequest'
+              - $ref: '#/components/schemas/ClickToDialRequest'
+            examples:
+              voiceNotify:
+                summary: 语音通知 — voice notification (action=voiceNotify)
+                value:
+                  participant_address: '8618102383000'
+                  display: '02066240200'
+                  notify_url: http://10.10.3.71:80/thirdParty/callback/statusback
+                  actions:
+                  - operation: PlayAndCollect
+                    tts_template: '89'
+                    param_value: '{"param1":"张三"}'
+                    collect_length: '1'
+                    replay_after_collection: 'true'
+                    collect_content_trigger_replaying: '1'
+              dialNotify:
+                summary: 点击拨号 — click to dial (action=dialNotify)
+                value:
+                  sponsor: '02066240222'
+                  caller: '8618223159111'
+                  callee: '8613696486500'
+                  display: '02066240222'
+                  notify_url: http://183.230.40.149:80/callback/statusback
+      responses:
+        '200':
+          description: Call accepted, or a business failure carried in the envelope.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CallEnvelope'
+              examples:
+                success:
+                  summary: Documented success response
+                  value:
+                    requestId: a25087f46df04b69b29e90ef0acfd115
+                    success: true
+                    data:
+                      call_id: '150104227912386807'
+                failure:
+                  summary: Documented failure response
+                  value:
+                    requestId: 0d9a3bab49ee458984743d5ee59eafab
+                    success: false
+                    code: iot.vcs.notApplyTestAccount
+                    msg: request ip not equals test account ip
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/request.html
+      - https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/notify.html
+      - https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd.html
+webhooks:
+  voiceNotifyStatusCallback:
+    post:
+      operationId: voiceNotifyStatusCallback
+      summary: 语音通知状态呼叫通知 — voice notification call-status callback
+      description: >-
+        OneNET POSTs call-status events to the `notify_url` supplied on the voiceNotify
+        request (or to the URL configured on the platform when the field is omitted). The
+        receiver must answer with the OneNET callback acknowledgement envelope.
+      tags:
+      - Voice Call Service
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoiceNotifyStatusEvent'
+            example:
+              user_id: 1234
+              call_id: CS123
+              caller: '8613912345672'
+              callee: '8613912345673'
+              status: Disconnected
+              reason: HangUp
+      responses:
+        '200':
+          description: Acknowledgement expected from the receiving application server.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CallbackAck'
+              example:
+                request_id: 85fcaba7045247c88b87380149ea0941
+                code_no: '000000'
+                code: OneNET_common_success
+                message: 调用成功
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/notify-status.html
+  clickToDialStatusCallback:
+    post:
+      operationId: clickToDialStatusCallback
+      summary: 点击拨号状态呼叫通知 — click-to-dial call-status callback
+      description: >-
+        OneNET POSTs call-status events to the `notify_url` supplied on the dialNotify
+        request (or to the URL configured on the platform when the field is omitted).
+      tags:
+      - Voice Call Service
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClickToDialStatusEvent'
+            example:
+              user_id: 1234
+              call_id: CS123
+              caller: '8613912345672'
+              callee: '8613912345673'
+              status: Disconnected
+              reason: HangUp
+      responses:
+        '200':
+          description: Acknowledgement expected from the receiving application server.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CallbackAck'
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd-status.html
+components:
+  securitySchemes:
+    onenetAuthorization:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: >-
+        OneNET signed authorization token:
+        `version=2020-05-29&res=userid/{userid}&et={epoch}&method={md5|sha1|sha256}&sign={signature}`
+        where sign = base64(hmac_method(base64decode(accessKey), et + "\n" + method + "\n"
+        + res + "\n" + version)). See
+        https://open.iot.10086.cn/doc/iot_platform/book/api/auth.html
+  schemas:
+    VoiceNotifyRequest:
+      type: object
+      title: 语音通知 request
+      required:
+      - participant_address
+      - display
+      - actions
+      properties:
+        participant_address:
+          type: string
+          maxLength: 20
+          description: Called party MSISDN, e.g. 8618625150488.
+        display:
+          type: string
+          maxLength: 64
+          description: Service number allocated by the platform after qualification review.
+        actions:
+          type: array
+          description: Call action instructions; only Play and PlayAndCollect are supported.
+          items:
+            $ref: '#/components/schemas/CallActionType'
+        notify_url:
+          type: string
+          maxLength: 512
+          description: Callback URL (POST). When absent, the platform-configured URL is used.
+    CallActionType:
+      type: object
+      title: CallActionType
+      required:
+      - operation
+      - tts_template
+      - param_value
+      properties:
+        operation:
+          type: string
+          maxLength: 32
+          enum:
+          - Play
+          - PlayAndCollect
+          description: Play = play announcement; PlayAndCollect = play and collect digits.
+        tts_template:
+          type: string
+          maxLength: 20
+          description: TTS template number; must be approved before use.
+        param_value:
+          type: string
+          description: >-
+            Template variable fill-ins, UTF-8, JSON object form
+            {"var1":"aa","var2":"aa"}; the number of variables is variable.
+        collect_length:
+          type: string
+          maxLength: 32
+          description: Digit-collection length 1-32; valid when operation=PlayAndCollect.
+        replay_after_collection:
+          type: string
+          description: Whether to replay the announcement after collection. Default false.
+        collect_content_trigger_replaying:
+          type: string
+          maxLength: 32
+          description: >-
+            Collected content that triggers a replay; valid when
+            replay_after_collection=true. Default 1.
+        relay_time:
+          type: string
+          maxLength: 32
+          description: Number of announcement repeats; valid when operation=Play. Default 1.
+    ClickToDialRequest:
+      type: object
+      title: 点击拨号 request
+      required:
+      - sponsor
+      - caller
+      - callee
+      properties:
+        sponsor:
+          type: string
+          maxLength: 64
+          description: >-
+            Originating service number supplied by OneNET, shown to the calling user.
+            MSISDN (e.g. 8613500000003) or area code + fixed line (e.g. 075528000003).
+        caller:
+          type: string
+          maxLength: 64
+          description: Calling number in MSISDN format, e.g. 8618625150488.
+        callee:
+          type: string
+          maxLength: 64
+          description: Called number in MSISDN format, e.g. 8618625150488.
+        display:
+          type: string
+          maxLength: 64
+          description: >-
+            Number displayed to the called user. Defaults to sponsor; may only equal
+            caller (whitelisting required) or sponsor.
+        notify_url:
+          type: string
+          maxLength: 512
+          description: Callback URL (POST). When absent, no callback is made.
+    CallEnvelope:
+      type: object
+      title: OneNET response envelope
+      required:
+      - requestId
+      - success
+      properties:
+        requestId:
+          type: string
+          description: Unique request identifier generated by the platform.
+        success:
+          type: boolean
+          description: Whether the call succeeded.
+        code:
+          type: string
+          description: Error code returned on failure.
+        msg:
+          type: string
+          description: Error message returned on failure.
+        data:
+          type: [object, 'null']
+          description: Business payload on success; null when the interface returns none.
+          properties:
+            call_id:
+              type: string
+              description: Call identifier.
+    VoiceNotifyStatusEvent:
+      type: object
+      title: 语音通知状态呼叫通知 event
+      required:
+      - user_id
+      - call_id
+      - caller
+      - callee
+      - status
+      properties:
+        user_id:
+          type: integer
+          format: int64
+          description: OneNET user id.
+        call_id:
+          type: string
+          maxLength: 64
+        caller:
+          type: string
+          maxLength: 64
+          description: Calling number (MSISDN).
+        callee:
+          type: string
+          maxLength: 64
+          description: Called number (MSISDN).
+        status:
+          type: string
+          maxLength: 16
+          enum:
+          - CallingCallee
+          - Connected
+          - Disconnected
+          - CollectResult
+        reason:
+          type: string
+          maxLength: 16
+          description: Required when status=Disconnected.
+          enum:
+          - HangUp
+          - CalleeBusy
+          - CalleeNoAnswer
+          - CalleeFailure
+          - Other
+          - CalleeEmpty
+          - CalleeUnregistere
+          - CalleeReject
+          - CalleenotReach
+        operation_result:
+          type: string
+          maxLength: 64
+          description: Digit-collection result; present when status=CollectResult.
+        call_duration:
+          type: string
+          description: Call duration in seconds; required when status=Disconnected.
+    ClickToDialStatusEvent:
+      type: object
+      title: 点击拨号状态呼叫通知 event
+      required:
+      - user_id
+      - call_id
+      - caller
+      - callee
+      - status
+      properties:
+        user_id:
+          type: integer
+          format: int64
+          description: OneNET user id.
+        call_id:
+          type: string
+          maxLength: 64
+        caller:
+          type: string
+          maxLength: 64
+        callee:
+          type: string
+          maxLength: 64
+        status:
+          type: string
+          maxLength: 16
+          enum:
+          - CallingCaller
+          - CallingCallee
+          - Connected
+          - Disconnected
+        report_date:
+          type: string
+          maxLength: 16
+          description: Status report time, format YYYYmmDDHHMMSS, e.g. 20141102100144.
+        reason:
+          type: string
+          maxLength: 16
+          description: Required when status=Disconnected.
+          enum:
+          - HangUp
+          - CallerBusy
+          - CallerNoAnswer
+          - CallerFailure
+          - CallerAbandon
+          - CalleeBusy
+          - CalleeNoAnswer
+          - CalleeFailure
+          - Other
+        call_duration:
+          type: string
+          description: Call duration in seconds; required when status=Disconnected.
+        caller_call_duration:
+          type: string
+          description: >-
+            Calling-party duration in seconds; present when status=Disconnected and the
+            caller is not a China Mobile number.
+    CallbackAck:
+      type: object
+      title: Callback acknowledgement
+      required:
+      - request_id
+      - code_no
+      - code
+      - message
+      properties:
+        request_id:
+          type: string
+          maxLength: 32
+          description: Unique HTTP request identifier.
+        code_no:
+          type: string
+          maxLength: 6
+          description: Return code number, e.g. 000000.
+        code:
+          type: string
+          maxLength: 512
+          description: Return code, e.g. onenet_common_success.
+        message:
+          type: string
+          maxLength: 512
+          description: Return description.

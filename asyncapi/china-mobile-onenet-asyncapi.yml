@@ -1,0 +1,294 @@
+asyncapi: 3.0.0
+info:
+  title: China Mobile OneNET event and callback surface
+  version: '1.0.0'
+  description: >-
+    OneNET pushes events to application servers over plain HTTP(S) POST. Two distinct
+    outbound surfaces are documented anonymously: the platform-wide 数据推送 (HTTP data
+    push) service, which delivers rule-engine-filtered device lifecycle, thing-model and
+    scene-linkage messages, and the Voice Call Service call-status callbacks delivered to
+    the notify_url supplied on each call request.
+
+    Every channel, message field, type, enumeration and example below was transcribed from
+    the first-party OneNET reference (see externalDocs on each channel). China Mobile
+    publishes no AsyncAPI of its own; this document is an API Evangelist derivation so the
+    event surface is machine-readable. Nothing here is invented.
+  externalDocs:
+    url: https://open.iot.10086.cn/doc/iot_platform/book/application-develop/push/http_push.html
+  contact:
+    name: OneNET Service (中移物联网)
+    email: iot_service@cmiot.chinamobile.com
+  x-provenance:
+    generated: '2026-07-25'
+    method: derived
+    source: https://open.iot.10086.cn/doc/iot_platform/book/application-develop/push/http_push.html
+defaultContentType: application/json
+servers:
+  applicationServer:
+    host: 'your-application-server.example.com'
+    protocol: https
+    description: >-
+      The subscriber's own HTTPS endpoint. OneNET is the client: the push address is
+      registered on the console as a push instance (maximum 10 per user) and must accept
+      both GET (for the one-time address-validation handshake) and POST (for message
+      delivery).
+channels:
+  httpDataPush:
+    address: '/'
+    title: 数据推送 — OneNET HTTP data push
+    description: >-
+      Rule-engine output delivered to a verified push instance. Supported message sources
+      are device lifecycle, device thing-model data and scene-linkage trigger logs.
+    servers:
+    - $ref: '#/servers/applicationServer'
+    messages:
+      pushEnvelope:
+        $ref: '#/components/messages/PushEnvelope'
+    externalDocs:
+      url: https://open.iot.10086.cn/doc/iot_platform/book/application-develop/push/http_push.html
+  pushInstanceValidation:
+    address: '/'
+    title: 实例验证 — push instance validation handshake
+    description: >-
+      Before a push instance goes live, OneNET issues an HTTP GET to the registered
+      address as ?msg=xxx&nonce=xxx&signature=xxx. The receiver verifies signature and
+      must echo msg back verbatim, otherwise the instance stays in 验证失败 (validation
+      failed) and no messages are delivered.
+    servers:
+    - $ref: '#/servers/applicationServer'
+    messages:
+      validationChallenge:
+        $ref: '#/components/messages/ValidationChallenge'
+    externalDocs:
+      url: https://open.iot.10086.cn/doc/iot_platform/book/application-develop/push/http_push.html
+  voiceNotifyStatus:
+    address: '{notify_url}'
+    title: 语音通知状态呼叫通知 — voice notification call-status callback
+    parameters:
+      notify_url:
+        description: The notify_url supplied on the voiceNotify request, or the URL
+          configured on the OneNET console when the field is omitted.
+    servers:
+    - $ref: '#/servers/applicationServer'
+    messages:
+      voiceNotifyStatusEvent:
+        $ref: '#/components/messages/VoiceNotifyStatusEvent'
+    externalDocs:
+      url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/notify-status.html
+  clickToDialStatus:
+    address: '{notify_url}'
+    title: 点击拨号状态呼叫通知 — click-to-dial call-status callback
+    parameters:
+      notify_url:
+        description: The notify_url supplied on the dialNotify request, or the URL
+          configured on the OneNET console when the field is omitted.
+    servers:
+    - $ref: '#/servers/applicationServer'
+    messages:
+      clickToDialStatusEvent:
+        $ref: '#/components/messages/ClickToDialStatusEvent'
+    externalDocs:
+      url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd-status.html
+operations:
+  receiveHttpDataPush:
+    action: receive
+    channel:
+      $ref: '#/channels/httpDataPush'
+    summary: Receive rule-engine filtered device and business messages from OneNET.
+    bindings:
+      http:
+        method: POST
+  receivePushInstanceValidation:
+    action: receive
+    channel:
+      $ref: '#/channels/pushInstanceValidation'
+    summary: Answer the OneNET push-instance address validation challenge.
+    bindings:
+      http:
+        method: GET
+  receiveVoiceNotifyStatus:
+    action: receive
+    channel:
+      $ref: '#/channels/voiceNotifyStatus'
+    summary: Receive voice-notification call-status events.
+    bindings:
+      http:
+        method: POST
+  receiveClickToDialStatus:
+    action: receive
+    channel:
+      $ref: '#/channels/clickToDialStatus'
+    summary: Receive click-to-dial call-status events.
+    bindings:
+      http:
+        method: POST
+components:
+  messages:
+    PushEnvelope:
+      name: PushEnvelope
+      title: OneNET HTTP push message
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/PushEnvelope'
+      examples:
+      - name: documented
+        payload:
+          msg: xxxxxxxx
+          nonce: abcdefgh
+          signature: message signature
+          time: 1591340648197
+          id: '3799902'
+      bindings:
+        http:
+          headers:
+            type: object
+    ValidationChallenge:
+      name: ValidationChallenge
+      title: Push instance validation challenge
+      payload:
+        $ref: '#/components/schemas/ValidationChallenge'
+    VoiceNotifyStatusEvent:
+      name: VoiceNotifyStatusEvent
+      title: 语音通知状态呼叫通知
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/VoiceNotifyStatusEvent'
+      examples:
+      - name: documented
+        payload:
+          user_id: 1234
+          call_id: CS123
+          caller: '8613912345672'
+          callee: '8613912345673'
+          status: Disconnected
+          reason: HangUp
+    ClickToDialStatusEvent:
+      name: ClickToDialStatusEvent
+      title: 点击拨号状态呼叫通知
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ClickToDialStatusEvent'
+      examples:
+      - name: documented
+        payload:
+          user_id: 1234
+          call_id: CS123
+          caller: '8613912345672'
+          callee: '8613912345673'
+          status: Disconnected
+          reason: HangUp
+  schemas:
+    PushEnvelope:
+      type: object
+      required: [msg, nonce, signature, time, id]
+      properties:
+        msg:
+          type: string
+          description: >-
+            Rule-engine filtered content — device lifecycle, device thing-model data or
+            scene-linkage trigger log — as a JSON string. When the push instance is set to
+            安全模式 (secure mode) this value is AES-CBC/PKCS7 encrypted with the 16-byte
+            key generated by the platform.
+        nonce:
+          type: string
+          description: Random string used in signature computation.
+        signature:
+          type: string
+          description: >-
+            Message signature used to verify the pushing client. Computed as
+            base64(md5(token + nonce + msg)) with the token registered on the push
+            instance.
+        time:
+          type: integer
+          format: int64
+          description: Push timestamp in milliseconds.
+        id:
+          type: string
+          description: Message id.
+    ValidationChallenge:
+      type: object
+      required: [msg, nonce, signature]
+      properties:
+        msg:
+          type: string
+          description: Random string generated by the platform during validation; must be
+            echoed back verbatim in the response body.
+        nonce:
+          type: string
+        signature:
+          type: string
+    VoiceNotifyStatusEvent:
+      type: object
+      required: [user_id, call_id, caller, callee, status]
+      properties:
+        user_id:
+          type: integer
+          format: int64
+        call_id:
+          type: string
+          maxLength: 64
+        caller:
+          type: string
+          maxLength: 64
+        callee:
+          type: string
+          maxLength: 64
+        status:
+          type: string
+          enum: [CallingCallee, Connected, Disconnected, CollectResult]
+        reason:
+          type: string
+          description: Required when status=Disconnected.
+          enum: [HangUp, CalleeBusy, CalleeNoAnswer, CalleeFailure, Other, CalleeEmpty,
+            CalleeUnregistere, CalleeReject, CalleenotReach]
+        operation_result:
+          type: string
+          maxLength: 64
+          description: Digit-collection result; present when status=CollectResult.
+        call_duration:
+          type: string
+          description: Call duration in seconds; required when status=Disconnected.
+    ClickToDialStatusEvent:
+      type: object
+      required: [user_id, call_id, caller, callee, status]
+      properties:
+        user_id:
+          type: integer
+          format: int64
+        call_id:
+          type: string
+          maxLength: 64
+        caller:
+          type: string
+          maxLength: 64
+        callee:
+          type: string
+          maxLength: 64
+        status:
+          type: string
+          enum: [CallingCaller, CallingCallee, Connected, Disconnected]
+        report_date:
+          type: string
+          maxLength: 16
+          description: Status report time, format YYYYmmDDHHMMSS.
+        reason:
+          type: string
+          description: Required when status=Disconnected.
+          enum: [HangUp, CallerBusy, CallerNoAnswer, CallerFailure, CallerAbandon,
+            CalleeBusy, CalleeNoAnswer, CalleeFailure, Other]
+        call_duration:
+          type: string
+        caller_call_duration:
+          type: string
+          description: Present when status=Disconnected and the caller is not a China
+            Mobile number.
+  securitySchemes:
+    signedPayload:
+      type: httpApiKey
+      name: signature
+      in: query
+      description: >-
+        OneNET does not authenticate itself with a bearer credential. Instead the receiver
+        verifies the signature field against the token it registered on the push instance
+        (base64(md5(token + nonce + msg))). VCS call-status callbacks additionally carry
+        the OneNET signed Authorization header.

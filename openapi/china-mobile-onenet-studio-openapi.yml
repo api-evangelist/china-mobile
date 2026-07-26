@@ -1,0 +1,2019 @@
+openapi: 3.1.0
+info:
+  title: China Mobile OneNET Studio Application API
+  version: '1'
+  summary: Device, project, group, thing-model, file and scene-linkage operations on China Mobile's OneNET
+    Studio IoT platform.
+  description: 'OneNET Studio is China Mobile''s IoT PaaS, operated by CMIOT (中移物联网). Its application
+    API is an action-dispatched gateway: every call is https://openapi.heclouds.com/{namespace}?action={Action}&version={version},
+    where namespace is one of application (application development), common (device management), lwm2m-online
+    or lwm2m-offline, and version is 1 for all platform interfaces.
+
+
+    Every operation, HTTP method, parameter name, type, required flag and description in this document
+    was transcribed from the first-party OneNET reference pages under https://open.iot.10086.cn/doc/iot_platform/book/api/
+    (each operation carries its source page in x-evidence). China Mobile publishes no OpenAPI/Swagger
+    of its own on any confirmed first-party host; this document is an API Evangelist derivation of the
+    published reference so that the surface is machine-readable. Nothing here is invented — operations
+    whose reference pages did not state a method were omitted rather than guessed.
+
+
+    Because the gateway dispatches on a query parameter rather than on the path, each path key below reproduces
+    the documented request line verbatim (the reference literally writes ''POST /common?action=UpdateDevice&version=1'').'
+  contact:
+    name: OneNET Service (中移物联网)
+    email: iot_service@cmiot.chinamobile.com
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
+  x-provenance:
+    generated: '2026-07-25'
+    method: derived
+    source: https://open.iot.10086.cn/doc/iot_platform/book/api/
+servers:
+- url: https://openapi.heclouds.com
+  description: OneNET open API gateway (live; returns HTTP 403 to anonymous requests)
+tags:
+- name: Application Development
+- name: Device Management
+security:
+- onenetAuthorization: []
+paths:
+  /common?action=CreateDevice&version=1:
+    post:
+      operationId: CreateDevice
+      summary: 设备创建 (CreateDevice)
+      description: OneNET Studio common namespace, action CreateDevice, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/common/createDevice.html
+      tags:
+      - Device Management
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: common
+      x-onenet-action: CreateDevice
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/common/createDevice.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: string
+                  description: 产品ID
+                device_name:
+                  type: string
+                  description: 设备名称
+                imei:
+                  type: string
+                  description: 'NB设备imei，15个数字组成的电子串号，设备所属产品为LwM2M时，为必填 [required: 否(LwM2M协议时必填)]'
+                imsi:
+                  type: string
+                  description: NB设备imsi，不超过15个的数字，设备所属产品为LwM2M时，为必填
+                psk:
+                  type: string
+                  description: NB设备所需属性，若创建未填则平台随机生成，8-16位数字字母组合
+                auth_code:
+                  type: string
+                  description: NB设备鉴权码，1-16位数字字母组合
+                desc:
+                  type: string
+                  description: 设备描述
+              required:
+              - product_id
+              - device_name
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /common?action=BatchCreateDevices&version=1:
+    post:
+      operationId: BatchCreateDevices
+      summary: 设备批量创建 (BatchCreateDevices)
+      description: OneNET Studio common namespace, action BatchCreateDevices, version 1. Documented at
+        https://open.iot.10086.cn/doc/iot_platform/book/api/common/batchCreateDevice.html
+      tags:
+      - Device Management
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: common
+      x-onenet-action: BatchCreateDevices
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/common/batchCreateDevice.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: string
+                  description: 产品ID
+                devices:
+                  type: array
+                  items: {}
+                  description: '批量创建的设备信息集合, 一次最多创建500个设备。每个集合元素为json对象，包括name和desc属性值,例如[{ "name": "no001"
+                    , "desc": "iot application" }], 设备为LwM2M协议时，增加imei、imsi、auth_code、psk属性，校验规则请参考设备创建接口'
+              required:
+              - product_id
+              - devices
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /common?action=UpdateDevice&version=1:
+    post:
+      operationId: UpdateDevice
+      summary: 设备编辑 (UpdateDevice)
+      description: OneNET Studio common namespace, action UpdateDevice, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/common/updateDevice.html
+      tags:
+      - Device Management
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: common
+      x-onenet-action: UpdateDevice
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/common/updateDevice.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: string
+                  description: 产品ID
+                device_name:
+                  type: string
+                  description: 设备名称
+                desc:
+                  type: string
+                  description: 设备描述
+                imsi:
+                  type: string
+                  description: NB设备imsi，不超过15个的数字，设备所属产品为LwM2M时，为必填
+                psk:
+                  type: string
+                  description: NB设备所需属性，若创建未填则平台随机生成，8-16位数字字母组合
+                auth_code:
+                  type: string
+                  description: NB设备鉴权码，1-16位数字字母组合
+              required:
+              - product_id
+              - device_name
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /common?action=DeleteDevice&version=1:
+    post:
+      operationId: DeleteDevice
+      summary: 设备删除 (DeleteDevice)
+      description: OneNET Studio common namespace, action DeleteDevice, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/common/deleteDevice.html
+      tags:
+      - Device Management
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: common
+      x-onenet-action: DeleteDevice
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/common/deleteDevice.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: string
+                  description: 产品ID
+                device_name:
+                  type: string
+                  description: 设备名称
+              required:
+              - product_id
+              - device_name
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /common?action=QueryDeviceDetail&version=1:
+    get:
+      operationId: QueryDeviceDetail
+      summary: 设备详情 (QueryDeviceDetail)
+      description: OneNET Studio common namespace, action QueryDeviceDetail, version 1. Documented at
+        https://open.iot.10086.cn/doc/iot_platform/book/api/common/queryDeviceDetail.html
+      tags:
+      - Device Management
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: common
+      x-onenet-action: QueryDeviceDetail
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/common/queryDeviceDetail.html
+      parameters:
+      - name: product_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 产品ID
+      - name: device_name
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 设备名称
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /common?action=MoveProductDevice&version=1:
+    post:
+      operationId: MoveProductDevice
+      summary: 设备转移 (MoveProductDevice)
+      description: OneNET Studio common namespace, action MoveProductDevice, version 1. Documented at
+        https://open.iot.10086.cn/doc/iot_platform/book/api/common/moveProductDevice.html
+      tags:
+      - Device Management
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: common
+      x-onenet-action: MoveProductDevice
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/common/moveProductDevice.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: string
+                  description: 产品ID
+                target_user_tel:
+                  type: string
+                  description: 接收人电话
+                device_name:
+                  type: array
+                  items: {}
+                  description: 被转移设备的名称数组，如["name_1", "name_2"]
+              required:
+              - product_id
+              - target_user_tel
+              - device_name
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /common?action=QuerySystemThingModel&version=1:
+    get:
+      operationId: QuerySystemThingModel
+      summary: 物模型系统功能点 (QuerySystemThingModel)
+      description: OneNET Studio common namespace, action QuerySystemThingModel, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/common/querySystemThingModel.html
+      tags:
+      - Device Management
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: common
+      x-onenet-action: QuerySystemThingModel
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/common/querySystemThingModel.html
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /common?action=QueryThingModel&version=1:
+    get:
+      operationId: QueryThingModel
+      summary: 物模型查询 (QueryThingModel)
+      description: OneNET Studio common namespace, action QueryThingModel, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/common/queryThingModel.html
+      tags:
+      - Device Management
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: common
+      x-onenet-action: QueryThingModel
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/common/queryThingModel.html
+      parameters:
+      - name: product_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 产品id
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /common?action=RegistDeviceIdentity&version=1:
+    post:
+      operationId: RegistDeviceIdentity
+      summary: 设备工业标识注册 (RegistDeviceIdentity)
+      description: OneNET Studio common namespace, action RegistDeviceIdentity, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/common/registDeviceIdentity.html
+      tags:
+      - Device Management
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: common
+      x-onenet-action: RegistDeviceIdentity
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/common/registDeviceIdentity.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: string
+                  description: 产品ID
+                devices:
+                  type: array
+                  items: {}
+                  description: 设备信息集合, 一次最多创建500个设备。每个集合元素设备名称,例如["device01", "device02"]
+                auto_mode:
+                  type: number
+                  description: 是否开启自动更新,0：关闭，1：开启
+              required:
+              - product_id
+              - devices
+              - auto_mode
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=QueryProductList&version=1:
+    get:
+      operationId: QueryProductList
+      summary: 项目集成产品列表 (QueryProductList)
+      description: OneNET Studio application namespace, action QueryProductList, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryProductList.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: QueryProductList
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryProductList.html
+      parameters:
+      - name: project_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 项目ID
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 请求起始位置，默认0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 每次请求记录数，默认10
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=QueryDeviceList&version=1:
+    get:
+      operationId: QueryDeviceList
+      summary: 项目集成设备列表 (QueryDeviceList)
+      description: OneNET Studio application namespace, action QueryDeviceList, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceList.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: QueryDeviceList
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceList.html
+      parameters:
+      - name: project_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 项目ID
+      - name: product_id
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 产品ID
+      - name: group_id
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 分组ID
+      - name: device_name
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 设备名称
+      - name: from
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 设备来源 1-自主创建 2-他人转移
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 请求记录起始位置，默认 0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 每次请求记录数，默认10, 范围[1, 100]
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=AddDevice&version=1:
+    post:
+      operationId: AddDevice
+      summary: 项目添加设备 (AddDevice)
+      description: OneNET Studio application namespace, action AddDevice, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/addDevice.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: AddDevice
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/addDevice.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: string
+                  description: 项目ID
+                product_id:
+                  type: string
+                  description: 产品ID
+                devices:
+                  type: array
+                  items: {}
+                  description: 添加的设备名称集合
+              required:
+              - project_id
+              - product_id
+              - devices
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=RemoveDevice&version=1:
+    post:
+      operationId: RemoveDevice
+      summary: 项目移除设备 (RemoveDevice)
+      description: OneNET Studio application namespace, action RemoveDevice, version 1. Documented at
+        https://open.iot.10086.cn/doc/iot_platform/book/api/application/removeDevice.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: RemoveDevice
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/removeDevice.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: string
+                  description: 项目ID
+                product_id:
+                  type: string
+                  description: 产品ID
+                devices:
+                  type: array
+                  items: {}
+                  description: 需要移除的设备名称集合
+              required:
+              - project_id
+              - product_id
+              - devices
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=CreateGroup&version=1:
+    post:
+      operationId: CreateGroup
+      summary: 分组创建 (CreateGroup)
+      description: OneNET Studio application namespace, action CreateGroup, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/createGroup.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: CreateGroup
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/createGroup.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: string
+                  description: 项目ID
+                name:
+                  type: string
+                  description: 分组名称
+                desc:
+                  type: string
+                  description: 分组描述
+              required:
+              - project_id
+              - name
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=DeleteGroup&version=1:
+    post:
+      operationId: DeleteGroup
+      summary: 分组删除 (DeleteGroup)
+      description: OneNET Studio application namespace, action DeleteGroup, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/deleteGroup.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: DeleteGroup
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/deleteGroup.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: string
+                  description: 项目ID
+                group_id:
+                  type: string
+                  description: 分组ID
+              required:
+              - project_id
+              - group_id
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=UpdateGroup&version=1:
+    post:
+      operationId: UpdateGroup
+      summary: 分组编辑 (UpdateGroup)
+      description: OneNET Studio application namespace, action UpdateGroup, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/updateGroup.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: UpdateGroup
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/updateGroup.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: string
+                  description: 项目ID
+                group_id:
+                  type: string
+                  description: 分组ID
+                tag:
+                  type: object
+                  description: 标签信息
+                desc:
+                  type: string
+                  description: 分组描述
+              required:
+              - project_id
+              - group_id
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=QueryGroupDetail&version=1:
+    get:
+      operationId: QueryGroupDetail
+      summary: 分组详情 (QueryGroupDetail)
+      description: OneNET Studio application namespace, action QueryGroupDetail, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryGroupDetail.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: QueryGroupDetail
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryGroupDetail.html
+      parameters:
+      - name: project_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 项目ID
+      - name: group_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 分组ID
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=QueryGroupList&version=1:
+    get:
+      operationId: QueryGroupList
+      summary: 分组列表 (QueryGroupList)
+      description: OneNET Studio application namespace, action QueryGroupList, version 1. Documented at
+        https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryGroupList.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: QueryGroupList
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryGroupList.html
+      parameters:
+      - name: project_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 项目ID
+      - name: name
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 分组名称
+      - name: key
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 标签key（key、value需成对出现，否则没有效果）
+      - name: value
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 标签value（key、value 需成对出现，否则没有效果）
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 请求记录起始位置，默认 0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 每次请求记录数，默认10
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=AddGroupDevice&version=1:
+    post:
+      operationId: AddGroupDevice
+      summary: 分组设备添加 (AddGroupDevice)
+      description: OneNET Studio application namespace, action AddGroupDevice, version 1. Documented at
+        https://open.iot.10086.cn/doc/iot_platform/book/api/application/addGroupDevice.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: AddGroupDevice
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/addGroupDevice.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: string
+                  description: 项目ID
+                group_id:
+                  type: string
+                  description: 分组ID
+                product_id:
+                  type: string
+                  description: 产品ID
+                devices:
+                  type: string
+                  x-documented-type: arrary
+                  description: 需要添加的设备集合
+              required:
+              - project_id
+              - group_id
+              - product_id
+              - devices
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=RemoveGroupDevice&version=1:
+    post:
+      operationId: RemoveGroupDevice
+      summary: 分组设备移除 (RemoveGroupDevice)
+      description: OneNET Studio application namespace, action RemoveGroupDevice, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/removeGroupDevice.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: RemoveGroupDevice
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/removeGroupDevice.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: string
+                  description: 项目ID
+                group_id:
+                  type: string
+                  description: 分组ID
+                product_id:
+                  type: string
+                  description: 产品ID
+                devices:
+                  type: string
+                  x-documented-type: arrary
+                  description: 需要移除的设备集合
+              required:
+              - project_id
+              - group_id
+              - product_id
+              - devices
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=QueryDeviceDetail&version=1:
+    get:
+      operationId: QueryDeviceDetail
+      summary: 设备详情 (QueryDeviceDetail)
+      description: OneNET Studio application namespace, action QueryDeviceDetail, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceDetail.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: QueryDeviceDetail
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceDetail.html
+      parameters:
+      - name: project_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 项目ID
+      - name: product_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 产品ID
+      - name: device_name
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 设备名称
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=QueryDeviceStatus&version=1:
+    get:
+      operationId: QueryDeviceStatus
+      summary: 设备状态查询 (QueryDeviceStatus)
+      description: OneNET Studio application namespace, action QueryDeviceStatus, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceStatus.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: QueryDeviceStatus
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceStatus.html
+      parameters:
+      - name: project_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 项目ID
+      - name: product_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 产品ID
+      - name: device_name
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 设备名称
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=QueryDeviceStatusHistory&version=1:
+    get:
+      operationId: QueryDeviceStatusHistory
+      summary: 设备状态记录查询 (QueryDeviceStatusHistory)
+      description: OneNET Studio application namespace, action QueryDeviceStatusHistory, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceStatusHistory.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: QueryDeviceStatusHistory
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceStatusHistory.html
+      parameters:
+      - name: project_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 项目ID
+      - name: product_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 产品ID
+      - name: device_name
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 设备名称
+      - name: start_time
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 查询起始时间，毫秒时间戳
+      - name: end_time
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 查询结束时间，毫秒时间戳
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 请求起始位置，默认0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 每次请求记录数，默认10, 范围[1, 100]
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=SetDeviceProperty&version=1:
+    post:
+      operationId: SetDeviceProperty
+      summary: 设备属性设置 (SetDeviceProperty)
+      description: OneNET Studio application namespace, action SetDeviceProperty, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/setDeviceProperty.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: SetDeviceProperty
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/setDeviceProperty.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: string
+                  description: 项目ID
+                product_id:
+                  type: string
+                  description: 产品ID
+                device_name:
+                  type: string
+                  description: 设备名称
+                params:
+                  type: object
+                  description: '设置的属性值, 数据格式为json对象, 形式为key:value, key为属性功能点标识, value为属性值, 取值符合物模型定义的数据类型和取值范围,
+                    例如 { "switch": true }'
+              required:
+              - project_id
+              - product_id
+              - device_name
+              - params
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=QueryDevicePropertyDetail&version=1:
+    post:
+      operationId: QueryDevicePropertyDetail
+      summary: 设备属性获取 (QueryDevicePropertyDetail)
+      description: OneNET Studio application namespace, action QueryDevicePropertyDetail, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDevicePropertyDetail.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: QueryDevicePropertyDetail
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDevicePropertyDetail.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: string
+                  description: 设备所属项目id
+                product_id:
+                  type: string
+                  description: 产品id
+                device_name:
+                  type: string
+                  description: 设备唯一标识
+                params:
+                  type: array
+                  items: {}
+                  description: '功能点标识数组，expample: ["light","model"]'
+              required:
+              - project_id
+              - product_id
+              - device_name
+              - params
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=SetDeviceDesiredProperty&version=1:
+    post:
+      operationId: SetDeviceDesiredProperty
+      summary: 设备属性期望设置 (SetDeviceDesiredProperty)
+      description: OneNET Studio application namespace, action SetDeviceDesiredProperty, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/setDeviceDesiredProperty.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: SetDeviceDesiredProperty
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/setDeviceDesiredProperty.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: string
+                  description: 项目ID
+                product_id:
+                  type: string
+                  description: 产品ID
+                device_name:
+                  type: string
+                  description: 设备名称
+                params:
+                  type: object
+                  description: '设置的属性期望值, 数据格式为json对象, 形式为key:value, key为属性功能点标识, value为属性值, 取值符合物模型定义的数据类型和取值范围,
+                    例如{ "switch": true }'
+              required:
+              - project_id
+              - product_id
+              - device_name
+              - params
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=QueryDeviceDesiredProperty&version=1:
+    post:
+      operationId: QueryDeviceDesiredProperty
+      summary: 设备属性期望查询 (QueryDeviceDesiredProperty)
+      description: OneNET Studio application namespace, action QueryDeviceDesiredProperty, version 1.
+        Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceDesiredProperty.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: QueryDeviceDesiredProperty
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceDesiredProperty.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: string
+                  description: 项目ID
+                product_id:
+                  type: string
+                  description: 产品ID
+                device_name:
+                  type: string
+                  description: 设备名称
+                params:
+                  type: array
+                  items: {}
+                  description: 查询期望值的功能点标识集合，参数不传默认查询所有属性期望，例如["switch", "temperature"]
+              required:
+              - project_id
+              - product_id
+              - device_name
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=DeleteDeviceDesiredProperty&version=1:
+    post:
+      operationId: DeleteDeviceDesiredProperty
+      summary: 设备属性期望删除 (DeleteDeviceDesiredProperty)
+      description: OneNET Studio application namespace, action DeleteDeviceDesiredProperty, version 1.
+        Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/deleteDeviceDesiredProperty.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: DeleteDeviceDesiredProperty
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/deleteDeviceDesiredProperty.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: string
+                  description: 项目ID
+                product_id:
+                  type: string
+                  description: 产品ID
+                device_name:
+                  type: string
+                  description: 设备名称
+                params:
+                  type: object
+                  description: '删除的属性期望, 数据格式为json对象, 形式为key:value, key为属性功能点标识, value为空对象{} 或者 { "version":
+                    1 }, 如果携带版本号信息，则只有版本号信息等于当前属性期望值版本，才能删除成功'
+              required:
+              - project_id
+              - product_id
+              - device_name
+              - params
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=QueryDeviceLog&version=1:
+    get:
+      operationId: QueryDeviceLog
+      summary: 设备操作日志查询 (QueryDeviceLog)
+      description: OneNET Studio application namespace, action QueryDeviceLog, version 1. Documented at
+        https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceLog.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: QueryDeviceLog
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceLog.html
+      parameters:
+      - name: project_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 项目ID
+      - name: product_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 产品ID
+      - name: device_name
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 设备名称
+      - name: start_time
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 查询起始时间，毫秒时间戳
+      - name: end_time
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 查询结束时间，毫秒时间戳
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 请求起始位置，默认0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 每次请求记录数，默认10, 范围[1, 100]
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=QueryDeviceProperty&version=1:
+    get:
+      operationId: QueryDeviceProperty
+      summary: 设备最新数据查询 (QueryDeviceProperty)
+      description: OneNET Studio application namespace, action QueryDeviceProperty, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceProperty.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: QueryDeviceProperty
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceProperty.html
+      parameters:
+      - name: project_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 项目ID
+      - name: product_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 产品ID
+      - name: device_name
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 设备名称
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=QueryDevicePropertyHistory&version=1:
+    get:
+      operationId: QueryDevicePropertyHistory
+      summary: 设备属性记录查询 (QueryDevicePropertyHistory)
+      description: OneNET Studio application namespace, action QueryDevicePropertyHistory, version 1.
+        Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDevicePropertyHistory.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: QueryDevicePropertyHistory
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDevicePropertyHistory.html
+      parameters:
+      - name: project_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 项目ID
+      - name: product_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 产品ID
+      - name: device_name
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 设备名称
+      - name: identifier
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 属性功能点标识
+      - name: start_time
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 查询起始时间，毫秒时间戳
+      - name: end_time
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 查询结束时间，毫秒时间戳
+      - name: sort
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 排序参数 1-正序 2-倒序
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 请求起始位置，默认0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 每次请求记录数，默认10, 范围[1, 100]
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=QueryDeviceEventHistory&version=1:
+    get:
+      operationId: QueryDeviceEventHistory
+      summary: 设备事件记录查询 (QueryDeviceEventHistory)
+      description: OneNET Studio application namespace, action QueryDeviceEventHistory, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceEventHistory.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: QueryDeviceEventHistory
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceEventHistory.html
+      parameters:
+      - name: project_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 项目ID
+      - name: product_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 产品ID
+      - name: device_name
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 设备名称
+      - name: start_time
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 查询起始时间，毫秒时间戳
+      - name: end_time
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 查询结束时间，毫秒时间戳
+      - name: identifier
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 事件功能点标识
+      - name: event_type
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 事件类型 1-信息 2-告警 3-故障
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 请求起始位置，默认0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 每次请求记录数，默认10, 范围[1, 100]
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=CallService&version=1:
+    post:
+      operationId: CallService
+      summary: 设备服务调用 (CallService)
+      description: OneNET Studio application namespace, action CallService, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/callService.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: CallService
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/callService.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: string
+                  description: 项目ID
+                product_id:
+                  type: string
+                  description: 产品ID
+                device_name:
+                  type: string
+                  description: 设备唯一标识
+                identifier:
+                  type: string
+                  description: 服务型功能点标识
+                params:
+                  type: object
+                  description: 输入参数的键值对，输入参数的唯一标识做键
+              required:
+              - project_id
+              - product_id
+              - device_name
+              - identifier
+              - params
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=QueryServiceRecord&version=1:
+    get:
+      operationId: QueryServiceRecord
+      summary: 设备服务执行记录查询 (QueryServiceRecord)
+      description: OneNET Studio application namespace, action QueryServiceRecord, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryServiceRecord.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: QueryServiceRecord
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryServiceRecord.html
+      parameters:
+      - name: project_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 项目id
+      - name: trace_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 调用服务后的requestId
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=CreateDeviceFile&version=1:
+    post:
+      operationId: CreateDeviceFile
+      summary: 设备文件上传 (CreateDeviceFile)
+      description: OneNET Studio application namespace, action CreateDeviceFile, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/createDeviceFile.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: CreateDeviceFile
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/createDeviceFile.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device_name:
+                  type: string
+                  description: 设备名称 ,参数需构造在同一个 form-data 中
+                product_id:
+                  type: string
+                  description: 产品ID ,参数需构造在同一个 form-data 中
+                file:
+                  type: string
+                  x-documented-type: file
+                  description: 上传的图片文件(目前支持JPG、PNG、BMP、GIF)
+              required:
+              - device_name
+              - product_id
+              - file
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=GetDeviceFile&version=1:
+    get:
+      operationId: GetDeviceFile
+      summary: 设备文件下载 (GetDeviceFile)
+      description: OneNET Studio application namespace, action GetDeviceFile, version 1. Documented at
+        https://open.iot.10086.cn/doc/iot_platform/book/api/application/getDeviceFile.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: GetDeviceFile
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/getDeviceFile.html
+      parameters:
+      - name: id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 文件ID
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=DeleteDeviceFile&version=1:
+    post:
+      operationId: DeleteDeviceFile
+      summary: 设备文件删除 (DeleteDeviceFile)
+      description: OneNET Studio application namespace, action DeleteDeviceFile, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/deleteDeviceFile.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: DeleteDeviceFile
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/deleteDeviceFile.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: 文件ID
+              required:
+              - id
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=GetDeviceFilesList&version=1:
+    get:
+      operationId: GetDeviceFilesList
+      summary: 账户文件列表查询 (GetDeviceFilesList)
+      description: OneNET Studio application namespace, action GetDeviceFilesList, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/getDeviceFilesList.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: GetDeviceFilesList
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/getDeviceFilesList.html
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=GetDeviceFileSpace&version=1:
+    get:
+      operationId: GetDeviceFileSpace
+      summary: 账户文件存储空间查询 (GetDeviceFileSpace)
+      description: OneNET Studio application namespace, action GetDeviceFileSpace, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/getDeviceFileSpace.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: GetDeviceFileSpace
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/getDeviceFileSpace.html
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=GetDeviceFileCount&version=1:
+    get:
+      operationId: GetDeviceFileCount
+      summary: 账户设备文件数量查询 (GetDeviceFileCount)
+      description: OneNET Studio application namespace, action GetDeviceFileCount, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/getDeviceFileCount.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: GetDeviceFileCount
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/getDeviceFileCount.html
+      parameters:
+      - name: device_name
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 设备名称
+      - name: product_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 产品ID
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=CreateSceneRule&version=1:
+    post:
+      operationId: CreateSceneRule
+      summary: 场景联动规则创建 (CreateSceneRule)
+      description: OneNET Studio application namespace, action CreateSceneRule, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/createSceneRule.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: CreateSceneRule
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/createSceneRule.html
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                project_id:
+                  type: string
+                  description: 项目ID
+                name:
+                  type: string
+                  description: 场景联动名称
+                conditions:
+                  type: array
+                  items: {}
+                  description: 触发条件集合
+                actions:
+                  type: array
+                  items: {}
+                  description: 执行动作集合，接口只支持设备生命周期、设备数据上报两种触发方式， 定时触发、第三方数据触发可通过页面设置
+                emit_condition:
+                  type: string
+                  description: 触发方式，all - 满足全部条件触发, any - 任意条件触发
+              required:
+              - project_id
+              - name
+              - conditions
+              - actions
+              - emit_condition
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=QuerySceneRuleDetail&version=1:
+    get:
+      operationId: QuerySceneRuleDetail
+      summary: 场景联动规则详情 (QuerySceneRuleDetail)
+      description: OneNET Studio application namespace, action QuerySceneRuleDetail, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/querySceneRuleDetail.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: QuerySceneRuleDetail
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/querySceneRuleDetail.html
+      parameters:
+      - name: project_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 项目ID
+      - name: scene_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 场景联动规则ID
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=QuerySceneRules&version=1:
+    get:
+      operationId: QuerySceneRules
+      summary: 场景联动规则列表 (QuerySceneRules)
+      description: OneNET Studio application namespace, action QuerySceneRules, version 1. Documented
+        at https://open.iot.10086.cn/doc/iot_platform/book/api/application/querySceneRules.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: QuerySceneRules
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/querySceneRules.html
+      parameters:
+      - name: project_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 项目ID
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 请求起始位置，默认0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 每次请求记录数，默认10, 范围[1, 100]
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+  /application?action=QuerySceneLog&version=1:
+    get:
+      operationId: QuerySceneLog
+      summary: 场景联动触发日志 (QuerySceneLog)
+      description: OneNET Studio application namespace, action QuerySceneLog, version 1. Documented at
+        https://open.iot.10086.cn/doc/iot_platform/book/api/application/querySceneLog.html
+      tags:
+      - Application Development
+      security:
+      - onenetAuthorization: []
+      x-onenet-namespace: application
+      x-onenet-action: QuerySceneLog
+      x-evidence:
+      - https://open.iot.10086.cn/doc/iot_platform/book/api/application/querySceneLog.html
+      parameters:
+      - name: project_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 项目ID
+      - name: scene_id
+        in: query
+        required: true
+        schema:
+          type: string
+        description: 场景联动规则ID
+      - name: start_time
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 查询起始时间，例如2020-07-10T05:59:02.833Z
+      - name: end_time
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 查询起始时间
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 请求起始位置，默认0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: string
+        description: 每次请求记录数，默认10, 范围[1, 100]
+      responses:
+        '200':
+          description: OneNET response envelope. success=true carries the business payload in data; success=false
+            carries code and msg.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseEnvelope'
+components:
+  securitySchemes:
+    onenetAuthorization:
+      type: apiKey
+      in: header
+      name: authorization
+      description: 'OneNET signed authorization token: version=2020-05-29&res=userid/{userid}&et={epoch}&method={md5|sha1|sha256}&sign={signature},
+        where sign = base64(hmac_method(base64decode(accessKey), et + "\n" + method + "\n" + res + "\n"
+        + version)). Reference: https://open.iot.10086.cn/doc/iot_platform/book/api/auth.html'
+  schemas:
+    ResponseEnvelope:
+      type: object
+      title: OneNET response envelope
+      required:
+      - requestId
+      - success
+      properties:
+        requestId:
+          type: string
+          description: Unique request identifier generated by the platform for every API call.
+        success:
+          type: boolean
+          description: Whether the call succeeded.
+        code:
+          type: string
+          description: Error code returned on failure, e.g. iot.application.deviceNotFound.
+        msg:
+          type: string
+          description: Error message returned on failure.
+        data:
+          type:
+          - object
+          - array
+          - 'null'
+          description: Business payload on success; null when the interface returns none.

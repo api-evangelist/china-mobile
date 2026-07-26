@@ -1,0 +1,151 @@
+generated: '2026-07-25'
+method: derived
+source: openapi/china-mobile-onenet-studio-openapi.yml, openapi/china-mobile-vcs-openapi.yml
+summary: >-
+  Derived from the id-reference fields carried by the 44 documented OneNET Studio
+  operations and the 2 Voice Call Service operations. OneNET has no $ref-linked component
+  schemas to walk (the published reference documents flat parameter tables), so the graph
+  below is built from the identifier fields the operations actually require:
+  project_id, product_id, device_name, group_id, identifier, file_id and call_id. The
+  device is identified compositely — product_id plus device_name — rather than by a single
+  opaque id, which is the defining shape of this model.
+identifiers:
+- field: project_id
+  entity: Project
+  form: opaque string (e.g. KLza8R)
+- field: product_id
+  entity: Product
+  form: opaque string (e.g. 9MaNe52pNO)
+- field: device_name
+  entity: Device
+  form: user-assigned name, unique within a product
+- field: device_id
+  entity: Device
+  form: platform-assigned id, accepted by some device operations alongside device_name
+- field: group_id
+  entity: Group
+  form: opaque string
+- field: identifier
+  entity: ThingModelFunction
+  form: thing-model property/service/event identifier
+- field: imei / imsi
+  entity: Device
+  form: NB-IoT device identifiers; imei required when the product protocol is LwM2M
+- field: call_id
+  entity: Call
+  form: platform-assigned call identifier returned by voiceNotify and dialNotify
+entities:
+- name: Project
+  description: 项目 — the application-development container; devices are added to a project
+    before application APIs can address them.
+  operations: [QueryProductList, QueryDeviceList, AddDevice, RemoveDevice]
+- name: Product
+  description: 产品 — a device class carrying the thing model and access protocol
+    (MQTT/CoAP/LwM2M/HTTP).
+  operations: [CreateDevice, BatchCreateDevices, UpdateDevice, DeleteDevice,
+    QueryDeviceDetail, MoveProductDevice, QueryThingModel, QuerySystemThingModel]
+- name: Device
+  description: 设备 — an individual connected device, addressed by product_id + device_name.
+  operations: [CreateDevice, UpdateDevice, DeleteDevice, QueryDeviceDetail,
+    QueryDeviceStatus, QueryDeviceStatusHistory, QueryDeviceLog, RegistDeviceIdentity]
+- name: Group
+  description: 分组 — a device grouping inside a project, and the unit an access key can be
+    scoped to (res=projectid/{projectid}/groupid/{groupid}).
+  operations: [CreateGroup, UpdateGroup, DeleteGroup, QueryGroupDetail, QueryGroupList,
+    AddGroupDevice, RemoveGroupDevice]
+- name: ThingModel
+  description: 物模型 — the property/event/service definition a product exposes.
+  operations: [QueryThingModel, QuerySystemThingModel]
+- name: DeviceProperty
+  description: 设备属性 — current and desired values of a thing-model property.
+  operations: [SetDeviceProperty, QueryDevicePropertyDetail, QueryDeviceProperty,
+    QueryDevicePropertyHistory, SetDeviceDesiredProperty, QueryDeviceDesiredProperty,
+    DeleteDeviceDesiredProperty]
+- name: DeviceEvent
+  description: 设备事件 — thing-model events reported by a device.
+  operations: [QueryDeviceEventHistory]
+- name: DeviceService
+  description: 设备服务 — an invocable thing-model service on a device.
+  operations: [CallService, QueryServiceRecord]
+- name: DeviceFile
+  description: 设备文件 — files attached to a device, with per-account storage accounting.
+  operations: [CreateDeviceFile, GetDeviceFile, DeleteDeviceFile, GetDeviceFilesList,
+    GetDeviceFileSpace, GetDeviceFileCount]
+- name: SceneRule
+  description: 场景联动规则 — a scene-linkage automation rule and its trigger log.
+  operations: [CreateSceneRule, QuerySceneRuleDetail, QuerySceneRules, QuerySceneLog]
+- name: Call
+  description: 呼叫 — a Voice Call Service call, created by voiceNotify or dialNotify and
+    tracked by call_id through its status callbacks.
+  operations: [voiceNotify, dialNotify]
+relationships:
+- from: Project
+  to: Device
+  type: has_many
+  via: project_id
+  evidence: QueryDeviceList, AddDevice and RemoveDevice all take project_id + device_name.
+- from: Project
+  to: Product
+  type: has_many
+  via: project_id
+  evidence: QueryProductList takes project_id.
+- from: Project
+  to: Group
+  type: has_many
+  via: project_id
+  evidence: CreateGroup and QueryGroupList take project_id.
+- from: Product
+  to: Device
+  type: has_many
+  via: product_id
+  evidence: CreateDevice, UpdateDevice and DeleteDevice all key on product_id +
+    device_name.
+- from: Product
+  to: ThingModel
+  type: has_one
+  via: product_id
+  evidence: QueryThingModel takes product_id.
+- from: Group
+  to: Device
+  type: has_many
+  via: group_id
+  evidence: AddGroupDevice and RemoveGroupDevice take group_id + device_name.
+- from: Device
+  to: DeviceProperty
+  type: has_many
+  via: product_id + device_name
+  evidence: SetDeviceProperty and QueryDevicePropertyDetail key on the device pair plus a
+    thing-model identifier.
+- from: Device
+  to: DeviceEvent
+  type: has_many
+  via: product_id + device_name
+- from: Device
+  to: DeviceService
+  type: has_many
+  via: identifier
+  evidence: CallService takes project_id, product_id, device_name, identifier and params.
+- from: Device
+  to: DeviceFile
+  type: has_many
+  via: device_name
+- from: SceneRule
+  to: Project
+  type: belongs_to
+  via: project_id
+- from: Call
+  to: CallStatusEvent
+  type: has_many
+  via: call_id
+  evidence: The status callbacks carry call_id plus caller/callee and a status enum.
+notes:
+- >-
+  Authorisation is modelled on the same graph: an access key is scoped either to the whole
+  master account (res=userid/{userid}) or to one project group
+  (res=projectid/{projectid}/groupid/{groupid}), and a group-scoped key may only operate on
+  devices inside that group.
+- >-
+  The IoT Card Capability Open Platform has a separate, single-entity model — a SIM
+  identified interchangeably by ICCID, IMSI or MSISDN, resolved by
+  GET/POST https://api.iot.10086.cn/v2/cardinfo (CMIOT_API2003). It shares no identifiers
+  with the OneNET model.

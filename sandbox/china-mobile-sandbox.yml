@@ -1,0 +1,69 @@
+generated: '2026-07-25'
+method: searched
+source: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/errorcode.html
+summary: >-
+  China Mobile publishes no sandbox environment, no separate test host, no test/live key
+  prefixes and no magic test values. What it does publish is evidence that a gated test
+  account exists for the Voice Call Service: two error codes in the VCS registry
+  (notApplyTestAccount, testAccountIsInvalid) and the verbatim failure message "request ip
+  not equals test account ip" show that OneNET issues per-customer test accounts pinned to
+  an IP allowlist, applied for through the console. A trial-usage counter
+  (overTheExperienceNumber, 体验次数超过限制) caps how many test calls a trial account may place.
+  Nothing self-serve, and no published test credentials or numbers — so nothing can be
+  captured verbatim beyond the mechanism itself.
+test_live_separation:
+  separate_host: false
+  key_prefixes: false
+  note: >-
+    The same host (openapi.heclouds.com) and the same signed authorization header serve
+    both test and production traffic. Separation is by account entitlement and source-IP
+    allowlist, not by credential shape or environment URL.
+mechanisms:
+- name: VCS test account (测试账户)
+  gated: true
+  applies_to: OneNET Voice Call Service (语音通知, 点击拨号)
+  how: Applied for through the OneNET console; the platform binds the account to an
+    approved source IP.
+  evidence:
+  - code: notApplyTestAccount
+    message_zh: 未申请测试账户
+    message_en: No test account applied for
+    observed_message: request ip not equals test account ip
+  - code: testAccountIsInvalid
+    message_zh: 测试账户非法
+    message_en: Test account invalid
+  - code: ipWhiteListNotMatch
+    message_zh: IP白名单不匹配
+    message_en: IP allowlist mismatch
+  - code: overTheExperienceNumber
+    message_zh: 体验次数超过限制
+    message_en: Trial-usage limit exceeded
+  docs: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/errorcode.html
+- name: API 调试 (in-console API debugger)
+  gated: true
+  applies_to: OneNET Studio application API
+  how: Console-hosted request builder under 运维监控 → API调试; requires a logged-in account
+    and a real project.
+  docs: https://open.iot.10086.cn/doc/iot_platform/book/devops&monitor/online-api/introduce.html
+- name: 设备调试 (device debugger)
+  gated: true
+  applies_to: OneNET Studio device access
+  how: Console tool for simulating device property/event traffic against a real product.
+- name: HTTP push instance validation
+  gated: false
+  applies_to: OneNET HTTP data push
+  how: >-
+    The only anonymous, reproducible test loop in the estate — OneNET issues a GET
+    challenge to a candidate push URL with msg/nonce/signature and the receiver echoes msg.
+    Instance states are 待验证 / 验证成功 / 验证失败.
+  docs: https://open.iot.10086.cn/doc/iot_platform/book/application-develop/push/http_push.html
+test_values:
+  published: false
+  note: >-
+    No test card numbers, magic MSISDNs, fixture identifiers or hosted test tokens are
+    published for any China Mobile API. The MSISDNs and service numbers that appear in the
+    OneNET reference (e.g. 8618625150488, 02066240222) are documentation examples, not
+    reserved test numbers, and are not recorded here as usable test values.
+quotas_observed:
+  push_instances_per_user: 10
+  devices_per_batch_create: 500

@@ -1,0 +1,37 @@
+generated: '2026-07-25'
+method: searched
+source: https://open.iot.10086.cn/doc/iot_platform/book/release/update_log.html
+url: https://open.iot.10086.cn/doc/iot_platform/book/release/update_log.html
+scheme: semantic-ish platform release numbers (vMAJOR.MINOR.PATCH) with a calendar date
+current_version: v1.1.9
+current_version_date: '2021-03-25'
+note: >-
+  The OneNET Studio 更新日志 (release log) is the only dated, structured changelog China
+  Mobile publishes for any API. It is thin — two entries — and has not been updated since
+  2021, while the platform documentation itself has moved to a newer generation at
+  /doc/v5/develop. Product-level change traffic runs instead through the untimestamped
+  平台公告 (platform announcements) board. The IoT Card, communication-capability and
+  internet-capability platforms publish no changelog at all.
+entries:
+- version: v1.1.9
+  date: '2021-03-25'
+  breaking: false
+  highlights:
+  - 物联网平台支持LwM2M协议 — the IoT platform adds LwM2M protocol support
+  - 产品新增省市信息 — products gain province/city information
+  - 已知BUG修复 — known bug fixes
+- version: v1.0.0
+  date: '2020-06-30'
+  breaking: false
+  highlights:
+  - 上线物联网平台V1.0版本 — IoT platform v1.0 launched
+other_surfaces:
+- name: 平台公告 (platform announcements)
+  url: https://open.iot.10086.cn/doc/announcement
+  note: Maintenance and product change notices; not a versioned changelog.
+- name: OneNET Studio API SDK releases
+  url: https://github.com/cm-heclouds
+  note: >-
+    The first-party SDK repositories carry their own commit history; the Java SDK
+    (onenet-studio-api-java-sdk) was last pushed 2025-11-13 and the protocol adapter
+    publishes tagged releases to Maven Central at 1.0.4.

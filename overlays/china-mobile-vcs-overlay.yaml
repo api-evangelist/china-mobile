@@ -1,0 +1,47 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for China Mobile OneNET Voice Call Service API
+  version: 1.0.0
+extends: openapi/china-mobile-vcs-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: china-mobile
+    x-apievangelist-artifact-set:
+    - authentication/china-mobile-authentication.yml
+    - conventions/china-mobile-conventions.yml
+    - errors/china-mobile-error-codes.yml
+    - sandbox/china-mobile-sandbox.yml
+    - asyncapi/china-mobile-onenet-asyncapi.yml
+    x-apievangelist-contract-origin: >-
+      Derived from first-party documentation at
+      https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ — China Mobile publishes
+      no OpenAPI.
+- target: $.info
+  update:
+    x-camara-lineage:
+      camara_api: Click to Dial
+      relationship: >-
+        China Mobile is the sponsor of the CAMARA Click to Dial API (with Huawei; template
+        2023-05-12, TSC approved 2023-09-07, v0.1.0 Spring26 released 2026-05-28). The
+        dialNotify action below is the domestic first-party product that CAMARA API
+        abstracts. It does not implement the CAMARA schema, paths or OIDC/CIBA security
+        model.
+      camara_backlog: https://raw.githubusercontent.com/camaraproject/APIBacklog/main/documentation/APIbacklog.md
+- target: $
+  update:
+    x-apievangelist-access:
+      self_serve: false
+      gating: >-
+        Service numbers and TTS templates require qualification review (资质申请) before use,
+        and API access is bound to a test account pinned to an approved source IP before
+        production entitlement. Errors notApplyTestAccount, testAccountIsInvalid and
+        ipWhiteListNotMatch are the enforcement points.
+      sandbox: sandbox/china-mobile-sandbox.yml
+- target: $.paths['/vcs'].post
+  update:
+    x-consequence: physical
+    x-note: >-
+      Both documented actions place a real telephone call on China Mobile's network and
+      incur per-call charges. Treat as a side-effecting, non-idempotent operation — no
+      idempotency key exists, so a retried request places a second call.

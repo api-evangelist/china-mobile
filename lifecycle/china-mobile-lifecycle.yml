@@ -1,0 +1,59 @@
+generated: '2026-07-25'
+method: searched
+source: https://open.iot.10086.cn/doc/iot_platform/book/release/update_log.html
+summary: >-
+  OneNET versions its APIs with a query parameter rather than the URL path, and pins the
+  authorization signature algorithm to a dated version string. A dated release log and a
+  platform announcement board exist. No deprecation policy, no Sunset/Deprecation header
+  support, no SLA with an uptime target and no status page were found anywhere across the
+  four China Mobile API estates.
+versioning:
+  scheme: query-parameter
+  parameter: version
+  current:
+    onenet_studio_application_api: '1'
+    onenet_voice_call_service: '2'
+    onenet_auth_signature: '2020-05-29'
+    iot_card_capability_platform: v2 (URI path segment)
+  docs: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
+  note: >-
+    The auth reference states 2020-05-29 is "目前仅支持" — currently the only supported
+    signature version — so the algorithm version is effectively frozen.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation policy, migration window or RFC 8594 Sunset/Deprecation header support
+    is published. The documentation does carry an in-band deprecation signal of a sort:
+    the OneNET Studio book renders a banner reading 该文档版本较低，请点击访问新版本文档 ("this
+    documentation version is out of date, click for the new version") pointing at
+    /doc/v5/develop, so an older generation of the platform docs is being superseded
+    without a stated timetable.
+  superseded_docs:
+    old: https://open.iot.10086.cn/doc/iot_platform/
+    new: https://open.iot.10086.cn/doc/v5/develop
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No published SLA or uptime commitment. Service agreements exist for the products
+    (公测服务协议, 位置定位服务协议, 语音通话服务协议, 工业互联网标识服务协议) but they are terms of service, not
+    availability commitments.
+status_page: null
+status_page_note: >-
+  No status page. The closest first-party surface is the OneNET 平台公告 (platform
+  announcements) board at https://open.iot.10086.cn/doc/announcement, which carries
+  maintenance and change notices but is not an availability dashboard. status.heclouds.com
+  does not resolve.
+release_log: https://open.iot.10086.cn/doc/iot_platform/book/release/update_log.html
+announcements: https://open.iot.10086.cn/doc/announcement
+support:
+  faq: https://open.iot.10086.cn/doc/problem
+  email: iot_service@cmiot.chinamobile.com
+  partnership_email: kfptbhezuo@cmiot.chinamobile.com
+  phone: 4001-100-868 转 3
+deprecated_operations: []
+deprecated_operations_note: >-
+  No operation in either harvested OpenAPI is marked deprecated in the published
+  reference.

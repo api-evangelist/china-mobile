@@ -1,0 +1,27 @@
+generated: '2026-07-25'
+method: generated
+source: openapi/china-mobile-onenet-studio-openapi.yml, openapi/china-mobile-vcs-openapi.yml,
+  conventions/china-mobile-conventions.yml, errors/china-mobile-error-codes.yml
+note: >-
+  China Mobile publishes no AGENTS.md, no skill files and no agent guidance of any kind.
+  These skills are API Evangelist generated packaging of the first-party reference. Every
+  operationId referenced below exists verbatim in the OpenAPI documents in this repository,
+  which were themselves transcribed from the OneNET reference pages.
+skills:
+- file: china-mobile-onboard-and-authenticate.md
+  name: Onboard and authenticate against the OneNET open API gateway
+  api: openapi/china-mobile-onenet-studio-openapi.yml
+  operations: [QueryProductList, QueryDeviceList]
+- file: china-mobile-register-and-control-a-device.md
+  name: Register a device and read or control it through the thing model
+  api: openapi/china-mobile-onenet-studio-openapi.yml
+  operations: [CreateDevice, QueryDeviceDetail, QueryDeviceStatus, QueryDeviceProperty,
+    SetDeviceProperty, SetDeviceDesiredProperty, CallService, QueryServiceRecord]
+- file: china-mobile-receive-device-events.md
+  name: Receive OneNET device events over HTTP data push
+  api: asyncapi/china-mobile-onenet-asyncapi.yml
+  operations: [receivePushInstanceValidation, receiveHttpDataPush]
+- file: china-mobile-place-a-click-to-dial-call.md
+  name: Place a click-to-dial or voice-notification call and track its status
+  api: openapi/china-mobile-vcs-openapi.yml
+  operations: [vcsAction, clickToDialStatusCallback, voiceNotifyStatusCallback]
