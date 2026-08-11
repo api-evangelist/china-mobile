@@ -219,6 +219,8 @@ apis:
   - type: Portal
     url: https://dev.10086.cn/apmc/abilityList
 common:
+- type: MCPServer
+  url: mcp/china-mobile-mcp.yml
 - type: Website
   url: https://www.chinamobileltd.com/
 - type: DeveloperPortal
