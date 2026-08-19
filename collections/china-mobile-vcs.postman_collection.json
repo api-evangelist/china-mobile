@@ -1,0 +1,169 @@
+{
+  "item": [
+    {
+      "id": "10a9f8ab-ce0d-40f1-9d96-21123ae60e30",
+      "name": "Voice Call Service",
+      "description": {
+        "content": "语音通话 — voice notification and click-to-dial",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "df8c5eaf-94f3-4db5-acf0-b0d4c903bf4f",
+          "name": "Invoke a Voice Call Service action",
+          "request": {
+            "name": "Invoke a Voice Call Service action",
+            "description": {
+              "content": "Single entry point for the `vcs` namespace. The concrete operation is selected by the `action` query parameter; `version` is 2 for every Voice Call Service action. Documented actions are `voiceNotify` (语音通知, voice notification) and `dialNotify` (点击拨号, click to dial).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vcs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "action",
+                  "value": "<string>",
+                  "description": "(Required) API interface name."
+                },
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "(Required) API version number; all Voice Call Service interfaces are version 2."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"participant_address\": \"<string>\",\n  \"display\": \"<string>\",\n  \"actions\": [\n    {\n      \"operation\": \"<string>\",\n      \"tts_template\": \"<string>\",\n      \"param_value\": \"<string>\",\n      \"collect_length\": \"<string>\",\n      \"replay_after_collection\": \"<string>\",\n      \"collect_content_trigger_replaying\": \"<string>\",\n      \"relay_time\": \"<string>\"\n    },\n    {\n      \"operation\": \"<string>\",\n      \"tts_template\": \"<string>\",\n      \"param_value\": \"<string>\",\n      \"collect_length\": \"<string>\",\n      \"replay_after_collection\": \"<string>\",\n      \"collect_content_trigger_replaying\": \"<string>\",\n      \"relay_time\": \"<string>\"\n    }\n  ],\n  \"notify_url\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "68e36cf4-39c1-4a51-b156-3cf6fdfea735",
+              "name": "Call accepted, or a business failure carried in the envelope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vcs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "action",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "version",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"participant_address\": \"8618102383000\",\n  \"display\": \"02066240200\",\n  \"notify_url\": \"http://10.10.3.71:80/thirdParty/callback/statusback\",\n  \"actions\": [\n    {\n      \"operation\": \"PlayAndCollect\",\n      \"tts_template\": \"89\",\n      \"param_value\": \"{\\\"param1\\\":\\\"张三\\\"}\",\n      \"collect_length\": \"1\",\n      \"replay_after_collection\": \"true\",\n      \"collect_content_trigger_replaying\": \"1\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"a25087f46df04b69b29e90ef0acfd115\",\n  \"success\": true,\n  \"data\": {\n    \"call_id\": \"150104227912386807\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://openapi.heclouds.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d01a75dd-5fa7-4b56-b1a1-7e664b3402f8",
+    "name": "China Mobile OneNET Voice Call Service (VCS) API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OneNET 语音通话 (Voice Call Service, VCS) is the only China Mobile network-capability product whose full request/response contract is published anonymously. Every path, parameter, type, length, required flag, enumeration and example in this document was transcribed verbatim from the first-party OneNET developer documentation at open.iot.10086.cn (see x-evidence on each operation) — nothing here is invented. China Mobile publishes no OpenAPI of its own; this document is an API Evangelist derivation of the published reference so the surface is machine-readable.\nThe gateway uses a single path per namespace with the operation selected by the `action` query parameter and pinned by `version`. Voice Call Service is namespace `vcs`, API version `2`. Authentication is the OneNET signed `authorization` header (HMAC over et/method/res/version — see authentication/china-mobile-authentication.yml).\nClick to Dial is the domestic first-party product behind the CAMARA Click to Dial API that China Mobile sponsors upstream.\n\nContact Support:\n Name: OneNET Service (中移物联网)\n Email: iot_service@cmiot.chinamobile.com",
+      "type": "text/plain"
+    }
+  }
+}

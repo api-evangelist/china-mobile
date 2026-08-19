@@ -8,21 +8,19 @@ search:
   - registry.modelcontextprotocol.io (search "onenet", "china mobile") — 0 servers
   - github search "onenet mcp" — 0 repositories
   - OneNET documentation (open.iot.10086.cn) — no MCP, agent or tool-calling surface
-  conclusion: >-
-    China Mobile publishes no MCP server. The tool list below is an API Evangelist
-    derivation from the documented OneNET operations — a candidate design, not a China
-    Mobile product, and deliberately NOT wired as a `MCPServer` pointer in apis.yml.
+  conclusion: China Mobile publishes no MCP server. The tool list below is an API Evangelist derivation
+    from the documented OneNET operations — a candidate design, not a China Mobile product, and deliberately
+    NOT wired as a `MCPServer` pointer in apis.yml.
 server:
   name: china-mobile-onenet
   status: candidate
   transport: null
   url: null
 notes:
-- Every candidate tool inherits its real input schema from the backing OpenAPI operation's
-  parameters or requestBody in this repository.
-- Read tools are safe to expose to an agent. The write tools carry consequence, and the two
-  voice tools place billable telephone calls with no idempotency key — see
-  agentic-access/china-mobile-agentic-access.yml.
+- Every candidate tool inherits its real input schema from the backing OpenAPI operation's parameters
+  or requestBody in this repository.
+- Read tools are safe to expose to an agent. The write tools carry consequence, and the two voice tools
+  place billable telephone calls with no idempotency key — see agentic-access/china-mobile-agentic-access.yml.
 tools:
 - name: list_products
   description: List the products integrated into a OneNET project.
@@ -77,3 +75,9 @@ tools:
   source_operation: openapi/china-mobile-vcs-openapi.yml#vcsAction
   consequence: physical
   note: Places a billable telephone call. No idempotency key exists; a retry dials again.
+deployment:
+  mode: none
+  verified: derived
+  tools: 15
+  checked: '2026-08-12'
+  source: catalog MCP census

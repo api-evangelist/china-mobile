@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "China Mobile OneNET Voice Call Service (VCS) API",
+    "version": "2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Voice Call Service",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Invoke a Voice Call Service action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/vcs",
+            "params": [
+              {
+                "name": "action",
+                "value": "",
+                "type": "query",
+                "description": "API interface name."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "API version number; all Voice Call Service interfaces are version 2."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Single entry point for the `vcs` namespace. The concrete operation is selected by the `action` query parameter; `version` is 2 for every Voice Call Service action. Documented actions are `voiceNotify` (语音通知, voice notification) and `dialNotify` (点击拨号, click to dial)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

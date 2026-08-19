@@ -1,0 +1,1376 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "China Mobile OneNET Studio Application API",
+    "version": "1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "authorization",
+      "value": "{{authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Device Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "设备创建 (CreateDevice)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/common?action=CreateDevice&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio common namespace, action CreateDevice, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/common/createDevice.html"
+        },
+        {
+          "info": {
+            "name": "设备批量创建 (BatchCreateDevices)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/common?action=BatchCreateDevices&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio common namespace, action BatchCreateDevices, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/common/batchCreateDevice.html"
+        },
+        {
+          "info": {
+            "name": "设备编辑 (UpdateDevice)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/common?action=UpdateDevice&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio common namespace, action UpdateDevice, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/common/updateDevice.html"
+        },
+        {
+          "info": {
+            "name": "设备删除 (DeleteDevice)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/common?action=DeleteDevice&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio common namespace, action DeleteDevice, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/common/deleteDevice.html"
+        },
+        {
+          "info": {
+            "name": "设备详情 (QueryDeviceDetail)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/common?action=QueryDeviceDetail&version=1",
+            "params": [
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "产品ID"
+              },
+              {
+                "name": "device_name",
+                "value": "",
+                "type": "query",
+                "description": "设备名称"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio common namespace, action QueryDeviceDetail, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/common/queryDeviceDetail.html"
+        },
+        {
+          "info": {
+            "name": "设备转移 (MoveProductDevice)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/common?action=MoveProductDevice&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio common namespace, action MoveProductDevice, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/common/moveProductDevice.html"
+        },
+        {
+          "info": {
+            "name": "物模型系统功能点 (QuerySystemThingModel)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/common?action=QuerySystemThingModel&version=1",
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio common namespace, action QuerySystemThingModel, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/common/querySystemThingModel.html"
+        },
+        {
+          "info": {
+            "name": "物模型查询 (QueryThingModel)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/common?action=QueryThingModel&version=1",
+            "params": [
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "产品id"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio common namespace, action QueryThingModel, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/common/queryThingModel.html"
+        },
+        {
+          "info": {
+            "name": "设备工业标识注册 (RegistDeviceIdentity)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/common?action=RegistDeviceIdentity&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio common namespace, action RegistDeviceIdentity, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/common/registDeviceIdentity.html"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Application Development",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "项目集成产品列表 (QueryProductList)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=QueryProductList&version=1",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "项目ID"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "请求起始位置，默认0"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "每次请求记录数，默认10"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action QueryProductList, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryProductList.html"
+        },
+        {
+          "info": {
+            "name": "项目集成设备列表 (QueryDeviceList)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=QueryDeviceList&version=1",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "项目ID"
+              },
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "产品ID"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "query",
+                "description": "分组ID"
+              },
+              {
+                "name": "device_name",
+                "value": "",
+                "type": "query",
+                "description": "设备名称"
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "设备来源 1-自主创建 2-他人转移"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "请求记录起始位置，默认 0"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "每次请求记录数，默认10, 范围[1, 100]"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action QueryDeviceList, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceList.html"
+        },
+        {
+          "info": {
+            "name": "项目添加设备 (AddDevice)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/application?action=AddDevice&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action AddDevice, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/addDevice.html"
+        },
+        {
+          "info": {
+            "name": "项目移除设备 (RemoveDevice)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/application?action=RemoveDevice&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action RemoveDevice, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/removeDevice.html"
+        },
+        {
+          "info": {
+            "name": "分组创建 (CreateGroup)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/application?action=CreateGroup&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action CreateGroup, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/createGroup.html"
+        },
+        {
+          "info": {
+            "name": "分组删除 (DeleteGroup)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/application?action=DeleteGroup&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action DeleteGroup, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/deleteGroup.html"
+        },
+        {
+          "info": {
+            "name": "分组编辑 (UpdateGroup)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/application?action=UpdateGroup&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action UpdateGroup, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/updateGroup.html"
+        },
+        {
+          "info": {
+            "name": "分组详情 (QueryGroupDetail)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=QueryGroupDetail&version=1",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "项目ID"
+              },
+              {
+                "name": "group_id",
+                "value": "",
+                "type": "query",
+                "description": "分组ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action QueryGroupDetail, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryGroupDetail.html"
+        },
+        {
+          "info": {
+            "name": "分组列表 (QueryGroupList)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=QueryGroupList&version=1",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "项目ID"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "分组名称"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "标签key（key、value需成对出现，否则没有效果）"
+              },
+              {
+                "name": "value",
+                "value": "",
+                "type": "query",
+                "description": "标签value（key、value 需成对出现，否则没有效果）"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "请求记录起始位置，默认 0"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "每次请求记录数，默认10"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action QueryGroupList, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryGroupList.html"
+        },
+        {
+          "info": {
+            "name": "分组设备添加 (AddGroupDevice)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/application?action=AddGroupDevice&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action AddGroupDevice, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/addGroupDevice.html"
+        },
+        {
+          "info": {
+            "name": "分组设备移除 (RemoveGroupDevice)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/application?action=RemoveGroupDevice&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action RemoveGroupDevice, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/removeGroupDevice.html"
+        },
+        {
+          "info": {
+            "name": "设备详情 (QueryDeviceDetail)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=QueryDeviceDetail&version=1",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "项目ID"
+              },
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "产品ID"
+              },
+              {
+                "name": "device_name",
+                "value": "",
+                "type": "query",
+                "description": "设备名称"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action QueryDeviceDetail, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceDetail.html"
+        },
+        {
+          "info": {
+            "name": "设备状态查询 (QueryDeviceStatus)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=QueryDeviceStatus&version=1",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "项目ID"
+              },
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "产品ID"
+              },
+              {
+                "name": "device_name",
+                "value": "",
+                "type": "query",
+                "description": "设备名称"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action QueryDeviceStatus, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceStatus.html"
+        },
+        {
+          "info": {
+            "name": "设备状态记录查询 (QueryDeviceStatusHistory)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=QueryDeviceStatusHistory&version=1",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "项目ID"
+              },
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "产品ID"
+              },
+              {
+                "name": "device_name",
+                "value": "",
+                "type": "query",
+                "description": "设备名称"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "查询起始时间，毫秒时间戳"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "查询结束时间，毫秒时间戳"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "请求起始位置，默认0"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "每次请求记录数，默认10, 范围[1, 100]"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action QueryDeviceStatusHistory, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceStatusHistory.html"
+        },
+        {
+          "info": {
+            "name": "设备属性设置 (SetDeviceProperty)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/application?action=SetDeviceProperty&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action SetDeviceProperty, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/setDeviceProperty.html"
+        },
+        {
+          "info": {
+            "name": "设备属性获取 (QueryDevicePropertyDetail)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/application?action=QueryDevicePropertyDetail&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action QueryDevicePropertyDetail, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDevicePropertyDetail.html"
+        },
+        {
+          "info": {
+            "name": "设备属性期望设置 (SetDeviceDesiredProperty)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/application?action=SetDeviceDesiredProperty&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action SetDeviceDesiredProperty, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/setDeviceDesiredProperty.html"
+        },
+        {
+          "info": {
+            "name": "设备属性期望查询 (QueryDeviceDesiredProperty)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/application?action=QueryDeviceDesiredProperty&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action QueryDeviceDesiredProperty, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceDesiredProperty.html"
+        },
+        {
+          "info": {
+            "name": "设备属性期望删除 (DeleteDeviceDesiredProperty)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/application?action=DeleteDeviceDesiredProperty&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action DeleteDeviceDesiredProperty, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/deleteDeviceDesiredProperty.html"
+        },
+        {
+          "info": {
+            "name": "设备操作日志查询 (QueryDeviceLog)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=QueryDeviceLog&version=1",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "项目ID"
+              },
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "产品ID"
+              },
+              {
+                "name": "device_name",
+                "value": "",
+                "type": "query",
+                "description": "设备名称"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "查询起始时间，毫秒时间戳"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "查询结束时间，毫秒时间戳"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "请求起始位置，默认0"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "每次请求记录数，默认10, 范围[1, 100]"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action QueryDeviceLog, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceLog.html"
+        },
+        {
+          "info": {
+            "name": "设备最新数据查询 (QueryDeviceProperty)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=QueryDeviceProperty&version=1",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "项目ID"
+              },
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "产品ID"
+              },
+              {
+                "name": "device_name",
+                "value": "",
+                "type": "query",
+                "description": "设备名称"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action QueryDeviceProperty, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceProperty.html"
+        },
+        {
+          "info": {
+            "name": "设备属性记录查询 (QueryDevicePropertyHistory)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=QueryDevicePropertyHistory&version=1",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "项目ID"
+              },
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "产品ID"
+              },
+              {
+                "name": "device_name",
+                "value": "",
+                "type": "query",
+                "description": "设备名称"
+              },
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "query",
+                "description": "属性功能点标识"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "查询起始时间，毫秒时间戳"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "查询结束时间，毫秒时间戳"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "排序参数 1-正序 2-倒序"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "请求起始位置，默认0"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "每次请求记录数，默认10, 范围[1, 100]"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action QueryDevicePropertyHistory, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDevicePropertyHistory.html"
+        },
+        {
+          "info": {
+            "name": "设备事件记录查询 (QueryDeviceEventHistory)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=QueryDeviceEventHistory&version=1",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "项目ID"
+              },
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "产品ID"
+              },
+              {
+                "name": "device_name",
+                "value": "",
+                "type": "query",
+                "description": "设备名称"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "查询起始时间，毫秒时间戳"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "查询结束时间，毫秒时间戳"
+              },
+              {
+                "name": "identifier",
+                "value": "",
+                "type": "query",
+                "description": "事件功能点标识"
+              },
+              {
+                "name": "event_type",
+                "value": "",
+                "type": "query",
+                "description": "事件类型 1-信息 2-告警 3-故障"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "请求起始位置，默认0"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "每次请求记录数，默认10, 范围[1, 100]"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action QueryDeviceEventHistory, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryDeviceEventHistory.html"
+        },
+        {
+          "info": {
+            "name": "设备服务调用 (CallService)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/application?action=CallService&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action CallService, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/callService.html"
+        },
+        {
+          "info": {
+            "name": "设备服务执行记录查询 (QueryServiceRecord)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=QueryServiceRecord&version=1",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "项目id"
+              },
+              {
+                "name": "trace_id",
+                "value": "",
+                "type": "query",
+                "description": "调用服务后的requestId"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action QueryServiceRecord, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/queryServiceRecord.html"
+        },
+        {
+          "info": {
+            "name": "设备文件上传 (CreateDeviceFile)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/application?action=CreateDeviceFile&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action CreateDeviceFile, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/createDeviceFile.html"
+        },
+        {
+          "info": {
+            "name": "设备文件下载 (GetDeviceFile)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=GetDeviceFile&version=1",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "文件ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action GetDeviceFile, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/getDeviceFile.html"
+        },
+        {
+          "info": {
+            "name": "设备文件删除 (DeleteDeviceFile)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/application?action=DeleteDeviceFile&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action DeleteDeviceFile, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/deleteDeviceFile.html"
+        },
+        {
+          "info": {
+            "name": "账户文件列表查询 (GetDeviceFilesList)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=GetDeviceFilesList&version=1",
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action GetDeviceFilesList, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/getDeviceFilesList.html"
+        },
+        {
+          "info": {
+            "name": "账户文件存储空间查询 (GetDeviceFileSpace)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=GetDeviceFileSpace&version=1",
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action GetDeviceFileSpace, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/getDeviceFileSpace.html"
+        },
+        {
+          "info": {
+            "name": "账户设备文件数量查询 (GetDeviceFileCount)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=GetDeviceFileCount&version=1",
+            "params": [
+              {
+                "name": "device_name",
+                "value": "",
+                "type": "query",
+                "description": "设备名称"
+              },
+              {
+                "name": "product_id",
+                "value": "",
+                "type": "query",
+                "description": "产品ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action GetDeviceFileCount, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/getDeviceFileCount.html"
+        },
+        {
+          "info": {
+            "name": "场景联动规则创建 (CreateSceneRule)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://openapi.heclouds.com/application?action=CreateSceneRule&version=1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action CreateSceneRule, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/createSceneRule.html"
+        },
+        {
+          "info": {
+            "name": "场景联动规则详情 (QuerySceneRuleDetail)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=QuerySceneRuleDetail&version=1",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "项目ID"
+              },
+              {
+                "name": "scene_id",
+                "value": "",
+                "type": "query",
+                "description": "场景联动规则ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action QuerySceneRuleDetail, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/querySceneRuleDetail.html"
+        },
+        {
+          "info": {
+            "name": "场景联动规则列表 (QuerySceneRules)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=QuerySceneRules&version=1",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "项目ID"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "请求起始位置，默认0"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "每次请求记录数，默认10, 范围[1, 100]"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action QuerySceneRules, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/querySceneRules.html"
+        },
+        {
+          "info": {
+            "name": "场景联动触发日志 (QuerySceneLog)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://openapi.heclouds.com/application?action=QuerySceneLog&version=1",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "query",
+                "description": "项目ID"
+              },
+              {
+                "name": "scene_id",
+                "value": "",
+                "type": "query",
+                "description": "场景联动规则ID"
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "查询起始时间，例如2020-07-10T05:59:02.833Z"
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "查询起始时间"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "请求起始位置，默认0"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "每次请求记录数，默认10, 范围[1, 100]"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "authorization",
+              "value": "{{authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "OneNET Studio application namespace, action QuerySceneLog, version 1. Documented at https://open.iot.10086.cn/doc/iot_platform/book/api/application/querySceneLog.html"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
