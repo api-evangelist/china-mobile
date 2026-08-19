@@ -39,7 +39,7 @@ tags:
 - Satellite
 created: '2026-07-25'
 modified: '2026-07-25'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: china-mobile:onenet-studio-application-api
   name: OneNET Studio Application API
