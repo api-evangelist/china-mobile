@@ -62,6 +62,12 @@ apis:
   - IoT
   - Device Management
   - Thing Model
+  - Platform-as-a-Service
+  - China
+  tags_raw:
+  - IoT
+  - Device Management
+  - Thing Model
   - PaaS
   - China
   properties:
@@ -131,6 +137,12 @@ apis:
   humanURL: https://open.iot.10086.cn/doc/
   baseURL: https://api.heclouds.com
   tags:
+  - IoT
+  - Device Management
+  - MQTT
+  - Platform-as-a-Service
+  - China
+  tags_raw:
   - IoT
   - Device Management
   - MQTT
