@@ -41,99 +41,15 @@ created: '2026-07-25'
 modified: '2026-07-25'
 specificationVersion: '0.23'
 apis:
-- aid: china-mobile:onenet-studio-application-api
-  name: OneNET Studio Application API
-  description: The OneNET Studio application API is the one China Mobile surface with a
-    complete, anonymously readable request-and-response contract. It is an action-dispatched
-    gateway — every call is https://openapi.heclouds.com/{namespace}?action={Action}&version=1,
-    where the namespace is application (application development), common (device management),
-    lwm2m-online or lwm2m-offline. Forty-four operations are documented across devices,
-    products, projects, groups, thing models, device properties and desired properties,
-    thing-model service invocation, device files and scene-linkage rules. Authentication is a
-    signed, time-boxed authorization header (HMAC over et, method, res and version, signature
-    algorithm version 2020-05-29). Every response is a uniform envelope carrying a
-    platform-generated requestId, and business failures arrive as HTTP 200 with success false
-    plus a string error code. China Mobile publishes no OpenAPI for it; the OpenAPI in this
-    repository was transcribed operation by operation from the published reference, with each
-    operation carrying its source page in x-evidence.
-  humanURL: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
-  baseURL: https://openapi.heclouds.com
-  tags:
-  - IoT
-  - Device Management
-  - Thing Model
-  - Platform-as-a-Service
-  - China
-  tags_raw:
-  - IoT
-  - Device Management
-  - Thing Model
-  - PaaS
-  - China
-  properties:
-  - type: OpenAPI
-    url: openapi/china-mobile-onenet-studio-openapi.yml
-  - type: Overlay
-    url: overlays/china-mobile-onenet-studio-overlay.yaml
-  - type: Documentation
-    url: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
-  - type: APIReference
-    url: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
-  - type: Authentication
-    url: https://open.iot.10086.cn/doc/iot_platform/book/api/auth.html
-  - type: ErrorCatalog
-    url: https://open.iot.10086.cn/doc/iot_platform/book/api/code.html
-  - type: SDKs
-    url: https://open.iot.10086.cn/doc/iot_platform/book/api/sdk.html
-  - type: DataModel
-    url: data-model/china-mobile-data-model.yml
-- aid: china-mobile:onenet-voice-call-service
-  name: OneNET Voice Call Service (VCS) API
-  description: 语音通话 (Voice Call Service) is China Mobile's publicly documented voice
-    capability on the OneNET gateway, reached at
-    https://openapi.heclouds.com/vcs?action={voiceNotify|dialNotify}&version=2. Click to dial
-    (点击拨号) connects a caller and a callee across the China Mobile network; voice notification
-    (语音通知) plays an approved TTS template to a subscriber and can collect DTMF digits. Both
-    return a call_id and both deliver call-status callbacks to a caller-supplied notify_url,
-    with documented status and disconnect-reason enumerations. Click to Dial is the domestic
-    first-party product behind the CAMARA Click to Dial API that China Mobile sponsors
-    upstream with Huawei — the shipped product does not implement the CAMARA schema or its
-    OIDC/CIBA security model. Access is gated three ways — business entitlement, a test account
-    pinned to an approved source IP, and a trial-usage quota. Service numbers and TTS templates
-    require qualification review before use.
-  humanURL: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/request.html
-  baseURL: https://openapi.heclouds.com
-  tags:
-  - Voice
-  - Click to Dial
-  - CAMARA
-  - Network APIs
-  - China
-  properties:
-  - type: OpenAPI
-    url: openapi/china-mobile-vcs-openapi.yml
-  - type: Overlay
-    url: overlays/china-mobile-vcs-overlay.yaml
-  - type: Documentation
-    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/request.html
-  - type: APIReference
-    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd.html
-  - type: ErrorCatalog
-    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/errorcode.html
-  - type: Webhooks
-    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd-status.html
-  - type: TermsOfService
-    url: https://open.iot.10086.cn/doc/iot_platform/book/agreement/vcs-service-agreement.html
 - aid: china-mobile:onenet-iot-platform
   name: OneNET IoT Open Platform API
-  description: OneNET is China Mobile's IoT PaaS, operated by its CMIOT subsidiary,
-    for device connection, device management, data storage and data visualisation.
-    It is the company's most genuinely developer-facing surface, with open Chinese-language
-    documentation covering MQTT and multi-protocol device access, OneNET Studio, edge
-    computing, device management (DMP), OTA, message queue, SMS, LBS and video capabilities.
-    The legacy REST base URL api.heclouds.com is live and responds with a JSON token
-    authentication error to unauthenticated calls, confirming a real token-authenticated
-    device API behind the docs.
+  description: >-
+    OneNET is China Mobile's IoT PaaS, operated by its CMIOT subsidiary, for device connection, device
+    management, data storage and data visualisation. It is the company's most genuinely developer-facing
+    surface, with open Chinese-language documentation covering MQTT and multi-protocol device access,
+    OneNET Studio, edge computing, device management (DMP), OTA, message queue, SMS, LBS and video capabilities.
+    The legacy REST base URL api.heclouds.com is live and responds with a JSON token authentication error
+    to unauthenticated calls, confirming a real token-authenticated device API behind the docs.
   humanURL: https://open.iot.10086.cn/doc/
   baseURL: https://api.heclouds.com
   tags:
@@ -159,14 +75,14 @@ apis:
     url: https://open.iot.10086.cn/
 - aid: china-mobile:iot-card-capability-platform
   name: China Mobile IoT Card Capability Open Platform API
-  description: The 物联卡能力开放平台 (IoT Card Capability Open Platform) exposes cellular
-    M2M SIM lifecycle and subscriber-information operations to enterprise IoT customers.
-    Interface documentation is published openly — the confirmed CMIOT_API2003 码号信息查询
-    (code/number information query) page documents GET/POST https://api.iot.10086.cn/v2/cardinfo,
-    which resolves any one of ICCID, IMSI or MSISDN into the other two. Authentication
-    is a proprietary signed-request scheme (appid, transid, ebid and a SHA-256 token
-    derived from appid+password+transid) whose credentials China Mobile issues by email
-    to approved enterprise IoT-card customers only. No OpenAPI is published.
+  description: >-
+    The 物联卡能力开放平台 (IoT Card Capability Open Platform) exposes cellular M2M SIM lifecycle and subscriber-information
+    operations to enterprise IoT customers. Interface documentation is published openly — the confirmed
+    CMIOT_API2003 码号信息查询 (code/number information query) page documents GET/POST https://api.iot.10086.cn/v2/cardinfo,
+    which resolves any one of ICCID, IMSI or MSISDN into the other two. Authentication is a proprietary
+    signed-request scheme (appid, transid, ebid and a SHA-256 token derived from appid+password+transid)
+    whose credentials China Mobile issues by email to approved enterprise IoT-card customers only. No
+    OpenAPI is published.
   humanURL: https://api.iot.10086.cn/apiDocuments/cusInfo/codeInfoQuery.html
   baseURL: https://api.iot.10086.cn/v2
   tags:
@@ -182,16 +98,15 @@ apis:
     url: https://api.iot.10086.cn/apiDocuments/cusInfo/codeInfoQuery.html
 - aid: china-mobile:communication-capability-platform
   name: China Mobile Communication Capability Open Platform
-  description: The 通信能力开放平台 (Communication Capability Open Platform) is China Mobile's
-    commercial network-capability channel and the surface where its Open Gateway work
-    actually meets buyers. Its published developer guide lists audio/video products
-    — 语音通知 (voice notification), 语音验证码 (voice OTP), 点击拨号 (click to dial) and 中间号
-    (number masking / privacy number) — plus an intelligent-pipe product, QoS保障 (QoS
-    guarantee). Click to Dial and QoS map directly to the CAMARA Click to Dial and
-    Quality on Demand APIs that China Mobile sponsors upstream. The guide covers product
-    introduction, quick start, interface guidance and pricing, but ordering and credentials
-    require enterprise onboarding; no base URL, endpoint reference or machine-readable
-    definition is published anonymously.
+  description: >-
+    The 通信能力开放平台 (Communication Capability Open Platform) is China Mobile's commercial network-capability
+    channel and the surface where its Open Gateway work actually meets buyers. Its published developer
+    guide lists audio/video products — 语音通知 (voice notification), 语音验证码 (voice OTP), 点击拨号 (click to dial)
+    and 中间号 (number masking / privacy number) — plus an intelligent-pipe product, QoS保障 (QoS guarantee).
+    Click to Dial and QoS map directly to the CAMARA Click to Dial and Quality on Demand APIs that China
+    Mobile sponsors upstream. The guide covers product introduction, quick start, interface guidance and
+    pricing, but ordering and credentials require enterprise onboarding; no base URL, endpoint reference
+    or machine-readable definition is published anonymously.
   humanURL: https://ct.open.10086.cn/portal/developer/docAndHelp.action
   tags:
   - Voice
@@ -207,15 +122,14 @@ apis:
     url: https://ct.open.10086.cn/portal/index.action
 - aid: china-mobile:internet-capability-open-platform
   name: China Mobile Internet Capability Open Platform
-  description: 中国移动互联网能力开放平台 at dev.10086.cn is the operator's application-facing
-    capability marketplace, describing itself as offering 移动认证/号码认证 (mobile and number
-    authentication), 大数据服务 (big data services), 通信能力 (communication capabilities),
-    支付能力 (payment/carrier-billing capabilities) and promotion capabilities. In practice
-    it is an enterprise procurement console rather than a developer portal — its routes
-    are login, ability ordering, application management, billing, invoices and work
-    orders, and every documentation route resolves to the same single-page shell for
-    anonymous visitors. Its number-authentication capability is the domestic analogue
-    of CAMARA Number Verification and is delivered through China Mobile's CMPassport
+  description: >-
+    中国移动互联网能力开放平台 at dev.10086.cn is the operator's application-facing capability marketplace, describing
+    itself as offering 移动认证/号码认证 (mobile and number authentication), 大数据服务 (big data services), 通信能力 (communication
+    capabilities), 支付能力 (payment/carrier-billing capabilities) and promotion capabilities. In practice
+    it is an enterprise procurement console rather than a developer portal — its routes are login, ability
+    ordering, application management, billing, invoices and work orders, and every documentation route
+    resolves to the same single-page shell for anonymous visitors. Its number-authentication capability
+    is the domestic analogue of CAMARA Number Verification and is delivered through China Mobile's CMPassport
     unified-authentication gateway rather than through a CAMARA endpoint.
   humanURL: https://dev.10086.cn/
   tags:
@@ -230,7 +144,108 @@ apis:
     url: https://dev.10086.cn/
   - type: Portal
     url: https://dev.10086.cn/apmc/abilityList
+- aid: china-mobile:china-mobile-application-development-api
+  name: China Mobile Application Development API
+  description: >-
+    The Application Development API from China Mobile — 35 operation(s) for application development.
+  humanURL: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
+  baseURL: https://openapi.heclouds.com
+  tags:
+  - Application Development
+  properties:
+  - type: OpenAPI
+    url: openapi/china-mobile-application-development-api-openapi.yml
+  - type: Documentation
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
+  - type: APIReference
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
+  - type: Authentication
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/auth.html
+  - type: ErrorCatalog
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/code.html
+  - type: SDKs
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/sdk.html
+  - type: DataModel
+    url: data-model/china-mobile-data-model.yml
+  - type: Documentation
+    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/request.html
+  - type: APIReference
+    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd.html
+  - type: ErrorCatalog
+    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/errorcode.html
+  - type: Webhooks
+    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd-status.html
+  - type: TermsOfService
+    url: https://open.iot.10086.cn/doc/iot_platform/book/agreement/vcs-service-agreement.html
+- aid: china-mobile:china-mobile-device-management-api
+  name: China Mobile Device Management API
+  description: The Device Management API from China Mobile — 9 operation(s) for device management.
+  humanURL: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
+  baseURL: https://openapi.heclouds.com
+  tags:
+  - Device Management
+  properties:
+  - type: OpenAPI
+    url: openapi/china-mobile-device-management-api-openapi.yml
+  - type: Documentation
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
+  - type: APIReference
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
+  - type: Authentication
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/auth.html
+  - type: ErrorCatalog
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/code.html
+  - type: SDKs
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/sdk.html
+  - type: DataModel
+    url: data-model/china-mobile-data-model.yml
+  - type: Documentation
+    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/request.html
+  - type: APIReference
+    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd.html
+  - type: ErrorCatalog
+    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/errorcode.html
+  - type: Webhooks
+    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd-status.html
+  - type: TermsOfService
+    url: https://open.iot.10086.cn/doc/iot_platform/book/agreement/vcs-service-agreement.html
+- aid: china-mobile:china-mobile-voice-call-service-api
+  name: China Mobile Voice Call Service API
+  description: 语音通话 — voice notification and click-to-dial
+  humanURL: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
+  baseURL: https://openapi.heclouds.com
+  tags:
+  - Voice Call Service
+  properties:
+  - type: OpenAPI
+    url: openapi/china-mobile-voice-call-service-api-openapi.yml
+  - type: Documentation
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
+  - type: APIReference
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html
+  - type: Authentication
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/auth.html
+  - type: ErrorCatalog
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/code.html
+  - type: SDKs
+    url: https://open.iot.10086.cn/doc/iot_platform/book/api/sdk.html
+  - type: DataModel
+    url: data-model/china-mobile-data-model.yml
+  - type: Documentation
+    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/request.html
+  - type: APIReference
+    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd.html
+  - type: ErrorCatalog
+    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/errorcode.html
+  - type: Webhooks
+    url: https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd-status.html
+  - type: TermsOfService
+    url: https://open.iot.10086.cn/doc/iot_platform/book/agreement/vcs-service-agreement.html
 common:
+- type: Overlay
+  url: overlays/china-mobile-onenet-studio-overlay.yaml
+- type: Overlay
+  url: overlays/china-mobile-vcs-overlay.yaml
 - type: MCPServer
   url: mcp/china-mobile-mcp.yml
 - type: Website
