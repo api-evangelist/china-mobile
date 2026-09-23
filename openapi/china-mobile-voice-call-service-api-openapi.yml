@@ -3,11 +3,7 @@ info:
   title: China Mobile OneNET (VCS) Voice Call Service API
   version: '2'
   summary: Voice notification and click-to-dial operations on China Mobile's OneNET open API gateway, plus their call-status callbacks.
-  description: 'OneNET 语音通话 (Voice Call Service, VCS) is the only China Mobile network-capability product whose full request/response contract is published anonymously. Every path, parameter, type, length, required flag, enumeration and example in this document was transcribed verbatim from the first-party OneNET developer documentation at open.iot.10086.cn (see x-evidence on each operation) — nothing here is invented. China Mobile publishes no OpenAPI of its own; this document is an API Evangelist derivation of the published reference so the surface is machine-readable.
-
-    The gateway uses a single path per namespace with the operation selected by the `action` query parameter and pinned by `version`. Voice Call Service is namespace `vcs`, API version `2`. Authentication is the OneNET signed `authorization` header (HMAC over et/method/res/version — see authentication/china-mobile-authentication.yml).
-
-    Click to Dial is the domestic first-party product behind the CAMARA Click to Dial API that China Mobile sponsors upstream.'
+  description: OneNET 语音通话 (Voice Call Service, VCS) is the only China Mobile network-capability product whose full request/response contract is published anonymously.
   contact:
     name: OneNET Service (中移物联网)
     email: iot_service@cmiot.chinamobile.com
@@ -173,6 +169,43 @@ webhooks:
       - https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/ctd-status.html
 components:
   schemas:
+    CallActionType:
+      type: object
+      title: CallActionType
+      required:
+      - operation
+      - tts_template
+      - param_value
+      properties:
+        operation:
+          type: string
+          maxLength: 32
+          enum:
+          - Play
+          - PlayAndCollect
+          description: Play = play announcement; PlayAndCollect = play and collect digits.
+        tts_template:
+          type: string
+          maxLength: 20
+          description: TTS template number; must be approved before use.
+        param_value:
+          type: string
+          description: Template variable fill-ins, UTF-8, JSON object form {"var1":"aa","var2":"aa"}; the number of variables is variable.
+        collect_length:
+          type: string
+          maxLength: 32
+          description: Digit-collection length 1-32; valid when operation=PlayAndCollect.
+        replay_after_collection:
+          type: string
+          description: Whether to replay the announcement after collection. Default false.
+        collect_content_trigger_replaying:
+          type: string
+          maxLength: 32
+          description: Collected content that triggers a replay; valid when replay_after_collection=true. Default 1.
+        relay_time:
+          type: string
+          maxLength: 32
+          description: Number of announcement repeats; valid when operation=Play. Default 1.
     ClickToDialStatusEvent:
       type: object
       title: 点击拨号状态呼叫通知 event
@@ -228,6 +261,31 @@ components:
         caller_call_duration:
           type: string
           description: Calling-party duration in seconds; present when status=Disconnected and the caller is not a China Mobile number.
+    CallbackAck:
+      type: object
+      title: Callback acknowledgement
+      required:
+      - request_id
+      - code_no
+      - code
+      - message
+      properties:
+        request_id:
+          type: string
+          maxLength: 32
+          description: Unique HTTP request identifier.
+        code_no:
+          type: string
+          maxLength: 6
+          description: Return code number, e.g. 000000.
+        code:
+          type: string
+          maxLength: 512
+          description: Return code, e.g. onenet_common_success.
+        message:
+          type: string
+          maxLength: 512
+          description: Return description.
     VoiceNotifyStatusEvent:
       type: object
       title: 语音通知状态呼叫通知 event
@@ -310,56 +368,6 @@ components:
             call_id:
               type: string
               description: Call identifier.
-    VoiceNotifyRequest:
-      type: object
-      title: 语音通知 request
-      required:
-      - participant_address
-      - display
-      - actions
-      properties:
-        participant_address:
-          type: string
-          maxLength: 20
-          description: Called party MSISDN, e.g. 8618625150488.
-        display:
-          type: string
-          maxLength: 64
-          description: Service number allocated by the platform after qualification review.
-        actions:
-          type: array
-          description: Call action instructions; only Play and PlayAndCollect are supported.
-          items:
-            $ref: '#/components/schemas/CallActionType'
-        notify_url:
-          type: string
-          maxLength: 512
-          description: Callback URL (POST). When absent, the platform-configured URL is used.
-    CallbackAck:
-      type: object
-      title: Callback acknowledgement
-      required:
-      - request_id
-      - code_no
-      - code
-      - message
-      properties:
-        request_id:
-          type: string
-          maxLength: 32
-          description: Unique HTTP request identifier.
-        code_no:
-          type: string
-          maxLength: 6
-          description: Return code number, e.g. 000000.
-        code:
-          type: string
-          maxLength: 512
-          description: Return code, e.g. onenet_common_success.
-        message:
-          type: string
-          maxLength: 512
-          description: Return description.
     ClickToDialRequest:
       type: object
       title: 点击拨号 request
@@ -388,43 +396,31 @@ components:
           type: string
           maxLength: 512
           description: Callback URL (POST). When absent, no callback is made.
-    CallActionType:
+    VoiceNotifyRequest:
       type: object
-      title: CallActionType
+      title: 语音通知 request
       required:
-      - operation
-      - tts_template
-      - param_value
+      - participant_address
+      - display
+      - actions
       properties:
-        operation:
-          type: string
-          maxLength: 32
-          enum:
-          - Play
-          - PlayAndCollect
-          description: Play = play announcement; PlayAndCollect = play and collect digits.
-        tts_template:
+        participant_address:
           type: string
           maxLength: 20
-          description: TTS template number; must be approved before use.
-        param_value:
+          description: Called party MSISDN, e.g. 8618625150488.
+        display:
           type: string
-          description: Template variable fill-ins, UTF-8, JSON object form {"var1":"aa","var2":"aa"}; the number of variables is variable.
-        collect_length:
+          maxLength: 64
+          description: Service number allocated by the platform after qualification review.
+        actions:
+          type: array
+          description: Call action instructions; only Play and PlayAndCollect are supported.
+          items:
+            $ref: '#/components/schemas/CallActionType'
+        notify_url:
           type: string
-          maxLength: 32
-          description: Digit-collection length 1-32; valid when operation=PlayAndCollect.
-        replay_after_collection:
-          type: string
-          description: Whether to replay the announcement after collection. Default false.
-        collect_content_trigger_replaying:
-          type: string
-          maxLength: 32
-          description: Collected content that triggers a replay; valid when replay_after_collection=true. Default 1.
-        relay_time:
-          type: string
-          maxLength: 32
-          description: Number of announcement repeats; valid when operation=Play. Default 1.
+          maxLength: 512
+          description: Callback URL (POST). When absent, the platform-configured URL is used.
   securitySchemes:
     onenetAuthorization:
       type: apiKey

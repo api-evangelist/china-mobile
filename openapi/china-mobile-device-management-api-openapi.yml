@@ -3,13 +3,7 @@ info:
   title: China Mobile OneNET Studio Application Device Management API
   version: '1'
   summary: Device, project, group, thing-model, file and scene-linkage operations on China Mobile's OneNET Studio IoT platform.
-  description: 'OneNET Studio is China Mobile''s IoT PaaS, operated by CMIOT (中移物联网). Its application API is an action-dispatched gateway: every call is https://openapi.heclouds.com/{namespace}?action={Action}&version={version}, where namespace is one of application (application development), common (device management), lwm2m-online or lwm2m-offline, and version is 1 for all platform interfaces.
-
-
-    Every operation, HTTP method, parameter name, type, required flag and description in this document was transcribed from the first-party OneNET reference pages under https://open.iot.10086.cn/doc/iot_platform/book/api/ (each operation carries its source page in x-evidence). China Mobile publishes no OpenAPI/Swagger of its own on any confirmed first-party host; this document is an API Evangelist derivation of the published reference so that the surface is machine-readable. Nothing here is invented — operations whose reference pages did not state a method were omitted rather than guessed.
-
-
-    Because the gateway dispatches on a query parameter rather than on the path, each path key below reproduces the documented request line verbatim (the reference literally writes ''POST /common?action=UpdateDevice&version=1'').'
+  description: OneNET Studio is China Mobile's IoT PaaS, operated by CMIOT (中移物联网).
   contact:
     name: OneNET Service (中移物联网)
     email: iot_service@cmiot.chinamobile.com
