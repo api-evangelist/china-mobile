@@ -1,4 +1,4 @@
-# China Mobile (china-mobile)
+# China Mobile
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,150 +64,141 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-China Mobile Limited is the world's largest mobile network operator by subscribers, serving approximately 1,005 million mobile customers and 110 million gigabit broadband customers across all 31 provinces of mainland China plus Hong Kong, with roaming into more than 200 countries. Listed on the Hong Kong Stock Exchange and the Shanghai Stock Exchange and majority-owned by state-held China Mobile Communications Group, it runs mobile, broadband, cellular IoT, satellite internet, data centre, cloud and AI businesses on annual revenue of about RMB 1,050.2 billion.
+China Mobile Limited is the world's largest mobile network operator by subscribers, serving approximately 1,005 million mobile customers and 110 million gigabit broadband customers across all 31 provinces of mainland China plus Hong Kong, with roaming into more than 200 countries. Listed on the Hong Kong Stock Exchange and the Shanghai Stock Exchange and majority-owned by state-held China Mobile Communications Group, it runs mobile, broadband, cellular IoT, satellite internet, data centre, cloud and AI businesses on annual revenue of about RMB 1,050.2 billion. In the network-API value chain China Mobile sits squarely on the operator side, not the aggregator side. It joined the GSMA Open Gateway initiative in June 2023, sponsors and maintains several CAMARA APIs upstream (Click to Dial, the Model as a Service family, High-throughput Elastic Network, Facial Recognition, and co-sponsors Network Slice Booking), and in October 2024 secured GSMA Open Gateway certification for its Network-as-a-Service platform after its Quality on Demand API passed 63 conformance tests on ZTE NEF/SCEF exposure functions. None of that is callable from the open internet. Its API posture is partner-gated and domestic — the capability platforms at dev.10086.cn, ct.open.10086.cn and api.iot.10086.cn publish real product and interface documentation but issue credentials only to registered mainland enterprise customers under contract, and China Mobile is not a shareholder in Aduna, so it reaches developers through its own Chinese-language capability marketplaces rather than through the global CPaaS or aggregator channel. The one genuinely self-serve surface is OneNET, its IoT PaaS, which publishes open developer documentation and a live token-authenticated device API.
 
-In the network-API value chain China Mobile sits squarely on the operator side, not the aggregator side. It joined the GSMA Open Gateway initiative in June 2023, sponsors and maintains several CAMARA APIs upstream, and in October 2024 secured GSMA Open Gateway certification for its Network-as-a-Service platform after its Quality on Demand API passed 63 conformance tests. None of that is callable from the open internet. Its API posture is partner-gated and domestic — the capability platforms publish real product and interface documentation but issue credentials only to registered mainland enterprise customers under contract. China Mobile is not a shareholder in Aduna, so it reaches developers through its own Chinese-language capability marketplaces rather than through the global CPaaS or aggregator channel.
+**Areas:** Telecommunications · China · Mobile Network Operator · Network APIs · CAMARA · GSMA Open Gateway · IoT · 5G · Broadband · Quality on Demand · Number Authentication · Satellite
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/china-mobile/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/china-mobile/refs/heads/main/apis.yml)
+## China Mobile on APIs.io
 
-## Tags
+Everything profiled for China Mobile is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/china-mobile/](https://apis.io/providers/china-mobile/)** — or go straight to one of the APIs or properties below.
 
-- Telecommunications
-- China
-- Mobile Network Operator
-- Network APIs
-- CAMARA
-- GSMA Open Gateway
-- IoT
-- 5G
-- Broadband
-- Quality on Demand
-- Number Authentication
-- Satellite
+### APIs (7)
 
-## Timestamps
+- [OneNET IoT Open Platform API](https://apis.io/apis/china-mobile/onenet-iot-platform/) — OneNET is China Mobile's IoT PaaS, operated by its CMIOT subsidiary, for device connection, device management, data storage and data visualisation. It is…
+- [China Mobile IoT Card Capability Open Platform API](https://apis.io/apis/china-mobile/iot-card-capability-platform/) — The 物联卡能力开放平台 (IoT Card Capability Open Platform) exposes cellular M2M SIM lifecycle and subscriber-information operations to enterprise IoT customers.…
+- [China Mobile Communication Capability Open Platform](https://apis.io/apis/china-mobile/communication-capability-platform/) — The 通信能力开放平台 (Communication Capability Open Platform) is China Mobile's commercial network-capability channel and the surface where its Open Gateway work…
+- [China Mobile Internet Capability Open Platform](https://apis.io/apis/china-mobile/internet-capability-open-platform/) — 中国移动互联网能力开放平台 at dev.10086.cn is the operator's application-facing capability marketplace, describing itself as offering 移动认证/号码认证 (mobile and number…
+- [China Mobile Application Development API](https://apis.io/apis/china-mobile/china-mobile-application-development-api/) — The Application Development API from China Mobile — 35 operation(s) for application development.
+- [China Mobile Device Management API](https://apis.io/apis/china-mobile/china-mobile-device-management-api/) — The Device Management API from China Mobile — 9 operation(s) for device management.
+- [China Mobile Voice Call Service API](https://apis.io/apis/china-mobile/china-mobile-voice-call-service-api/) — 语音通话 — voice notification and click-to-dial
 
-- **Created:** 2026-07-25
-- **Modified:** 2026-07-25
+### Published properties
 
-## APIs
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-### OneNET Studio Application API
+#### AsyncAPI (2)
 
-The one China Mobile surface with a complete, anonymously readable request-and-response contract. An action-dispatched gateway — every call is `https://openapi.heclouds.com/{namespace}?action={Action}&version=1`, with namespaces `application`, `common`, `lwm2m-online` and `lwm2m-offline`. Forty-four operations are documented across devices, products, projects, groups, thing models, properties and desired properties, service invocation, device files and scene-linkage rules. Authentication is a signed, time-boxed `authorization` header (HMAC over `et`, `method`, `res`, `version`; signature algorithm version `2020-05-29`). Every response is a uniform envelope carrying a platform-generated `requestId`; business failures arrive as HTTP 200 with `success: false`.
+Event-driven and webhook contracts.
 
-- **Human URL:** [API 调用说明](https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html)
-- **Base URL:** `https://openapi.heclouds.com`
-- **OpenAPI:** `openapi/china-mobile-onenet-studio-openapi.yml`
+- [China Mobile OneNET event and callback surface](https://apis.io/asyncapis/china-mobile/china-mobile-onenet-asyncapi/)
+- [China Mobile Onenet Webhooks](https://apis.io/asyncapis/china-mobile/china-mobile-onenet-webhooks/)
 
-### OneNET Voice Call Service (VCS) API
+#### Event channels (4)
 
-语音通话 — click to dial (点击拨号) and TTS voice notification (语音通知) at `https://openapi.heclouds.com/vcs?action={voiceNotify|dialNotify}&version=2`, each returning a `call_id` and delivering call-status callbacks to a caller-supplied `notify_url`. **Click to Dial is the domestic first-party product behind the CAMARA Click to Dial API that China Mobile sponsors upstream** — but it does not implement the CAMARA schema or its OIDC/CIBA security model. Access is gated three ways: business entitlement, a test account pinned to an approved source IP, and a trial-usage quota.
+Individual events and webhooks the provider emits.
 
-- **Human URL:** [API 使用说明](https://open.iot.10086.cn/doc/iot_platform/book/vcs/vcs_api/request.html)
-- **Base URL:** `https://openapi.heclouds.com`
-- **OpenAPI:** `openapi/china-mobile-vcs-openapi.yml`
+- [{notify_url}](https://apis.io/channels/china-mobile/china-mobile-onenet-event-and-callback-surface-notify-url/)
+- [/](https://apis.io/channels/china-mobile/httpdatapush/)
+- [{notify_url}](https://apis.io/channels/china-mobile/notify-url/)
+- [/](https://apis.io/channels/china-mobile/pushinstancevalidation/)
 
-### OneNET IoT Open Platform API
+#### MCP servers (1)
 
-OneNET is China Mobile's IoT PaaS, operated by its CMIOT subsidiary, for device connection, device management, data storage and data visualisation. It is the company's most genuinely developer-facing surface, with open Chinese-language documentation covering MQTT and multi-protocol device access, OneNET Studio, edge computing, device management (DMP), OTA, message queue, SMS, LBS and video capabilities. The legacy REST base URL is live and responds with a JSON token authentication error to unauthenticated calls.
+Model Context Protocol servers that expose the API to agents.
 
-- **Human URL:** [https://open.iot.10086.cn/doc/](https://open.iot.10086.cn/doc/)
-- **Base URL:** `https://api.heclouds.com`
+- [china-mobile-onenet](https://apis.io/servers/china-mobile/china-mobile-onenet/)
 
-#### Properties
+#### Agentic access (1)
 
-- [Documentation](https://open.iot.10086.cn/doc/)
-- [API Reference](https://open.iot.10086.cn/doc/iot_platform/)
-- [Documentation](https://open.iot.10086.cn/doc/mqtt)
-- [Portal](https://open.iot.10086.cn/)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### China Mobile IoT Card Capability Open Platform API
+- [China Mobile Agentic Access](https://apis.io/agentic-access/china-mobile/china-mobile-agentic-access/)
 
-The 物联卡能力开放平台 (IoT Card Capability Open Platform) exposes cellular M2M SIM lifecycle and subscriber-information operations to enterprise IoT customers. Interface documentation is published openly — the confirmed CMIOT_API2003 码号信息查询 page documents `GET/POST https://api.iot.10086.cn/v2/cardinfo`, resolving any one of ICCID, IMSI or MSISDN into the other two. Authentication is a proprietary signed-request scheme whose credentials China Mobile issues by email to approved enterprise customers only.
+#### Collections (2)
 
-- **Human URL:** [https://api.iot.10086.cn/apiDocuments/cusInfo/codeInfoQuery.html](https://api.iot.10086.cn/apiDocuments/cusInfo/codeInfoQuery.html)
-- **Base URL:** `https://api.iot.10086.cn/v2`
+Postman and Open Collection request collections.
 
-#### Properties
+- [China Mobile OneNET Studio Application API](https://apis.io/collections/china-mobile/open-china-mobile-onenet-studio/)
+- [China Mobile OneNET Voice Call Service (VCS) API](https://apis.io/collections/china-mobile/open-china-mobile-vcs/)
 
-- [Documentation](https://api.iot.10086.cn/)
-- [API Reference](https://api.iot.10086.cn/apiDocuments/cusInfo/codeInfoQuery.html)
+#### Overlays (2)
 
-### China Mobile Communication Capability Open Platform
+OpenAPI overlays, including conversational phrasing for each operation.
 
-The 通信能力开放平台 is China Mobile's commercial network-capability channel and the surface where its Open Gateway work actually meets buyers. Its published developer guide lists 语音通知 (voice notification), 语音验证码 (voice OTP), 点击拨号 (click to dial), 中间号 (number masking) and QoS保障 (QoS guarantee). Click to Dial and QoS map directly to the CAMARA Click to Dial and Quality on Demand APIs that China Mobile sponsors upstream. No base URL, endpoint reference or machine-readable definition is published anonymously.
+- [China Mobile Onenet Studio Overlay](https://apis.io/overlays/china-mobile/china-mobile-onenet-studio-overlay/)
+- [China Mobile Vcs Overlay](https://apis.io/overlays/china-mobile/china-mobile-vcs-overlay/)
 
-- **Human URL:** [https://ct.open.10086.cn/portal/developer/docAndHelp.action](https://ct.open.10086.cn/portal/developer/docAndHelp.action)
+#### Security (2)
 
-#### Properties
+Authentication, trust centre, and vulnerability disclosure.
 
-- [Documentation](https://ct.open.10086.cn/portal/developer/docAndHelp.action)
-- [Portal](https://ct.open.10086.cn/portal/index.action)
+- [China Mobile Authentication](https://apis.io/security/china-mobile/china-mobile-authentication/)
+- [China Mobile Domain Security](https://apis.io/security/china-mobile/china-mobile-domain-security/)
 
-### China Mobile Internet Capability Open Platform
+## Where to find this API
 
-中国移动互联网能力开放平台 at dev.10086.cn describes itself as offering 移动认证/号码认证 (mobile and number authentication), 大数据服务 (big data services), 通信能力, 支付能力 (carrier billing) and promotion capabilities. In practice it is an enterprise procurement console rather than a developer portal — its routes are login, ability ordering, application management, billing, invoices and work orders, and every documentation route resolves to the same single-page shell for anonymous visitors.
-
-- **Human URL:** [https://dev.10086.cn/](https://dev.10086.cn/)
-
-#### Properties
-
-- [Documentation](https://dev.10086.cn/)
-- [Portal](https://dev.10086.cn/apmc/abilityList)
-
-## CAMARA and GSMA Open Gateway posture
-
-China Mobile joined **GSMA Open Gateway in June 2023** and received **GSMA Open Gateway certification on 29 October 2024** for its Network-as-a-Service platform, after its **Quality on Demand** API passed 63 technical tests run by the Open Gateway working group over ZTE NEF/SCEF exposure functions.
-
-It is an active upstream **CAMARA** sponsor. The CAMARA API backlog records China Mobile as sponsor or participant for **Click to Dial**, **Model as a Service Family**, **Knowledge Base - Manage**, **Q&A Assistant - Manage**, **Q&A Assistant - Service**, **High-throughput Elastic Network**, **Facial Recognition**, **Network Slice Booking** and **Site-to-cloud VPN**. GSMA material also credits a CAMARA **Number Verification** deployment.
-
-None of it is publicly callable. There is no CAMARA endpoint, no OpenAPI, no OIDC discovery document and **no CIBA reference** on any China Mobile host. China Mobile is **not** an Aduna shareholder, so it does not reach global developers through the Ericsson-led aggregator channel — it sells through its own domestic capability marketplaces under enterprise contract.
-
-## Machine-readable definitions
-
-**China Mobile publishes none.** Every OpenAPI, Swagger, AsyncAPI, GraphQL, gRPC and Postman candidate probed on China Mobile hosts returned an HTML single-page-app shell, 403, 404, 406 or 500 — re-probed on 2026-07-25 against `openapi.heclouds.com`, `api.heclouds.com`, `iot-api.heclouds.com`, `api.iot.10086.cn`, `open.iot.10086.cn` and `dev.10086.cn`. See `review.yml` and `well-known/` for the probe logs with HTTP statuses.
-
-What the 2026-07-25 enrichment round *did* find is that OneNET publishes a complete, anonymously readable reference for two of its API products. Those references have been transcribed — operation by operation, with each operation carrying its source page in `x-evidence` — into machine-readable definitions in this repository:
-
-- `openapi/china-mobile-onenet-studio-openapi.yml` — 44 documented operations on the OneNET Studio application API (`https://openapi.heclouds.com/{namespace}?action={Action}&version=1`)
-- `openapi/china-mobile-vcs-openapi.yml` — the Voice Call Service actions `voiceNotify` and `dialNotify`, plus their two call-status webhook callbacks
-- `asyncapi/china-mobile-onenet-asyncapi.yml` — the OneNET event surface (HTTP data push, push-instance validation handshake, VCS call-status callbacks)
-
-These are API Evangelist derivations of published first-party documentation, marked as such in each `info.x-provenance` block. They are not China Mobile products and China Mobile does not endorse them.
-
-## Artifacts
-
-| Artifact | File |
-| --- | --- |
-| Authentication | `authentication/china-mobile-authentication.yml` |
-| Conventions | `conventions/china-mobile-conventions.yml` |
-| Error codes | `errors/china-mobile-error-codes.yml` |
-| Webhooks | `asyncapi/china-mobile-onenet-webhooks.yml` |
-| Data model | `data-model/china-mobile-data-model.yml` |
-| Packages / SDKs | `packages/china-mobile-packages.yml` |
-| Lifecycle | `lifecycle/china-mobile-lifecycle.yml` |
-| Changelog | `changelog/china-mobile-changelog.yml` |
-| Sandbox | `sandbox/china-mobile-sandbox.yml` |
-| Conformance | `conformance/china-mobile-conformance.yml` |
-| Domain security | `security/china-mobile-domain-security.yml` |
-| Well-known probe log | `well-known/china-mobile-well-known.yml` |
-| Agentic access | `agentic-access/china-mobile-agentic-access.yml` |
-| MCP (candidate) | `mcp/china-mobile-mcp.yml` |
-| Agent skills | `skills/` |
-| llms.txt | `llms/china-mobile-llms.txt` |
-| Overlays | `overlays/` |
-
-## SDKs
-
-China Mobile's first-party client-library channel is **[github.com/cm-heclouds](https://github.com/cm-heclouds)** — the CMIOT (中移物联网) OneNET account, 38 public repositories covering Java, Node, C, C#, PHP, Go, Android, iOS, Arduino, JavaScript and NB-IoT. The OneNET "API SDK下载" page names the Java and Node SDKs there as the platform's official SDKs, and the `JAVA-HTTP-SDK` README states verbatim that it was built by 中移物联网公司. Only the Java side reaches a package registry, on **Maven Central** under `com.github.cm-heclouds`. Nothing first-party was found on PyPI, NuGet, RubyGems, Packagist, crates.io or pkg.go.dev.
-
-## Links
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.chinamobileltd.com/)
-- [Developer Portal (OneNET)](https://open.iot.10086.cn/)
 - [Documentation](https://open.iot.10086.cn/doc/)
-- [Internet Capability Open Platform](https://dev.10086.cn/)
-- [Communication Capability Open Platform](https://ct.open.10086.cn/portal/index.action)
-- [IoT Card Capability Open Platform](https://api.iot.10086.cn/)
-- [China Mobile Research Institute on GitHub](https://github.com/cmri)
+- [Getting started](https://open.iot.10086.cn/doc/easy-manual)
+- [API reference](https://open.iot.10086.cn/doc/iot_platform/book/api/introduce.html)
+- [Pricing](https://open.iot.10086.cn/doc/introduce/book/fee.html)
+- [Sign up](https://open.iot.10086.cn/login)
+- [Support](https://open.iot.10086.cn/servicesupport/workorder/list)
+- [Changelog](https://open.iot.10086.cn/doc/iot_platform/book/release/update_log.html)
+- [Terms of service](https://open.iot.10086.cn/about/serviceprot/)
+- [GitHub](https://github.com/cmri)
+
+## API Evangelist rating
+
+**Kin Score 39.0** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 22.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 70.8 |
+| Access clarity | 34.2 |
+
+**Agent readiness 27.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 33.3** — Telecommunications
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/china-mobile/](https://apis.io/providers/china-mobile/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for China Mobile: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/china-mobile/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
